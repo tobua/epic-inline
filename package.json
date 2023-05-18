@@ -1,0 +1,27 @@
+{
+  "name": "epic-inline",
+  "description": "Concise way to write inline CSS styles.",
+  "version": "0.0.0-development",
+  "scripts": {
+    "build": "padua build",
+    "start": "padua watch",
+    "test": "vitest run"
+  },
+  "type": "module",
+  "sideEffects": true,
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "padua": "^1.2.3",
+    "vitest": "^0.31.1"
+  }
+}
