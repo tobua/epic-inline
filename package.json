@@ -1,6 +1,6 @@
 {
   "name": "epic-inline",
-  "description": "Concise way to write inline CSS styles.",
+  "description": "Concise way to write runtime inline CSS styles.",
   "version": "0.0.0-development",
   "scripts": {
     "build": "padua build",
@@ -23,5 +23,12 @@
   "devDependencies": {
     "padua": "^1.2.3",
     "vitest": "^0.31.1"
+  },
+  "prettier": "padua/configuration/.prettierrc.json",
+  "eslintConfig": {
+    "extends": "./node_modules/padua/configuration/eslint.cjs"
+  },
+  "engines": {
+    "node": ">= 16"
   }
 }

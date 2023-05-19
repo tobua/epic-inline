@@ -1,0 +1,30 @@
+name: push
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test-build-publish-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm install --legacy-peer-deps
+      - name: 🧪 Test
+        run: npm test
+      - name: 🚧 Build
+        run: npm run build
+      - name: 🛠️ Build Demo
+        run: |
+          cd demo
+          npm install --legacy-peer-deps
+          npx papua build
+      - name: 🚀 Publish Demo
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: publish
+          folder: demo/dist
+      - name: 📢 Release
+        uses: tobua/release-npm-action@v1
+        with:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
