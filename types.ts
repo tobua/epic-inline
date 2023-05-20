@@ -1,6 +1,7 @@
 export enum Type {
   js = 'javascript',
   css = 'css',
+  native = 'react-native',
 }
 
 export type Breakpoints = { [key: string]: number }

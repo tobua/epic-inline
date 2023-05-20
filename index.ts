@@ -10,10 +10,15 @@ const table = {
   h: ['height'],
   p: ['padding'],
   pt: ['paddingTop', null, 'padding-top'],
+  pv: ['paddingVertical'],
+  ph: ['paddingHorizontal'],
   m: ['margin'],
   mt: ['marginTop', null, 'margin-top'],
+  mv: ['marginVertical'],
+  mh: ['marginHorizontal'],
   bg: ['background'],
   text: ['textAlign', null, 'text-align'],
+  font: ['fontFamily', 'sans-serif', 'font-family'],
 }
 
 const options: Options = {
