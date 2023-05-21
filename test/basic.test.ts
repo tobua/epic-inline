@@ -15,7 +15,7 @@ test('Combined properties use camelCase.', () => {
   expect(ei('fullWidth')).toEqual({ width: '100%' })
 })
 
-test.only('Various flex properties are supported.', () => {
+test('Various flex properties are supported.', () => {
   expect(ei('flexDirection')).toEqual({ flexDirection: 'row' })
   expect(ei('row')).toEqual({ flexDirection: 'row' })
   expect(ei('column')).toEqual({ flexDirection: 'column' })
@@ -27,6 +27,13 @@ test.only('Various flex properties are supported.', () => {
   expect(ei('flexWrap-initial')).toEqual({ flexWrap: 'initial' })
   expect(ei('flexWrap-inherit')).toEqual({ flexWrap: 'inherit' })
   expect(ei('flexWrap-wrap-reverse')).toEqual({ flexWrap: 'wrap-reverse' })
+})
+
+test('Various font properties are supported.', () => {
+  expect(ei('fontWeight')).toEqual({ fontWeight: 'normal' })
+  expect(ei('bold')).toEqual({ fontWeight: 'bold' })
+  expect(ei('fontWeight-bolder')).toEqual({ fontWeight: 'bolder' })
+  expect(ei('fontWeight-500')).toEqual({ fontWeight: 500 })
 })
 
 test('Invalid values show warning.', () => {

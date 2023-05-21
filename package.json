@@ -15,8 +15,8 @@
   "main": "dist/index.js",
   "exports": {
     ".": {
-      "default": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "types": "dist/index.d.ts",
@@ -31,7 +31,7 @@
     "inline-styles"
   ],
   "devDependencies": {
-    "padua": "^1.2.3",
+    "padua": "^1.2.4",
     "vitest": "^0.31.1"
   },
   "prettier": "padua/configuration/.prettierrc.json",

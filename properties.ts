@@ -1,0 +1,32 @@
+import { Property, PropertyValue } from './types'
+
+export const getProperties: () => { [key: string]: Property } = () => ({
+  jc: ['justifyContent', 'center'],
+  center: 'jc',
+  flex: ['display', 'flex'],
+  df: 'flex',
+  flexDirection: ['flexDirection', 'row'],
+  row: 'flexDirection-row',
+  column: 'flexDirection-column',
+  direction: 'flexDirection',
+  flexWrap: ['flexWrap', 'wrap'], // nowrap is the default.
+  wrap: 'flexWrap',
+  w: ['width'],
+  fullWidth: ['width', '100%'],
+  h: ['height'],
+  fullHeight: ['height', '100%'],
+  p: ['padding'],
+  pt: ['paddingTop'],
+  pv: ['paddingVertical'],
+  ph: ['paddingHorizontal'],
+  m: ['margin'],
+  mt: ['marginTop'],
+  mv: ['marginVertical'],
+  mh: ['marginHorizontal'],
+  bg: ['background'],
+  text: ['textAlign'],
+  font: ['fontFamily', 'sans-serif'],
+  fontWeight: ['fontWeight', 'normal', PropertyValue.string],
+  bold: 'fontWeight-bold',
+  weight: 'fontWeight',
+})

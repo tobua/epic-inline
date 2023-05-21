@@ -1,62 +1,10 @@
-import { Options, Type, Configuration } from './types'
+import { Type } from './types'
 import { camelToDashCase, hasUpperCase, splitByFirstDash } from './helper'
+import { svelte, solid, vue } from './web'
+import { options } from './options'
 
-export { Type }
-
-const table = {
-  jc: ['justifyContent', 'center'],
-  center: 'jc',
-  flex: ['display', 'flex'],
-  df: 'flex',
-  flexDirection: ['flexDirection', 'row'],
-  row: 'flexDirection-row',
-  column: 'flexDirection-column',
-  direction: 'flexDirection',
-  flexWrap: ['flexWrap', 'wrap'], // nowrap is the default.
-  wrap: 'flexWrap',
-  w: ['width'],
-  fullWidth: ['width', '100%'],
-  h: ['height'],
-  fullHeight: ['height', '100%'],
-  p: ['padding'],
-  pt: ['paddingTop', null],
-  pv: ['paddingVertical'],
-  ph: ['paddingHorizontal'],
-  m: ['margin'],
-  mt: ['marginTop', null],
-  mv: ['marginVertical'],
-  mh: ['marginHorizontal'],
-  bg: ['background'],
-  text: ['textAlign', null],
-  font: ['fontFamily', 'sans-serif'],
-}
-
-const options: Options = {
-  type: Type.js,
-  breakpoints: {
-    s: 500,
-    m: 1000,
-    l: 1500,
-    small: 500,
-    medium: 1000,
-    large: 1500,
-  },
-  sizes: {
-    s: 5,
-    m: 10,
-    l: 20,
-    h: 40,
-    small: 5,
-    medium: 10,
-    large: 20,
-    huge: 40,
-  },
-}
-
-export const configure = ({ type, breakpoints }: Configuration) => {
-  options.type = type as Type
-  options.breakpoints = breakpoints
-}
+export { Type, svelte, solid, vue }
+export { reset, configure } from './options'
 
 const extractSize = (value: string) => {
   const [rest, initialSize] = splitByFirstDash(value)
@@ -100,7 +48,7 @@ const extractBreakpoint = (value: string) => {
 }
 
 const lookupTable = (value: string) => {
-  let link = table[value]
+  let link = options.properties[value]
   let linkSize: null | string | number = null
 
   if (process.env.NODE_ENV !== 'production' && !link) {
@@ -112,10 +60,10 @@ const lookupTable = (value: string) => {
     if (link.includes('-')) {
       ;[link, linkSize] = extractSize(link)
     }
-    link = table[link]
+    link = options.properties[link]
   }
 
-  return { property: link, size: linkSize }
+  return { property: link, size: linkSize, value: link && link.length > 2 && link[2] }
 }
 
 const parseValue = (value: string) => {
@@ -144,14 +92,14 @@ export const ei = (input: string) => {
     const [result, size, breakpoint] = parseValue(part)
 
     if (result && breakpoint) {
-      // eslint-disable-next-line prefer-destructuring
-      styles[
+      const property =
         options.type === Type.css && hasUpperCase(result[0])
           ? camelToDashCase(result[0])
           : result[0]
-      ] = size ?? result[1]
+      // eslint-disable-next-line prefer-destructuring
+      styles[property] = options.size(size ?? result[1], property)
     }
   })
 
-  return styles
+  return options.object(styles)
 }

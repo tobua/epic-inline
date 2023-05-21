@@ -1,6 +1,5 @@
 import { createRoot } from 'react-dom/client'
-// TODO regular import leads to build error.
-import { ei } from './node_modules/epic-inline'
+import { ei } from 'epic-inline'
 
 createRoot(document.body).render(
   <div style={ei('flex jc font')}>
