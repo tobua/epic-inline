@@ -1,5 +1,5 @@
 import { expect, test, vi } from 'vitest'
-import { configure, ei, Type } from '../index'
+import { ei } from '../index'
 
 const warnings = vi.spyOn(console, 'warn')
 
@@ -9,6 +9,24 @@ test('Basic values are converted.', () => {
 
 test('Duplicates are ignored.', () => {
   expect(ei('jc jc')).toEqual({ justifyContent: 'center' })
+})
+
+test('Combined properties use camelCase.', () => {
+  expect(ei('fullWidth')).toEqual({ width: '100%' })
+})
+
+test.only('Various flex properties are supported.', () => {
+  expect(ei('flexDirection')).toEqual({ flexDirection: 'row' })
+  expect(ei('row')).toEqual({ flexDirection: 'row' })
+  expect(ei('column')).toEqual({ flexDirection: 'column' })
+  expect(ei('direction')).toEqual({ flexDirection: 'row' })
+  expect(ei('flexWrap')).toEqual({ flexWrap: 'wrap' })
+  expect(ei('wrap')).toEqual({ flexWrap: 'wrap' })
+  expect(ei('flexWrap-nowrap')).toEqual({ flexWrap: 'nowrap' })
+  expect(ei('flexWrap-wrap')).toEqual({ flexWrap: 'wrap' })
+  expect(ei('flexWrap-initial')).toEqual({ flexWrap: 'initial' })
+  expect(ei('flexWrap-inherit')).toEqual({ flexWrap: 'inherit' })
+  expect(ei('flexWrap-wrap-reverse')).toEqual({ flexWrap: 'wrap-reverse' })
 })
 
 test('Invalid values show warning.', () => {

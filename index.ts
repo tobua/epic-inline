@@ -1,24 +1,34 @@
 import { Options, Type, Configuration } from './types'
+import { camelToDashCase, hasUpperCase, splitByFirstDash } from './helper'
 
 export { Type }
 
 const table = {
-  jc: ['justifyContent', 'center', 'justify-content'],
+  jc: ['justifyContent', 'center'],
+  center: 'jc',
   flex: ['display', 'flex'],
   df: 'flex',
+  flexDirection: ['flexDirection', 'row'],
+  row: 'flexDirection-row',
+  column: 'flexDirection-column',
+  direction: 'flexDirection',
+  flexWrap: ['flexWrap', 'wrap'], // nowrap is the default.
+  wrap: 'flexWrap',
   w: ['width'],
+  fullWidth: ['width', '100%'],
   h: ['height'],
+  fullHeight: ['height', '100%'],
   p: ['padding'],
-  pt: ['paddingTop', null, 'padding-top'],
+  pt: ['paddingTop', null],
   pv: ['paddingVertical'],
   ph: ['paddingHorizontal'],
   m: ['margin'],
-  mt: ['marginTop', null, 'margin-top'],
+  mt: ['marginTop', null],
   mv: ['marginVertical'],
   mh: ['marginHorizontal'],
   bg: ['background'],
-  text: ['textAlign', null, 'text-align'],
-  font: ['fontFamily', 'sans-serif', 'font-family'],
+  text: ['textAlign', null],
+  font: ['fontFamily', 'sans-serif'],
 }
 
 const options: Options = {
@@ -49,7 +59,7 @@ export const configure = ({ type, breakpoints }: Configuration) => {
 }
 
 const extractSize = (value: string) => {
-  const [rest, initialSize] = value.split('-')
+  const [rest, initialSize] = splitByFirstDash(value)
   let size: string | number = initialSize
 
   // Size shortcuts, like c for center, f for flex, l for left.
@@ -61,6 +71,11 @@ const extractSize = (value: string) => {
       size = Number(initialSize)
     } catch (error) {
       // Ignore
+      size = initialSize
+    }
+
+    if (Number.isNaN(size)) {
+      size = initialSize
     }
   }
 
@@ -86,6 +101,7 @@ const extractBreakpoint = (value: string) => {
 
 const lookupTable = (value: string) => {
   let link = table[value]
+  let linkSize: null | string | number = null
 
   if (process.env.NODE_ENV !== 'production' && !link) {
     console.warn(`Property "${value}" not found.`)
@@ -93,10 +109,13 @@ const lookupTable = (value: string) => {
 
   // Resolve alias.
   if (typeof link === 'string') {
+    if (link.includes('-')) {
+      ;[link, linkSize] = extractSize(link)
+    }
     link = table[link]
   }
 
-  return link
+  return { property: link, size: linkSize }
 }
 
 const parseValue = (value: string) => {
@@ -109,10 +128,12 @@ const parseValue = (value: string) => {
   }
 
   if (currentValue.includes('-')) {
-    ;[currentValue, size] = extractSize(value)
+    ;[currentValue, size] = extractSize(currentValue)
   }
 
-  return [lookupTable(currentValue), size, breakpoint]
+  const lookupResult = lookupTable(currentValue)
+
+  return [lookupResult.property, lookupResult.size ?? size, breakpoint]
 }
 
 export const ei = (input: string) => {
@@ -124,7 +145,11 @@ export const ei = (input: string) => {
 
     if (result && breakpoint) {
       // eslint-disable-next-line prefer-destructuring
-      styles[options.type === Type.css && result[2] ? result[2] : result[0]] = size ?? result[1]
+      styles[
+        options.type === Type.css && hasUpperCase(result[0])
+          ? camelToDashCase(result[0])
+          : result[0]
+      ] = size ?? result[1]
     }
   })
 
