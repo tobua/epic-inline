@@ -6,6 +6,14 @@ import { options } from './options'
 export { Type, svelte, solid, vue }
 export { reset, configure } from './options'
 
+const resolveShortcuts = (value: string) => {
+  if (Object.hasOwn(options.shortcuts, value)) {
+    return options.shortcuts[value]
+  }
+
+  return value
+}
+
 const extractSize = (value: string) => {
   const [rest, initialSize] = splitByFirstDash(value)
   let size: string | number = initialSize
@@ -85,8 +93,10 @@ const parseValue = (value: string) => {
 }
 
 export const ei = (input: string) => {
-  const parts = input.split(' ')
+  let parts = input.split(' ')
   const styles: { [key: string]: string } = {}
+
+  parts = parts.map(resolveShortcuts).join(' ').split(' ')
 
   parts.forEach((part) => {
     const [result, size, breakpoint] = parseValue(part)

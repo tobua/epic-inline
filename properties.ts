@@ -1,19 +1,33 @@
 import { Property, PropertyValue } from './types'
 
 export const getProperties: () => { [key: string]: Property } = () => ({
-  jc: ['justifyContent', 'center'],
-  center: 'jc',
-  flex: ['display', 'flex'],
-  df: 'flex',
+  justifyContent: ['justifyContent', 'center'],
+  center: 'justifyContent-center',
+  jc: 'justifyContent-center',
+  between: 'justifyContent-space-between',
+  alignItems: ['alignItems', 'center'],
+  display: ['display', 'flex'],
+  flex: 'display',
+  df: 'display',
   flexDirection: ['flexDirection', 'row'],
   row: 'flexDirection-row',
   column: 'flexDirection-column',
   direction: 'flexDirection',
   flexWrap: ['flexWrap', 'wrap'], // nowrap is the default.
   wrap: 'flexWrap',
-  w: ['width'],
+  gap: ['gap'],
+  space: 'gap',
+  columnGap: ['columnGap'],
+  rowGap: ['rowGap'],
+  borderRadius: ['borderRadius'],
+  radius: 'borderRadius',
+  background: ['background'],
+  backgroundColor: ['backgroundColor'],
+  width: ['width'],
+  w: 'width',
   fullWidth: ['width', '100%'],
-  h: ['height'],
+  height: ['height'],
+  h: 'height',
   fullHeight: ['height', '100%'],
   p: ['padding'],
   pt: ['paddingTop'],
@@ -29,4 +43,13 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   fontWeight: ['fontWeight', 'normal', PropertyValue.string],
   bold: 'fontWeight-bold',
   weight: 'fontWeight',
+  outline: ['outline', 'none'],
+  border: ['border', 'none'],
+  textDecoration: ['textDecoration', 'none'],
+  decoration: 'textDecoration',
+})
+
+export const getShortcuts = () => ({
+  button: 'outline border',
+  link: 'decoration',
 })

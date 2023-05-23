@@ -17,16 +17,16 @@ jobs:
         run: npm test
       - name: 🚧 Build
         run: npm run build
-      - name: 🛠️ Build Demo
+      - name: 🛠️ Build Documentation
         run: |
-          cd demo
+          cd documentation
           npm install --legacy-peer-deps
           npx papua build
-      - name: 🚀 Publish Demo
+      - name: 🚀 Publish Documentation
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: publish
-          folder: demo/dist
+          folder: documentation/dist
       - name: 📢 Release
         uses: tobua/release-npm-action@v1
         with:

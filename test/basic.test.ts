@@ -5,10 +5,12 @@ const warnings = vi.spyOn(console, 'warn')
 
 test('Basic values are converted.', () => {
   expect(ei('jc')).toEqual({ justifyContent: 'center' })
+  expect(ei('center')).toEqual({ justifyContent: 'center' })
+  expect(ei('justifyContent')).toEqual({ justifyContent: 'center' })
 })
 
 test('Duplicates are ignored.', () => {
-  expect(ei('jc jc')).toEqual({ justifyContent: 'center' })
+  expect(ei('jc jc center justifyContent')).toEqual({ justifyContent: 'center' })
 })
 
 test('Combined properties use camelCase.', () => {
@@ -27,6 +29,13 @@ test('Various flex properties are supported.', () => {
   expect(ei('flexWrap-initial')).toEqual({ flexWrap: 'initial' })
   expect(ei('flexWrap-inherit')).toEqual({ flexWrap: 'inherit' })
   expect(ei('flexWrap-wrap-reverse')).toEqual({ flexWrap: 'wrap-reverse' })
+
+  expect(ei('flex center column wrap')).toEqual({
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+  })
 })
 
 test('Various font properties are supported.', () => {

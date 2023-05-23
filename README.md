@@ -11,7 +11,7 @@ Concise way to write runtime inline CSS styles.
 ```jsx
 import { ei } from 'epic-inline'
 
-export const Button = () => <button style={ei('flex jc')}>Click me!</button>
+export const Button = () => <button style={ei('flex center')}>Click me!</button>
 ```
 
 ## Credits

@@ -22,6 +22,7 @@ export interface Options {
   size?: (value: number, property: string) => any
   object?: (values: Object) => any
   properties: { [key: string]: Property }
+  shortcuts: { [key: string]: string }
 }
 
 export interface Configuration {
@@ -30,4 +31,5 @@ export interface Configuration {
   size?: (value: number, property: string) => any
   object?: (values: Object) => any
   properties?: { [key: string]: Property }
+  shortcuts: { [key: string]: string }
 }
