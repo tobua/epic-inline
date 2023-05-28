@@ -2,6 +2,7 @@ import { Type } from './types'
 import { camelToDashCase, hasUpperCase, splitByFirstDash } from './helper'
 import { svelte, solid, vue } from './web'
 import { options } from './options'
+import { colors } from './color'
 
 export { Type, svelte, solid, vue }
 export { reset, configure } from './options'
@@ -14,28 +15,34 @@ const resolveShortcuts = (value: string) => {
   return value
 }
 
-const extractSize = (value: string) => {
-  const [rest, initialSize] = splitByFirstDash(value)
-  let size: string | number = initialSize
-
-  // Size shortcuts, like c for center, f for flex, l for left.
-
-  if (initialSize in options.sizes) {
-    size = options.sizes[initialSize]
-  } else {
-    try {
-      size = Number(initialSize)
-    } catch (error) {
-      // Ignore
-      size = initialSize
-    }
-
-    if (Number.isNaN(size)) {
-      size = initialSize
-    }
+const parseSize = (value: string | number) => {
+  if (value in options.sizes) {
+    return options.sizes[value]
+  }
+  if (value in colors) {
+    return value
   }
 
-  return [rest, size] as [string, string | number]
+  let result: number
+
+  try {
+    result = Number(value)
+  } catch (error) {
+    // Ignore
+    return value
+  }
+
+  if (Number.isNaN(result)) {
+    return value
+  }
+
+  return result
+}
+
+const extractSize = (value: string) => {
+  const [rest, initialSize] = splitByFirstDash(value)
+  // Size shortcuts, like c for center, f for flex, l for left.
+  return [rest, parseSize(initialSize)] as [string, string | number]
 }
 
 const extractBreakpoint = (value: string) => {
@@ -69,6 +76,10 @@ const lookupTable = (value: string) => {
       ;[link, linkSize] = extractSize(link)
     }
     link = options.properties[link]
+  }
+
+  if (Array.isArray(link) && link.length > 1) {
+    link[1] = parseSize(link[1])
   }
 
   return { property: link, size: linkSize, value: link && link.length > 2 && link[2] }

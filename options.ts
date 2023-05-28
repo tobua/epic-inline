@@ -6,6 +6,9 @@ const getBreakpoints = () => ({
   s: 500,
   m: 1000,
   l: 1500,
+  sm: 500,
+  md: 1000,
+  lg: 1500,
   small: 500,
   medium: 1000,
   large: 1500,
@@ -16,6 +19,10 @@ const getSizes = () => ({
   m: 10,
   l: 20,
   h: 40,
+  sm: 5,
+  mg: 10,
+  lg: 20,
+  hg: 40,
   small: 5,
   medium: 10,
   large: 20,
@@ -46,6 +53,7 @@ export const configure = ({
   object,
   properties,
   shortcuts,
+  sizes,
 }: Configuration) => {
   if (type) {
     options.type = type as Type
@@ -53,14 +61,17 @@ export const configure = ({
   if (breakpoints) {
     options.breakpoints = breakpoints
   }
-  if (breakpoints) {
+  if (size) {
     options.size = size
   }
-  if (breakpoints) {
+  if (object) {
     options.object = object
   }
   if (shortcuts) {
     options.shortcuts = shortcuts
+  }
+  if (sizes) {
+    options.sizes = sizes
   }
 
   if (properties) {

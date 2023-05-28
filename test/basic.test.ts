@@ -61,3 +61,14 @@ test('Numeric values can be provided.', () => {
   expect(ei('w-10')).toEqual({ width: 10 })
   expect(ei('p-12')).toEqual({ padding: 12 })
 })
+
+test('Medium size is used as default for size based short properties.', () => {
+  expect(ei('borderRadius-huge')).toEqual({ borderRadius: 40 })
+  expect(ei('borderRadius')).toEqual({ borderRadius: 10 })
+})
+
+test('Named colors can be used as values.', () => {
+  expect(ei('color-red')).toEqual({ color: 'red' })
+  expect(ei('color-lemonchiffon')).toEqual({ color: 'lemonchiffon' })
+  expect(ei('background-lavenderblush')).toEqual({ background: 'lavenderblush' })
+})

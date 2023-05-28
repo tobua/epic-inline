@@ -31,7 +31,7 @@
     "inline-styles"
   ],
   "devDependencies": {
-    "padua": "^1.2.4",
+    "padua": "^1.3.0",
     "vitest": "^0.31.1"
   },
   "prettier": "padua/configuration/.prettierrc.json",

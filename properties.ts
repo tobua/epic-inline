@@ -19,10 +19,12 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   space: 'gap',
   columnGap: ['columnGap'],
   rowGap: ['rowGap'],
-  borderRadius: ['borderRadius'],
+  borderRadius: ['borderRadius', 'medium'],
   radius: 'borderRadius',
+  rounded: 'borderRadius',
   background: ['background'],
   backgroundColor: ['backgroundColor'],
+  color: ['color'],
   width: ['width'],
   w: 'width',
   fullWidth: ['width', '100%'],
@@ -38,7 +40,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   mv: ['marginVertical'],
   mh: ['marginHorizontal'],
   bg: ['background'],
-  text: ['textAlign'],
+  text: ['textAlign', 'center'],
   font: ['fontFamily', 'sans-serif'],
   fontWeight: ['fontWeight', 'normal', PropertyValue.string],
   bold: 'fontWeight-bold',
@@ -47,6 +49,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   border: ['border', 'none'],
   textDecoration: ['textDecoration', 'none'],
   decoration: 'textDecoration',
+  boxShadow: ['box-shadow'],
+  shadow: 'boxShadow',
 })
 
 export const getShortcuts = () => ({

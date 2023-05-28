@@ -1,8 +1,9 @@
 {
   "dependencies": {
-    "@types/react": "^18.2.6",
+    "@manypkg/find-root": "^2.1.0",
+    "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
-    "papua": "^4.2.13",
+    "papua": "^4.2.14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

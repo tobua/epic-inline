@@ -3,12 +3,12 @@ export const camelToDashCase = (input: string) =>
 
 export const hasUpperCase = (input: string) => /[A-Z]/.test(input)
 
-export const splitByFirstDash = (str) => {
-  const index = str.indexOf('-')
+export const splitByFirstDash = (input: string) => {
+  const index = input.indexOf('-')
   if (index !== -1) {
-    const firstPart = str.slice(0, index)
-    const secondPart = str.slice(index + 1)
+    const firstPart = input.slice(0, index)
+    const secondPart = input.slice(index + 1)
     return [firstPart, secondPart]
   }
-  return [str, '']
+  return [input, '']
 }
