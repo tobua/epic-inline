@@ -26,6 +26,7 @@ export interface Options {
   object?: GetObject
   properties: Properties
   shortcuts: Shortcuts
+  classPrefix: string
 }
 
 export interface Configuration {
@@ -36,4 +37,5 @@ export interface Configuration {
   properties?: Properties
   shortcuts?: Shortcuts
   sizes?: Sizes
+  classPrefix?: string
 }

@@ -14,7 +14,7 @@ global.window = {
 
 const warnings = vi.spyOn(console, 'warn')
 
-test('Default sizes can be used to specify lengths.', () => {
+test('Various breakpoints lead to styles conditionally being shown.', () => {
   expect(ei('s:flex')).toEqual({})
   expect(ei('m:flex')).toEqual({})
   expect(ei('l:flex')).toEqual({ display: 'flex' })

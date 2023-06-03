@@ -107,7 +107,14 @@ export const ei = (input: string) => {
   let parts = input.split(' ')
   const styles: { [key: string]: string } = {}
 
+  // Keep regular classes intact.
+  if (parts.every((part) => part.startsWith(options.classPrefix))) {
+    return parts.join(' ')
+  }
+
   parts = parts.map(resolveShortcuts).join(' ').split(' ')
+
+  let missed = 0
 
   parts.forEach((part) => {
     const [result, size, breakpoint] = parseValue(part)
@@ -120,7 +127,16 @@ export const ei = (input: string) => {
       // eslint-disable-next-line prefer-destructuring
       styles[property] = options.size(size ?? result[1], property)
     }
+
+    if (!result && breakpoint) {
+      missed += 1
+    }
   })
+
+  // No matches found, let regular classes pass through.
+  if (missed === parts.length) {
+    return input
+  }
 
   return options.object(styles)
 }

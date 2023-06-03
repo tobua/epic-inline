@@ -40,6 +40,7 @@ export const options: Options = {
   breakpoints: getBreakpoints(),
   sizes: getSizes(),
   shortcuts: getShortcuts(),
+  classPrefix: 'css-',
 }
 
 if (isReactNative) {
@@ -54,6 +55,7 @@ export const configure = ({
   properties,
   shortcuts,
   sizes,
+  classPrefix,
 }: Configuration) => {
   if (type) {
     options.type = type as Type
@@ -72,6 +74,9 @@ export const configure = ({
   }
   if (sizes) {
     options.sizes = sizes
+  }
+  if (classPrefix) {
+    options.classPrefix = classPrefix
   }
 
   if (properties) {

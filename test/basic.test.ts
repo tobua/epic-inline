@@ -72,3 +72,11 @@ test('Named colors can be used as values.', () => {
   expect(ei('color-lemonchiffon')).toEqual({ color: 'lemonchiffon' })
   expect(ei('background-lavenderblush')).toEqual({ background: 'lavenderblush' })
 })
+
+test('Regular classes are preserved.', () => {
+  expect(ei('poiuytr')).toEqual('poiuytr')
+  expect(ei('poiuytr flex')).toEqual({ display: 'flex' })
+  expect(ei('flex poiuytr')).toEqual({ display: 'flex' })
+  expect(ei('poiuytr-12345')).toEqual('poiuytr-12345')
+  expect(ei('poiuytr-12345 css-in-js')).toEqual('poiuytr-12345 css-in-js')
+})
