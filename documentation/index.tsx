@@ -1,20 +1,23 @@
+// Using JSX createElement override to automatically convert className.
+import 'epic-inline/register-react'
 import { createRoot } from 'react-dom/client'
-import { ei } from 'epic-inline'
 import github from './asset/github.svg'
 import npm from './asset/npm.svg'
 
 createRoot(document.body).render(
-  <div style={ei('flex between alignItems')}>
-    <div style={ei('flex center column font')}>
+  <div className="flex between alignItems">
+    <div className="flex center column font">
       <h1>epic-inline</h1>
-      <p>One-Line Inline Styled React App</p>
+      <p>
+        One-Line Inline Styled <span className="bold">React App</span>
+      </p>
     </div>
-    <div style={ei('flex gap-10')}>
+    <div className="flex gap-10">
       <a href="https://github.com/tobua/epic-inline">
-        <img style={ei('width-50 height-50')} src={github} alt="epic-inline on GitHub" />
+        <img className="width-50 height-50" src={github} alt="epic-inline on GitHub" />
       </a>
       <a href="https://npmjs.com/epic-inline">
-        <img style={ei('width-50 height-50')} src={npm} alt="epic-inline on npm" />
+        <img className="width-50 height-50" src={npm} alt="epic-inline on npm" />
       </a>
     </div>
   </div>
