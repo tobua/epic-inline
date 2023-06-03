@@ -13,10 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: npm install --legacy-peer-deps
-      - name: 🧪 Test
-        run: npm test
       - name: 🚧 Build
         run: npm run build
+      - name: 🧪 Test
+        run: npm test
       - name: 🛠️ Build Documentation
         run: |
           cd documentation
