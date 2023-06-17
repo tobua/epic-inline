@@ -14,6 +14,91 @@ import { ei } from 'epic-inline'
 export const Button = () => <button style={ei('flex center')}>Click me!</button>
 ```
 
+## Breakpoints
+
+Breakpoints can be used to apply styles conditionally based on the current window width.
+
+`small:flex medium:grid large:block inline` or shorter `s:flex m:grid l:block inline`.
+
+## Sizes
+
+Sizes serve as readable values.
+
+```js
+"width:small" => { width: 5 } // small medium large huge
+"width:md" => { width: 10 }   // sm md lg hg
+"width:l" => { width: 20 }    // s m l h
+"width:huge" => { width: 40 }
+```
+
+## Colors
+
+Lots of named colors are available and can be combined with a tone between 50 and 900, where 400 matches the exact color.
+
+```js
+"color-red-400" => { color: '#FF0000'}
+"color-blue-200" => { color: '#3333FF'}
+"background-lavenderblush-900" => { background: '#FF70A0'}
+```
+
+## Shortcuts
+
+Shortcuts generate several properties and are thought to encapsulate often used patterns.
+
+```js
+"button" => { outline: 'none', border: 'none' }
+"link" => { textDecoration: 'none' }
+```
+
+## Configuration
+
+Various behaviours and sizes can be configured.
+
+```ts
+import { configure, Type } from 'epic-inline'
+
+configure({
+  type: Type.css | Type.js | Type.native,
+  size: (value) => `${value / 10}rem`,
+  object: (value) => JSON.stringify(value),
+  classPrefix: 'another-',
+  shortcuts: { image: 'width-50 height-50' },
+  sizes: { '4xl': 80 },
+  breakpoints: { phone: 500, tablet: 800, desktop: 1200 },
+  properties: {
+    // Additional CSS property.
+    borderStroke: ['border-stroke', 'solid'],
+    // Shortcut to existing property with value
+    outlineFlex: 'display-outline-flex',
+  },
+})
+```
+
+## React `className` Polyfill
+
+While generally considered criminal, for low-quality projects this plugin provides a JSX override that will automatically transform any `className` on a React component to matching inline styles.
+
+```js
+import 'epic-inline/register-react'
+
+export const Button = () => <button className="flex center">Click me!</button>
+```
+
+## React Native
+
+```tsx
+import { View, Text } from 'react-native'
+import { ei, configure, Type } from 'epic-inline'
+
+configure({ type: Type.native })
+
+const MyView = (
+  <View style={ei('pv-medium marginHorizontal-small center')}>
+    <Text>Hello React Native</Text>
+  </View>
+)
+```
+
 ## Credits
 
 The approach to parse short form strings into complex CSS style sheets is inspired by [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) which parses `className` during build time and outputs stylesheets containing only the necessary properties.

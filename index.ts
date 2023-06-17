@@ -2,25 +2,19 @@ import { Type } from './types'
 import { camelToDashCase, hasUpperCase, splitByFirstDash } from './helper'
 import { svelte, solid, vue } from './web'
 import { options } from './options'
-import { colors } from './color'
+import { parseColor } from './color'
 
 export { Type, svelte, solid, vue }
 export { reset, configure } from './options'
-
-const resolveShortcuts = (value: string) => {
-  if (Object.hasOwn(options.shortcuts, value)) {
-    return options.shortcuts[value]
-  }
-
-  return value
-}
 
 const parseSize = (value: string | number) => {
   if (value in options.sizes) {
     return options.sizes[value]
   }
-  if (value in colors) {
-    return value
+
+  const color = parseColor(value)
+  if (color) {
+    return color
   }
 
   let result: number
@@ -60,6 +54,25 @@ const extractBreakpoint = (value: string) => {
   }
 
   return [rest, match] as [string, boolean]
+}
+
+const resolveShortcuts = (value: string) => {
+  let breakpoint = true
+  let currentValue = value
+
+  if (currentValue.includes(':')) {
+    ;[currentValue, breakpoint] = extractBreakpoint(currentValue)
+  }
+
+  if (!breakpoint) {
+    return undefined
+  }
+
+  if (Object.hasOwn(options.shortcuts, currentValue)) {
+    return options.shortcuts[currentValue]
+  }
+
+  return currentValue
 }
 
 const lookupTable = (value: string) => {
@@ -114,7 +127,10 @@ export const ei = (input: string) => {
 
   parts = parts.map(resolveShortcuts).join(' ').split(' ')
 
-  let missed = 0
+  const partsBefore = parts.length
+  parts = parts.filter((value) => !!value)
+
+  let missed = partsBefore - parts.length
 
   parts.forEach((part) => {
     const [result, size, breakpoint] = parseValue(part)

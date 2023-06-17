@@ -54,3 +54,11 @@ test('The use of invalid breakpoints will show a warning.', () => {
   expect(warnings.mock.calls.length).toBe(2)
   expect(warnings.mock.calls[1][0]).toContain('"also-missing"')
 })
+
+test('Breakpoints also work with shortcuts.', () => {
+  windowWidth = 1250
+
+  expect(ei('s:link')).toEqual({})
+  expect(ei('medium:button')).toEqual({})
+  expect(ei('large:link')).toEqual({ textDecoration: 'none' })
+})

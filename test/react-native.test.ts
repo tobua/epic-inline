@@ -1,7 +1,5 @@
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 import { configure, ei, Type } from '../index'
-
-const warnings = vi.spyOn(console, 'warn')
 
 test('Regular properties still work the same.', () => {
   configure({ type: Type.native })

@@ -1,3 +1,7 @@
+import colorString from 'color-string'
+import parse from 'parse-color'
+import convert from 'color-convert'
+
 export const colors = {
   aliceblue: '#F0F8FF',
   antiquewhite: '#FAEBD7',
@@ -147,4 +151,46 @@ export const colors = {
   whitesmoke: '#F5F5F5',
   yellow: '#FFFF00',
   yellowgreen: '#9ACD32',
+}
+
+export const lighten = (color: string, tone: number): string => {
+  const { hsla } = parse(color)
+  if (tone > 400) {
+    hsla[2] -= (tone - 400) / 20
+  } else {
+    hsla[2] += (400 - tone) / 20
+  }
+  hsla[2] = Math.min(100, Math.max(0, hsla[2]))
+
+  // @ts-ignore
+  if (hsla[3] === 1) return colorString.to.hex(convert.hsl.rgb(hsla))
+  return colorString.to.hex(hsla)
+}
+
+export const parseColor = (value: string | number) => {
+  if (typeof value !== 'string') {
+    return false
+  }
+
+  if (value in colors) {
+    return value
+  }
+
+  const matched = value.match(/^(\w+)-(\d?[05]0)$/)
+
+  if (matched) {
+    const color = matched[1]
+    const tone = matched[2]
+
+    if (color in colors) {
+      if (tone !== '400') {
+        return lighten(colors[color], Number(tone))
+      }
+      return colors[color]
+    }
+
+    return matched[1]
+  }
+
+  return false
 }
