@@ -1,15 +1,18 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react'
 import _jsxdevruntime from 'react/jsx-dev-runtime'
 import _jsxruntime from 'react/jsx-runtime'
-// @ts-ignore Types won't be available during build.
 import { ei } from 'epic-inline'
+
+// Workaround to avoid tree-shaking issue in Rspack.
+const convert = ei
 
 function JSXPolyfill(originalMethod: Function, ...args: any[]) {
   const props = args[1]
 
   // Works both with class and className.
   if (props && props.className) {
-    const styles = ei(props.className)
+    const styles = convert(props.className)
 
     // Keep regular classes intact.
     if (styles !== props.className) {
@@ -19,7 +22,7 @@ function JSXPolyfill(originalMethod: Function, ...args: any[]) {
   }
 
   if (props && props.class) {
-    const styles = ei(props.class)
+    const styles = convert(props.class)
 
     // Keep regular classes intact.
     if (styles !== props.class) {
