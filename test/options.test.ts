@@ -30,3 +30,10 @@ test('Prefixed classes are preserved and prefix can be changed.', () => {
   expect(ei('another-hello-again')).toEqual('another-hello-again')
   expect(ei('another-hello another-world')).toEqual('another-hello another-world')
 })
+
+test('Default size can be changed.', () => {
+  configure({ defaultSize: 'huge' })
+  expect(ei('shadow')).toEqual({
+    boxShadow: '0 20px 20px 10px #000000AA',
+  })
+})

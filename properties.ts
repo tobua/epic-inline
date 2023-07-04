@@ -1,4 +1,4 @@
-import { Property, PropertyValue } from './types'
+import { Property, PropertyType } from './types'
 
 export const getProperties: () => { [key: string]: Property } = () => ({
   justifyContent: ['justifyContent', 'center'],
@@ -16,7 +16,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   direction: 'flexDirection',
   flexWrap: ['flexWrap', 'wrap'], // nowrap is the default.
   wrap: 'flexWrap',
-  gap: ['gap'],
+  gap: ['gap', 'medium'],
   space: 'gap',
   columnGap: ['columnGap'],
   rowGap: ['rowGap'],
@@ -56,14 +56,18 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   textAlign: ['textAlign', 'center'],
   text: 'textAlign',
   font: ['fontFamily', 'sans-serif'],
-  fontWeight: ['fontWeight', 'normal', PropertyValue.string],
+  fontWeight: ['fontWeight', 'normal', PropertyType.string],
   bold: 'fontWeight-bold',
   weight: 'fontWeight',
   outline: ['outline', 'none'],
   border: ['border', 'none'],
   textDecoration: ['textDecoration', 'none'],
   decoration: 'textDecoration',
-  boxShadow: ['box-shadow'],
+  boxShadow: [
+    'boxShadow',
+    (size) =>
+      `0 ${Math.round(size / 2)}px ${Math.round(size / 2)}px ${Math.round(size / 4)}px #000000AA`,
+  ],
   shadow: 'boxShadow',
   visibility: ['visibility', 'hidden'],
   hidden: 'visibility',

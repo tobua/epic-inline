@@ -35,6 +35,18 @@ createRoot(document.body).render(
             <p className={`bold color-salmon-${tone}`}>salmon-{tone}</p>
           ))}
         </div>
+        <h2>Shadows</h2>
+        <div className="flex gap-large">
+          <div className="shadow bg-gray p-medium">
+            <span className="color-white">shadow</span>
+          </div>
+          <div className="shadow-small bg-white radius p-medium">
+            <span>shadow-small</span>
+          </div>
+          <div className="shadow-large bg-white radius p-medium">
+            <span>shadow-large</span>
+          </div>
+        </div>
       </section>
     </main>
   </div>

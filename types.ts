@@ -4,15 +4,19 @@ export enum Type {
   native = 'react-native',
 }
 
-export enum PropertyValue {
+export enum PropertyType {
   numeric,
   string,
 }
 
-export type Property = string | [string, (string | number)?, PropertyValue?]
+export type PropertySize = string | number
+export type ComplexValue = (size: number) => string
+export type PropertyValue = string | number | ComplexValue
+
+export type Property = string | [string, PropertyValue?, PropertyType?]
 
 export type Breakpoints = { [key: string]: number }
-export type Sizes = { [key: string]: number | string }
+export type Sizes = { [key: string]: number }
 export type Shortcuts = { [key: string]: string }
 export type Properties = { [key: string]: Property }
 export type Size = (value: number, property: string) => any
@@ -23,6 +27,7 @@ export interface Options {
   breakpoints: Breakpoints
   sizes: Sizes
   size?: Size
+  defaultSize: keyof Sizes
   object?: GetObject
   properties: Properties
   shortcuts: Shortcuts
@@ -33,6 +38,7 @@ export interface Configuration {
   type?: Type | 'css' | 'javascript'
   breakpoints?: Breakpoints
   size?: Size
+  defaultSize?: keyof Sizes
   object?: GetObject
   properties?: Properties
   shortcuts?: Shortcuts

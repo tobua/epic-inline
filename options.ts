@@ -41,6 +41,7 @@ export const options: Options = {
   sizes: getSizes(),
   shortcuts: getShortcuts(),
   classPrefix: 'css-',
+  defaultSize: 'medium',
 }
 
 if (isReactNative) {
@@ -51,6 +52,7 @@ export const configure = ({
   type,
   breakpoints,
   size,
+  defaultSize,
   object,
   properties,
   shortcuts,
@@ -77,6 +79,9 @@ export const configure = ({
   }
   if (classPrefix) {
     options.classPrefix = classPrefix
+  }
+  if (defaultSize) {
+    options.defaultSize = defaultSize
   }
 
   if (properties) {

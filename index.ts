@@ -1,4 +1,4 @@
-import { Type } from './types'
+import { PropertyValue, Type } from './types'
 import { camelToDashCase, hasUpperCase, splitByFirstDash } from './helper'
 import { svelte, solid, vue } from './web'
 import { options } from './options'
@@ -7,7 +7,7 @@ import { parseColor } from './color'
 export { Type, svelte, solid, vue }
 export { reset, configure } from './options'
 
-const parseSize = (value: string | number) => {
+const parseSize = (value: string | number): number | string => {
   if (value in options.sizes) {
     return options.sizes[value]
   }
@@ -35,8 +35,9 @@ const parseSize = (value: string | number) => {
 
 const extractSize = (value: string) => {
   const [rest, initialSize] = splitByFirstDash(value)
+  const parsedSize = parseSize(initialSize)
   // Size shortcuts, like c for center, f for flex, l for left.
-  return [rest, parseSize(initialSize)] as [string, string | number]
+  return [rest, parsedSize] as const
 }
 
 const extractBreakpoint = (value: string) => {
@@ -77,7 +78,7 @@ const resolveShortcuts = (value: string) => {
 
 const lookupTable = (value: string) => {
   let link = options.properties[value]
-  let linkSize: null | string | number = null
+  let linkSize: undefined | number | string
 
   if (process.env.NODE_ENV !== 'production' && !link) {
     console.warn(`Property "${value}" not found.`)
@@ -91,17 +92,22 @@ const lookupTable = (value: string) => {
     link = options.properties[link]
   }
 
-  if (Array.isArray(link) && link.length > 1) {
+  // Parse Sizes values from user or properties default.
+  if (Array.isArray(link) && link.length > 1 && typeof link[1] !== 'function') {
     link[1] = parseSize(link[1])
   }
 
-  return { property: link, size: linkSize, value: link && link.length > 2 && link[2] }
+  return {
+    property: link,
+    size: linkSize,
+    value: link && link.length > 2 && link[2],
+  }
 }
 
 const parseValue = (value: string) => {
   let currentValue = value
   let breakpoint = true
-  let size = null
+  let size: number | string | undefined
 
   if (currentValue.includes(':')) {
     ;[currentValue, breakpoint] = extractBreakpoint(value)
@@ -113,7 +119,31 @@ const parseValue = (value: string) => {
 
   const lookupResult = lookupTable(currentValue)
 
-  return [lookupResult.property, lookupResult.size ?? size, breakpoint]
+  return [lookupResult.property, lookupResult.size ?? size, breakpoint] as const
+}
+
+const calculateValue = (
+  size: number | string | undefined,
+  value: PropertyValue,
+  property: string
+) => {
+  // Arbitrary values like center or space-between.
+  if (typeof size === 'string') {
+    return size
+  }
+
+  if (typeof value === 'function') {
+    return value(options.size(size ?? options.sizes[options.defaultSize], property))
+  }
+
+  if (typeof value === 'string') {
+    if (value in options.sizes) {
+      return options.size(size ?? options.sizes[value], property)
+    }
+    return size ?? value
+  }
+
+  return options.size(size ?? value, property)
 }
 
 export const ei = (input: string) => {
@@ -140,8 +170,8 @@ export const ei = (input: string) => {
         options.type === Type.css && hasUpperCase(result[0])
           ? camelToDashCase(result[0])
           : result[0]
-      // eslint-disable-next-line prefer-destructuring
-      styles[property] = options.size(size ?? result[1], property)
+
+      styles[property] = calculateValue(size, result[1], property)
     }
 
     if (!result && breakpoint) {

@@ -1,9 +1,12 @@
 {
+  "papua": {
+    "icon": "../logo.png"
+  },
   "dependencies": {
-    "@manypkg/find-root": "^2.1.0",
-    "@types/react": "^18.2.9",
-    "@types/react-dom": "^18.2.4",
-    "papua": "^4.3.10",
+    "@manypkg/find-root": "^2.2.1",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "papua": "^5.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
