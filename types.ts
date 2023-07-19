@@ -4,19 +4,14 @@ export enum Type {
   native = 'react-native',
 }
 
-export enum PropertyType {
-  numeric,
-  string,
-}
-
+export type MultiSize = [number, number]
 export type PropertySize = string | number
-export type ComplexValue = (size: number) => string
-export type PropertyValue = string | number | ComplexValue
-
-export type Property = string | [string, PropertyValue?, PropertyType?]
-
+export type ComplexValues = Partial<{ size: MultiSize | number; color: string }>
+export type ComplexValue = (properties: ComplexValues) => string
+export type PropertyValue = string | number | MultiSize | ComplexValue
+export type Property = string | [string, PropertyValue?]
 export type Breakpoints = { [key: string]: number }
-export type Sizes = { [key: string]: number }
+export type Sizes = { [key: string]: MultiSize }
 export type Shortcuts = { [key: string]: string }
 export type Properties = { [key: string]: Property }
 export type Size = (value: number, property: string) => any

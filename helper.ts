@@ -12,3 +12,15 @@ export const splitByFirstDash = (input: string) => {
   }
   return [input, '']
 }
+
+export const validateHtmlClass = (className: string) => {
+  if (process.env.NODE_ENV !== 'development') {
+    return
+  }
+
+  if (/^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/g.test(className)) {
+    return
+  }
+
+  console.warn(`class "${className}" isn't a valid HTML class!`)
+}

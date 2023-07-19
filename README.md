@@ -50,6 +50,17 @@ Shortcuts generate several properties and are thought to encapsulate often used 
 "link" => { textDecoration: 'none' }
 ```
 
+## Complex Values
+
+Using methods it's possible to create more complex styles. The methods can receive both a size and a color.
+
+```js
+ei('shadow') => { boxShadow: '0 5px 5px 3px #000000AA' }
+ei('boxShadow-large') => { boxShadow: '0 10px 10px 5px #000000AA' }
+ei('textShadow') => { textShadow: '2px 2px 2px black' }
+ei('textShadow-large-gray') => { textShadow: '4px 4px 4px gray' }
+```
+
 ## Configuration
 
 Various behaviours and sizes can be configured.
@@ -97,6 +108,26 @@ const MyView = (
     <Text>Hello React Native</Text>
   </View>
 )
+```
+
+## Vue, Svelte and SolidJS
+
+Inline styles can be configured to work with various frameworks using `Preset`s.
+
+```jsx
+import { ei, configure, Preset } from 'epic-inline'
+
+configure(Preset.vue)
+const MyVue = <div :style="ei('paddingLeft-10')">content</div>
+// <div :style="{ paddingLeft: '10px' }">content</div>
+
+configure(Preset.svelte)
+const MySvelete = <div style={ei('paddingLeft-10')}>content</div>
+// <div style="padding-left: 10px;">content</div>
+
+configure(Preset.solid)
+const MySolid = <div style={ei('paddingLeft-10')}>content</div>
+// <div style={{ 'padding-left': '10px' }}>content</div>
 ```
 
 ## Credits

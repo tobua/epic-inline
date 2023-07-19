@@ -1,4 +1,4 @@
-import { Property, PropertyType } from './types'
+import { Property } from './types'
 
 export const getProperties: () => { [key: string]: Property } = () => ({
   justifyContent: ['justifyContent', 'center'],
@@ -41,6 +41,12 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   p: 'padding',
   paddingTop: ['paddingTop'],
   pt: 'paddingTop',
+  paddingBottom: ['paddingBottom'],
+  pb: 'paddingBottom',
+  paddingLeft: ['paddingLeft'],
+  pl: 'paddingLeft',
+  paddingRight: ['paddingRight'],
+  pr: 'paddingRight',
   paddingVertical: ['paddingVertical'],
   pv: 'paddingVertical',
   paddingHorizontal: ['paddingHorizontal'],
@@ -56,22 +62,31 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   textAlign: ['textAlign', 'center'],
   text: 'textAlign',
   font: ['fontFamily', 'sans-serif'],
-  fontWeight: ['fontWeight', 'normal', PropertyType.string],
+  fontWeight: ['fontWeight', 'normal'],
+  fontSize: ['fontSize', 'medium'],
   bold: 'fontWeight-bold',
   weight: 'fontWeight',
   outline: ['outline', 'none'],
   border: ['border', 'none'],
   textDecoration: ['textDecoration', 'none'],
   decoration: 'textDecoration',
-  boxShadow: [
-    'boxShadow',
-    (size) =>
-      `0 ${Math.round(size / 2)}px ${Math.round(size / 2)}px ${Math.round(size / 4)}px #000000AA`,
-  ],
   shadow: 'boxShadow',
   visibility: ['visibility', 'hidden'],
   hidden: 'visibility',
   visible: 'visibility-visible',
+  // Complex properties (dynamically calculated).
+  boxShadow: [
+    'boxShadow',
+    ({ size, color = '#000000AA' }) =>
+      `0 ${Math.round(size[0] / 2)}px ${Math.round(size[0] / 2)}px ${Math.round(
+        size[0] / 4
+      )}px ${color}`,
+  ],
+  textShadow: [
+    'textShadow',
+    ({ size, color = 'black' }) => `${size[1]}px ${size[1]}px ${size[1]}px ${color}`,
+  ],
+  scaleY: ['transform',  ({ size = 0.5 }) => `scaleY(${size})`]
 })
 
 export const getShortcuts = () => ({

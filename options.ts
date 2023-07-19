@@ -1,5 +1,5 @@
 import { getProperties, getShortcuts } from './properties'
-import { Options, Type, Configuration } from './types'
+import { Options, Type, Configuration, Sizes } from './types'
 import { isReactNative, properties as nativeProperties } from './native'
 
 const getBreakpoints = () => ({
@@ -14,19 +14,26 @@ const getBreakpoints = () => ({
   large: 1500,
 })
 
-const getSizes = () => ({
-  s: 5,
-  m: 10,
-  l: 20,
-  h: 40,
-  sm: 5,
-  mg: 10,
-  lg: 20,
-  hg: 40,
-  small: 5,
-  medium: 10,
-  large: 20,
-  huge: 40,
+const defaultSizes: Sizes = {
+  small: [5, 1],
+  medium: [10, 2],
+  large: [20, 4],
+  huge: [40, 8],
+}
+
+const getSizes = (): Sizes => ({
+  s: defaultSizes.small,
+  m: defaultSizes.medium,
+  l: defaultSizes.large,
+  h: defaultSizes.huge,
+  sm: defaultSizes.small,
+  mg: defaultSizes.medium,
+  lg: defaultSizes.large,
+  hg: defaultSizes.huge,
+  small: defaultSizes.small,
+  medium: defaultSizes.medium,
+  large: defaultSizes.large,
+  huge: defaultSizes.huge,
 })
 
 const getSize = (value: number) => value

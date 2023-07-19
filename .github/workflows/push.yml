@@ -4,12 +4,12 @@ on:
   push:
     branches: [main]
 
-permissions:
-  contents: write
-
 jobs:
   test-build-publish-release:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - run: npm install --legacy-peer-deps
@@ -27,7 +27,8 @@ jobs:
         with:
           branch: publish
           folder: documentation/dist
+      - run: npm install -g npm@latest
       - name: 📢 Release
-        uses: tobua/release-npm-action@v1
+        uses: tobua/release-npm-action@v2
         with:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

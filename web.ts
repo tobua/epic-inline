@@ -1,6 +1,6 @@
 import { Configuration, Type } from './types'
 
-export const svelte: Configuration = {
+const svelte: Configuration = {
   size: (value: number) => `${value}px`,
   type: Type.css,
   object: (values: Object) =>
@@ -9,11 +9,13 @@ export const svelte: Configuration = {
       .join(' '),
 }
 
-export const solid: Configuration = {
+const solid: Configuration = {
   size: (value: number) => `${value}px`,
   type: Type.css,
 }
 
-export const vue: Configuration = {
+const vue: Configuration = {
   size: (value: number) => `${value}px`,
 }
+
+export const Preset = { svelte, solid, vue }
