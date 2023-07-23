@@ -110,6 +110,24 @@ const MyView = (
 )
 ```
 
+Using the `className` polyfill with types declared below:
+
+```tsx
+import { View, Text } from 'react-native'
+import 'epic-inline/register-react'
+import { configure, Type } from 'epic-inline'
+
+configure({ type: Type.native })
+
+const MyText = <Text className="color-red">Hello React Native</Text>
+
+declare module 'react-native' {
+  export interface TextProps {
+    className?: string
+  }
+}
+```
+
 ## Vue, Svelte and SolidJS
 
 Inline styles can be configured to work with various frameworks using `Preset`s.

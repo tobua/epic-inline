@@ -145,7 +145,7 @@ const lookupTable = (value: string) => {
   }
 
   // Parse Sizes values from user or properties default.
-  if (Array.isArray(link) && link.length > 1 && typeof link[1] !== 'function') {
+  if (Array.isArray(link) && link.length > 1 && typeof link[1] !== 'function' && link[1]) {
     link[1] = parseSize(link[1])
   }
 
@@ -181,9 +181,9 @@ const parseValue = (value: string) => {
 
 const calculateValue = (
   size: [number, number] | number | string | undefined,
-  value: PropertyValue,
   property: string,
-  complexValues: ComplexValues | undefined
+  complexValues: ComplexValues | undefined,
+  value: PropertyValue = options.sizes[options.defaultSize]
 ) => {
   // Complex values.
   if (typeof value === 'function') {
@@ -236,7 +236,7 @@ export const ei = (input: string) => {
           ? camelToDashCase(result[0])
           : result[0]
 
-      styles[property] = calculateValue(size, result[1], property, complexValues)
+      styles[property] = calculateValue(size, property, complexValues, result[1])
     }
 
     if (!result && breakpoint) {

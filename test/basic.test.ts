@@ -88,3 +88,12 @@ test('Regular classes are preserved.', () => {
   expect(ei('poiuytr-12345')).toEqual('poiuytr-12345')
   expect(ei('poiuytr-12345 css-in-js')).toEqual('poiuytr-12345 css-in-js')
 })
+
+test('Direction helper generates proper values.', () => {
+  expect(ei('padding')).toEqual({ padding: 10 })
+  expect(ei('paddingLeft')).toEqual({ paddingLeft: 10 })
+  expect(ei('m')).toEqual({ margin: 10 })
+  expect(ei('mr')).toEqual({ marginRight: 10 })
+  expect(ei('borderTop')).toEqual({ borderTop: 'none' })
+  expect(ei('bb-red')).toEqual({ borderBottom: 'red' }) // Should be a complex value.
+})

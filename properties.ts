@@ -1,5 +1,18 @@
 import { Property } from './types'
 
+const addDirections = (name: string, abbreviation: string, defaultValue = undefined) => ({
+  [name]: [name, defaultValue],
+  [abbreviation]: name,
+  [`${name}Top`]: [`${name}Top`, defaultValue],
+  [`${abbreviation}t`]: `${name}Top`,
+  [`${name}Bottom`]: [`${name}Bottom`, defaultValue],
+  [`${abbreviation}b`]: `${name}Bottom`,
+  [`${name}Left`]: [`${name}Left`, defaultValue],
+  [`${abbreviation}l`]: `${name}Left`,
+  [`${name}Right`]: [`${name}Right`, defaultValue],
+  [`${abbreviation}r`]: `${name}Right`,
+})
+
 export const getProperties: () => { [key: string]: Property } = () => ({
   justifyContent: ['justifyContent', 'center'],
   center: 'justifyContent-center',
@@ -37,24 +50,12 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   fullHeight: ['height', '100%'],
   maxHeight: ['max-width'],
   maxH: 'maxWidth',
-  padding: ['padding'],
-  p: 'padding',
-  paddingTop: ['paddingTop'],
-  pt: 'paddingTop',
-  paddingBottom: ['paddingBottom'],
-  pb: 'paddingBottom',
-  paddingLeft: ['paddingLeft'],
-  pl: 'paddingLeft',
-  paddingRight: ['paddingRight'],
-  pr: 'paddingRight',
+  ...addDirections('padding', 'p'),
   paddingVertical: ['paddingVertical'],
   pv: 'paddingVertical',
   paddingHorizontal: ['paddingHorizontal'],
   ph: 'paddingHorizontal',
-  margin: ['margin'],
-  m: 'margin',
-  marginTop: ['marginTop'],
-  mt: 'marginTop',
+  ...addDirections('margin', 'm'),
   marginVertical: ['marginVertical'],
   mv: 'marginVertical',
   marginHorizontal: ['marginHorizontal'],
@@ -67,7 +68,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   bold: 'fontWeight-bold',
   weight: 'fontWeight',
   outline: ['outline', 'none'],
-  border: ['border', 'none'],
+  ...addDirections('border', 'b', 'none'),
   textDecoration: ['textDecoration', 'none'],
   decoration: 'textDecoration',
   shadow: 'boxShadow',
@@ -86,7 +87,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
     'textShadow',
     ({ size, color = 'black' }) => `${size[1]}px ${size[1]}px ${size[1]}px ${color}`,
   ],
-  scaleY: ['transform',  ({ size = 0.5 }) => `scaleY(${size})`]
+  scaleY: ['transform', ({ size = 0.5 }) => `scaleY(${size})`],
 })
 
 export const getShortcuts = () => ({
