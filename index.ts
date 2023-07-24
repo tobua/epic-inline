@@ -122,7 +122,14 @@ const resolveShortcuts = (value: string) => {
   }
 
   if (Object.hasOwn(options.shortcuts, currentValue)) {
-    return options.shortcuts[currentValue]
+    const shortcut = options.shortcuts[currentValue]
+
+    // Resolve alias.
+    if (typeof shortcut === 'string' && Object.hasOwn(options.shortcuts, shortcut)) {
+      return options.shortcuts[shortcut]
+    }
+
+    return shortcut
   }
 
   return currentValue

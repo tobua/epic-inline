@@ -22,6 +22,7 @@ test('Various flex properties are supported.', () => {
   expect(ei('row')).toEqual({ flexDirection: 'row' })
   expect(ei('column')).toEqual({ flexDirection: 'column' })
   expect(ei('direction')).toEqual({ flexDirection: 'row' })
+  expect(ei('direction-column-reverse')).toEqual({ flexDirection: 'column-reverse' })
   expect(ei('flexWrap')).toEqual({ flexWrap: 'wrap' })
   expect(ei('wrap')).toEqual({ flexWrap: 'wrap' })
   expect(ei('flexWrap-nowrap')).toEqual({ flexWrap: 'nowrap' })
@@ -29,6 +30,15 @@ test('Various flex properties are supported.', () => {
   expect(ei('flexWrap-initial')).toEqual({ flexWrap: 'initial' })
   expect(ei('flexWrap-inherit')).toEqual({ flexWrap: 'inherit' })
   expect(ei('flexWrap-wrap-reverse')).toEqual({ flexWrap: 'wrap-reverse' })
+  expect(ei('order-5')).toEqual({ order: 5 })
+  expect(ei('flexGrow-4')).toEqual({ flexGrow: 4 })
+  expect(ei('flexGrow')).toEqual({ flexGrow: 0 })
+  expect(ei('grow-4')).toEqual({ flexGrow: 4 })
+  expect(ei('flexShrink-3')).toEqual({ flexShrink: 3 })
+  expect(ei('shrink-3')).toEqual({ flexShrink: 3 })
+  expect(ei('flexBasis')).toEqual({ flexBasis: 'auto' })
+  expect(ei('self')).toEqual({ alignSelf: 'auto' })
+  expect(ei('alignContent-start')).toEqual({ alignContent: 'start' })
 
   expect(ei('flex center column wrap')).toEqual({
     display: 'flex',

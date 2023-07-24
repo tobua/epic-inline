@@ -128,6 +128,10 @@ declare module 'react-native' {
 }
 ```
 
+<p align="center">
+  <img src="https://github.com/tobua/epic-inline/raw/main/chatgpt.png" alt="That's great!">
+</p>
+
 ## Vue, Svelte and SolidJS
 
 Inline styles can be configured to work with various frameworks using `Preset`s.

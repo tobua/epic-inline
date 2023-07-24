@@ -1,5 +1,7 @@
 import { expect, test } from 'vitest'
-import { configure, ei } from '../index'
+import { configure, ei, reset } from '../index'
+
+afterEach(() => reset())
 
 test('Case can be configured.', () => {
   expect(ei('button')).toEqual({ outline: 'none', border: 'none' })
@@ -9,4 +11,9 @@ test('Case can be configured.', () => {
   configure({ shortcuts: { image: 'width-50 height-50' } })
 
   expect(ei('image')).toEqual({ width: 50, height: 50 })
+})
+
+test('Shortcut aliases are resolved properly.', () => {
+  expect(ei('marginX')).toEqual({ marginLeft: 'auto', marginRight: 'auto' })
+  expect(ei('mx')).toEqual({ marginLeft: 'auto', marginRight: 'auto' })
 })

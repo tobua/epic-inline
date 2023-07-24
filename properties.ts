@@ -13,6 +13,13 @@ const addDirections = (name: string, abbreviation: string, defaultValue = undefi
   [`${abbreviation}r`]: `${name}Right`,
 })
 
+const addAxes = (name: string, abbreviation: string, defaultValue = undefined) => ({
+  [`${name}Vertical`]: ['paddingVertical', defaultValue],
+  [`${abbreviation}v`]: `${name}Vertical`,
+  [`${name}Horizontal`]: ['paddingHorizontal', defaultValue],
+  [`${abbreviation}h`]: `${name}Horizontal`,
+})
+
 export const getProperties: () => { [key: string]: Property } = () => ({
   justifyContent: ['justifyContent', 'center'],
   center: 'justifyContent-center',
@@ -20,6 +27,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   between: 'justifyContent-space-between',
   alignItems: ['alignItems', 'center'],
   items: 'alignItems',
+  alignContent: ['alignContent', 'normal'],
+  align: 'alignContent',
   display: ['display', 'flex'],
   flex: 'display',
   df: 'display',
@@ -33,6 +42,15 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   space: 'gap',
   columnGap: ['columnGap'],
   rowGap: ['rowGap'],
+  order: ['order'],
+  flexGrow: ['flexGrow', 0],
+  grow: 'flexGrow',
+  flexShrink: ['flexShrink', 1],
+  shrink: 'flexShrink',
+  flexBasis: ['flexBasis', 'auto'],
+  basis: 'flexBasis',
+  alignSelf: ['alignSelf', 'auto'],
+  self: 'alignSelf',
   borderRadius: ['borderRadius', 'medium'],
   radius: 'borderRadius',
   rounded: 'borderRadius',
@@ -51,15 +69,11 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   maxHeight: ['max-width'],
   maxH: 'maxWidth',
   ...addDirections('padding', 'p'),
-  paddingVertical: ['paddingVertical'],
-  pv: 'paddingVertical',
-  paddingHorizontal: ['paddingHorizontal'],
-  ph: 'paddingHorizontal',
+  ...addAxes('padding', 'p'),
   ...addDirections('margin', 'm'),
-  marginVertical: ['marginVertical'],
-  mv: 'marginVertical',
-  marginHorizontal: ['marginHorizontal'],
-  mh: 'marginHorizontal',
+  ...addAxes('margin', 'm'),
+  ...addDirections('border', 'b', 'none'),
+  ...addAxes('border', 'b', 'none'),
   textAlign: ['textAlign', 'center'],
   text: 'textAlign',
   font: ['fontFamily', 'sans-serif'],
@@ -68,7 +82,6 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   bold: 'fontWeight-bold',
   weight: 'fontWeight',
   outline: ['outline', 'none'],
-  ...addDirections('border', 'b', 'none'),
   textDecoration: ['textDecoration', 'none'],
   decoration: 'textDecoration',
   shadow: 'boxShadow',
@@ -93,4 +106,6 @@ export const getProperties: () => { [key: string]: Property } = () => ({
 export const getShortcuts = () => ({
   button: 'outline border',
   link: 'decoration',
+  marginX: 'marginLeft-auto marginRight-auto', // Common old way to center items.
+  mx: 'marginX',
 })
