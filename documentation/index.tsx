@@ -4,6 +4,25 @@ import { createRoot } from 'react-dom/client'
 import github from './asset/github.svg'
 import npm from './asset/npm.svg'
 
+const Flexboxes = ({
+  classes,
+  title,
+  count = 3,
+}: {
+  classes?: string
+  title: string
+  count: number
+}) => (
+  <div className="flex bg-lightgray column">
+    <span className="flex alignSelf-center p-small mono">{title}</span>
+    <div className={`flex gap-small p-medium ${classes}`}>
+      {Array.from({ length: count }).map((_, index) => (
+        <span key={index} className="bg-azure w-medium square" />
+      ))}
+    </div>
+  </div>
+)
+
 createRoot(document.body).render(
   <div className="flex column font">
     <header className="flex between alignItems font">
@@ -17,7 +36,7 @@ createRoot(document.body).render(
         </a>
       </div>
     </header>
-    <main className="flex center column">
+    <main className="flex column">
       <p>
         One-Line Inline Styled <span className="bold">React App</span>
       </p>
@@ -25,14 +44,19 @@ createRoot(document.body).render(
         <h2>Colors</h2>
         <div className="flex gap-medium">
           {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((tone) => (
-            <div className={`bold color-white radius-medium p-medium background-blue-${tone}`}>
+            <div
+              key={tone}
+              className={`bold color-white radius-medium p-medium background-blue-${tone}`}
+            >
               blue-{tone}
             </div>
           ))}
         </div>
         <div className="flex gap-medium">
           {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((tone) => (
-            <p className={`bold color-salmon-${tone}`}>salmon-{tone}</p>
+            <p key={tone} className={`bold color-salmon-${tone}`}>
+              salmon-{tone}
+            </p>
           ))}
         </div>
         <h2>Shadows</h2>
@@ -45,6 +69,25 @@ createRoot(document.body).render(
           </div>
           <div className="shadow-large bg-white radius p-medium">
             <span>shadow-large</span>
+          </div>
+        </div>
+        <h2>Flexbox</h2>
+        <div className="flex gap-large alignItems-start">
+          <Flexboxes title="flex" count={3} />
+          <Flexboxes title="column" classes="column" count={3} />
+          <Flexboxes title="center" classes="center width-100" count={3} />
+          <Flexboxes title="between" classes="width-100 between" count={3} />
+          <Flexboxes title="wrap" classes="width-50 wrap" count={5} />
+        </div>
+        <h2>Complex Values</h2>
+        <div className="flex gap-large column alignItems-start">
+          <span className="code">innerRadius</span>
+          <div className="flex alignItems-end">
+            <div className="innerRadius bg-blue w-large square" />
+            <div className="bg-blue w-100 h-huge borderTopRadius flex center color-white">
+              Fancy Tab
+            </div>
+            <div className="innerRadius bg-blue w-large square flipHorizontal" />
           </div>
         </div>
       </section>

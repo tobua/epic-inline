@@ -6,6 +6,7 @@ afterEach(() => reset())
 test('Case can be configured.', () => {
   expect(ei('button')).toEqual({ outline: 'none', border: 'none' })
   expect(ei('button link')).toEqual({ outline: 'none', border: 'none', textDecoration: 'none' })
+  expect(ei('center')).toEqual({ justifyContent: 'center', alignItems: 'center' })
   expect(ei('link button')).toEqual(ei('button link'))
 
   configure({ shortcuts: { image: 'width-50 height-50' } })

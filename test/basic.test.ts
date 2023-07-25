@@ -5,12 +5,12 @@ const warnings = vi.spyOn(console, 'warn')
 
 test('Basic values are converted.', () => {
   expect(ei('jc')).toEqual({ justifyContent: 'center' })
-  expect(ei('center')).toEqual({ justifyContent: 'center' })
+  expect(ei('centerHorizontal')).toEqual({ justifyContent: 'center' })
   expect(ei('justifyContent')).toEqual({ justifyContent: 'center' })
 })
 
 test('Duplicates are ignored.', () => {
-  expect(ei('jc jc center justifyContent')).toEqual({ justifyContent: 'center' })
+  expect(ei('jc jc centerHorizontal justifyContent')).toEqual({ justifyContent: 'center' })
 })
 
 test('Combined properties use camelCase.', () => {
@@ -40,7 +40,7 @@ test('Various flex properties are supported.', () => {
   expect(ei('self')).toEqual({ alignSelf: 'auto' })
   expect(ei('alignContent-start')).toEqual({ alignContent: 'start' })
 
-  expect(ei('flex center column wrap')).toEqual({
+  expect(ei('flex centerHorizontal column wrap')).toEqual({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
@@ -53,6 +53,14 @@ test('Various font properties are supported.', () => {
   expect(ei('bold')).toEqual({ fontWeight: 'bold' })
   expect(ei('fontWeight-bolder')).toEqual({ fontWeight: 'bolder' })
   expect(ei('fontWeight-500')).toEqual({ fontWeight: 500 })
+  expect(ei('aspectRatio')).toEqual({ aspectRatio: 'auto' })
+  expect(ei('aspectRatio-3')).toEqual({ aspectRatio: 3 })
+  expect(ei('square')).toEqual({ aspectRatio: 1 })
+  expect(ei('ratio-5')).toEqual({ aspectRatio: 5 })
+  expect(ei('position-relative')).toEqual({ position: 'relative' })
+  expect(ei('sticky')).toEqual({ position: 'sticky' })
+  expect(ei('top')).toEqual({ top: 0 })
+  expect(ei('lt-6')).toEqual({ left: 6 })
 })
 
 test('Invalid values show warning.', () => {
@@ -60,6 +68,13 @@ test('Invalid values show warning.', () => {
   expect(ei('jc js')).toEqual({ justifyContent: 'center' })
   expect(warnings.mock.calls.length).toBe(1)
   expect(warnings.mock.calls[0][0]).toContain('"js"')
+  // Warning for invalid className characters.
+  expect(ei('@invalid')).toEqual('@invalid')
+  expect(warnings.mock.calls.length).toBe(3)
+  expect(warnings.mock.calls[1][0]).toContain('Property "@invalid"')
+  expect(warnings.mock.calls[2][0]).toContain('Class "@invalid"')
+  expect(ei('display-v4l!d?')).toEqual({ display: 'v4l!d?' })
+  expect(warnings.mock.calls.length).toBe(3)
 })
 
 test('Aliases can be used.', () => {

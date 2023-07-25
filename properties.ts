@@ -22,7 +22,8 @@ const addAxes = (name: string, abbreviation: string, defaultValue = undefined) =
 
 export const getProperties: () => { [key: string]: Property } = () => ({
   justifyContent: ['justifyContent', 'center'],
-  center: 'justifyContent-center',
+  centerHorizontal: 'justifyContent-center',
+  centerVertical: 'alignItems-center',
   jc: 'justifyContent-center',
   between: 'justifyContent-space-between',
   alignItems: ['alignItems', 'center'],
@@ -53,6 +54,10 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   self: 'alignSelf',
   borderRadius: ['borderRadius', 'medium'],
   radius: 'borderRadius',
+  borderTopLeftRadius: ['borderTopLeftRadius', 'medium'],
+  borderTopRightRadius: ['borderTopRightRadius', 'medium'],
+  borderBottomLeftRadius: ['borderBottomLeftRadius', 'medium'],
+  borderBottomRightRadius: ['borderBottomRightRadius', 'medium'],
   rounded: 'borderRadius',
   background: ['background'],
   bg: 'background',
@@ -76,7 +81,12 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   ...addAxes('border', 'b', 'none'),
   textAlign: ['textAlign', 'center'],
   text: 'textAlign',
-  font: ['fontFamily', 'sans-serif'],
+  fontFamily: ['fontFamily', 'sans-serif'],
+  font: 'fontFamily',
+  mono: 'fontFamily-monospace',
+  serif: 'fontFamily-serif',
+  sansSerif: 'fontFamily',
+  sans: 'fontFamily',
   fontWeight: ['fontWeight', 'normal'],
   fontSize: ['fontSize', 'medium'],
   bold: 'fontWeight-bold',
@@ -88,6 +98,25 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   visibility: ['visibility', 'hidden'],
   hidden: 'visibility',
   visible: 'visibility-visible',
+  aspectRatio: ['aspectRatio', 'auto'],
+  ratio: 'aspectRatio',
+  square: 'aspectRatio-1',
+  position: ['position', 'static'],
+  relative: 'position-relative',
+  absolute: 'position-absolute',
+  fixed: 'position-fixed',
+  sticky: 'position-sticky',
+  top: ['top', 0],
+  right: ['right', 0],
+  bottom: ['bottom', 0],
+  left: ['left', 0],
+  tp: 'top',
+  ri: 'right',
+  bt: 'bottom',
+  lt: 'left',
+  flip: ['transform', 'scale(-1, -1)'],
+  flipHorizontal: ['transform', 'scale(-1, 1)'],
+  flipVertical: ['transform', 'scale(1, -1)'],
   // Complex properties (dynamically calculated).
   boxShadow: [
     'boxShadow',
@@ -100,7 +129,15 @@ export const getProperties: () => { [key: string]: Property } = () => ({
     'textShadow',
     ({ size, color = 'black' }) => `${size[1]}px ${size[1]}px ${size[1]}px ${color}`,
   ],
+  scale: ['transform', ({ size = 0.5 }) => `scale(${size})`],
   scaleY: ['transform', ({ size = 0.5 }) => `scaleY(${size})`],
+  innerRadius: [
+    'WebkitMaskImage',
+    ({ size }) =>
+      `radial-gradient(circle ${size[0]}px at 0 0, transparent 0, transparent ${
+        size[0] * 2
+      }px, black ${size[0] * 2 + 1}px)`,
+  ],
 })
 
 export const getShortcuts = () => ({
@@ -108,4 +145,7 @@ export const getShortcuts = () => ({
   link: 'decoration',
   marginX: 'marginLeft-auto marginRight-auto', // Common old way to center items.
   mx: 'marginX',
+  code: 'mono bg-lightgray p-3 radius-3',
+  borderTopRadius: 'borderTopLeftRadius borderTopRightRadius', // TODO pass value.
+  center: 'centerHorizontal centerVertical',
 })

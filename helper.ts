@@ -1,3 +1,4 @@
+// Works with Webkit prefixes as it starts upper-case.
 export const camelToDashCase = (input: string) =>
   input.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`)
 
@@ -14,7 +15,7 @@ export const splitByFirstDash = (input: string) => {
 }
 
 export const validateHtmlClass = (className: string) => {
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
     return
   }
 
@@ -22,5 +23,5 @@ export const validateHtmlClass = (className: string) => {
     return
   }
 
-  console.warn(`class "${className}" isn't a valid HTML class!`)
+  console.warn(`Class "${className}" isn't a valid HTML class!`)
 }

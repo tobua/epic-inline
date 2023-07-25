@@ -7,8 +7,7 @@ import { parseColor } from './color'
 export { Type, Preset }
 export { reset, configure } from './options'
 
-
-const parseNumber = (value: string | number) => {
+export const parseNumber = (value: string | number) => {
   let result: number
 
   try {
@@ -220,8 +219,6 @@ export const ei = (input: string) => {
   let parts = input.split(' ')
   const styles: { [key: string]: string } = {}
 
-  parts.forEach(validateHtmlClass) // Warn if invalid class characters used in development.
-
   // Keep regular classes intact.
   if (parts.every((part) => part.startsWith(options.classPrefix))) {
     return parts.join(' ')
@@ -247,6 +244,7 @@ export const ei = (input: string) => {
     }
 
     if (!result && breakpoint) {
+      validateHtmlClass(part) // Warn if invalid class characters used in development.
       missed += 1
     }
   })
