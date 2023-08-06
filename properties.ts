@@ -1,4 +1,4 @@
-import { Property } from './types'
+import { Complex, Property } from './types'
 
 const addDirections = (name: string, abbreviation: string, defaultValue = undefined) => ({
   [name]: [name, defaultValue],
@@ -44,9 +44,9 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   columnGap: ['columnGap'],
   rowGap: ['rowGap'],
   order: ['order'],
-  flexGrow: ['flexGrow', 0],
+  flexGrow: ['flexGrow', '[0]'],
   grow: 'flexGrow',
-  flexShrink: ['flexShrink', 1],
+  flexShrink: ['flexShrink', '[1]'],
   shrink: 'flexShrink',
   flexBasis: ['flexBasis', 'auto'],
   basis: 'flexBasis',
@@ -73,10 +73,10 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   fullHeight: ['height', '100%'],
   maxHeight: ['max-width'],
   maxH: 'maxWidth',
-  ...addDirections('padding', 'p'),
-  ...addAxes('padding', 'p'),
-  ...addDirections('margin', 'm'),
-  ...addAxes('margin', 'm'),
+  ...addDirections('padding', 'p', 'medium'),
+  ...addAxes('padding', 'p', 'medium'),
+  ...addDirections('margin', 'm', 'medium'),
+  ...addAxes('margin', 'm', 'medium'),
   ...addDirections('border', 'b', 'none'),
   ...addAxes('border', 'b', 'none'),
   textAlign: ['textAlign', 'center'],
@@ -100,7 +100,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   visible: 'visibility-visible',
   aspectRatio: ['aspectRatio', 'auto'],
   ratio: 'aspectRatio',
-  square: 'aspectRatio-1',
+  square: 'aspectRatio-[1]',
+  aspect: 'aspectRatio',
   position: ['position', 'static'],
   relative: 'position-relative',
   absolute: 'position-absolute',
@@ -114,9 +115,15 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   ri: 'right',
   bt: 'bottom',
   lt: 'left',
-  flip: ['transform', 'scale(-1, -1)'],
-  flipHorizontal: ['transform', 'scale(-1, 1)'],
-  flipVertical: ['transform', 'scale(1, -1)'],
+  flip: ['transform', '[scale(-1,-1)]'],
+  flipHorizontal: ['transform', '[scale(-1,1)]'],
+  flipVertical: ['transform', '[scale(1,-1)]'],
+  // CSS Grid
+  grid: 'display-grid',
+  gridTemplateRows: ['gridTemplateRows', 'none'],
+  gridTemplateColumns: ['gridTemplateColumns', 'none'],
+  gridRow: ['gridRow', 'auto'],
+  gridColumn: ['gridColumn', 'auto'],
   // Complex properties (dynamically calculated).
   boxShadow: [
     'boxShadow',
@@ -129,8 +136,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
     'textShadow',
     ({ size, color = 'black' }) => `${size[1]}px ${size[1]}px ${size[1]}px ${color}`,
   ],
-  scale: ['transform', ({ size = 0.5 }) => `scale(${size})`],
-  scaleY: ['transform', ({ size = 0.5 }) => `scaleY(${size})`],
+  scale: ['transform', ({ arbitrary = '0.5' }) => `scale(${arbitrary})`],
+  scaleY: ['transform', ({ arbitrary = '0.5' }) => `scaleY(${arbitrary})`],
   innerRadius: [
     'WebkitMaskImage',
     ({ size }) =>
@@ -138,6 +145,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
         size[0] * 2
       }px, black ${size[0] * 2 + 1}px)`,
   ],
+  // TODO complex with Complex.multiple
+  multiple: ['transform', ({ size }) => `${size[0][0]}-${size[1][1]}`, Complex.multiple],
 })
 
 export const getShortcuts = () => ({

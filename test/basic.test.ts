@@ -30,12 +30,13 @@ test('Various flex properties are supported.', () => {
   expect(ei('flexWrap-initial')).toEqual({ flexWrap: 'initial' })
   expect(ei('flexWrap-inherit')).toEqual({ flexWrap: 'inherit' })
   expect(ei('flexWrap-wrap-reverse')).toEqual({ flexWrap: 'wrap-reverse' })
-  expect(ei('order-5')).toEqual({ order: 5 })
-  expect(ei('flexGrow-4')).toEqual({ flexGrow: 4 })
-  expect(ei('flexGrow')).toEqual({ flexGrow: 0 })
-  expect(ei('grow-4')).toEqual({ flexGrow: 4 })
-  expect(ei('flexShrink-3')).toEqual({ flexShrink: 3 })
-  expect(ei('shrink-3')).toEqual({ flexShrink: 3 })
+  // TODO are string values valid for order in React CSSProperties?
+  expect(ei('order-[5]')).toEqual({ order: '5' })
+  expect(ei('flexGrow-[4]')).toEqual({ flexGrow: '4' })
+  expect(ei('flexGrow')).toEqual({ flexGrow: '0' })
+  expect(ei('grow-[4]')).toEqual({ flexGrow: '4' })
+  expect(ei('flexShrink-[3]')).toEqual({ flexShrink: '3' })
+  expect(ei('shrink-[3]')).toEqual({ flexShrink: '3' })
   expect(ei('flexBasis')).toEqual({ flexBasis: 'auto' })
   expect(ei('self')).toEqual({ alignSelf: 'auto' })
   expect(ei('alignContent-start')).toEqual({ alignContent: 'start' })
@@ -52,11 +53,11 @@ test('Various font properties are supported.', () => {
   expect(ei('fontWeight')).toEqual({ fontWeight: 'normal' })
   expect(ei('bold')).toEqual({ fontWeight: 'bold' })
   expect(ei('fontWeight-bolder')).toEqual({ fontWeight: 'bolder' })
-  expect(ei('fontWeight-500')).toEqual({ fontWeight: 500 })
+  expect(ei('fontWeight-[500]')).toEqual({ fontWeight: '500' })
   expect(ei('aspectRatio')).toEqual({ aspectRatio: 'auto' })
-  expect(ei('aspectRatio-3')).toEqual({ aspectRatio: 3 })
-  expect(ei('square')).toEqual({ aspectRatio: 1 })
-  expect(ei('ratio-5')).toEqual({ aspectRatio: 5 })
+  expect(ei('aspectRatio-[3]')).toEqual({ aspectRatio: '3' })
+  expect(ei('square')).toEqual({ aspectRatio: '1' })
+  expect(ei('ratio-[5]')).toEqual({ aspectRatio: '5' })
   expect(ei('position-relative')).toEqual({ position: 'relative' })
   expect(ei('sticky')).toEqual({ position: 'sticky' })
   expect(ei('top')).toEqual({ top: 0 })
@@ -121,4 +122,21 @@ test('Direction helper generates proper values.', () => {
   expect(ei('mr')).toEqual({ marginRight: 10 })
   expect(ei('borderTop')).toEqual({ borderTop: 'none' })
   expect(ei('bb-red')).toEqual({ borderBottom: 'red' }) // Should be a complex value.
+})
+
+test('Arbitrary values can be used.', () => {
+  expect(ei('p-[inherit]')).toEqual({ padding: 'inherit' })
+  expect(ei('p-[7/9]')).toEqual({ padding: '7/9' })
+  expect(ei('aspect-[2/6]')).toEqual({ aspectRatio: '2/6' })
+  expect(ei('gridRow-[1/3]')).toEqual({ gridRow: '1/3' })
+  expect(ei('gridTemplateRows-[auto_auto_auto]')).toEqual({ gridTemplateRows: 'auto auto auto' })
+  expect(ei('scaleY-[0.5]')).toEqual({ transform: 'scaleY(0.5)' })
+  expect(ei('scale-[50%_50%]')).toEqual({ transform: 'scale(50% 50%)' })
+  expect(ei('scaleY-[50/50]')).toEqual({ transform: 'scaleY(50/50)' })
+})
+
+test('Arbitrary values can also be used in complex values.', () => {
+  expect(ei('textShadow-large-gray-[1/1]')).toEqual({
+    textShadow: '4px 4px 4px gray',
+  })
 })

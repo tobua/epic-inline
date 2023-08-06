@@ -14,6 +14,8 @@ import { ei } from 'epic-inline'
 export const Button = () => <button style={ei('flex center')}>Click me!</button>
 ```
 
+<img src="https://github.com/tobua/epic-inline/raw/main/schema.svg" alt="schema of property structure">
+
 ## Breakpoints
 
 Breakpoints can be used to apply styles conditionally based on the current window width.
@@ -25,10 +27,10 @@ Breakpoints can be used to apply styles conditionally based on the current windo
 Sizes serve as readable values.
 
 ```js
-"width:small" => { width: 5 } // small medium large huge
-"width:md" => { width: 10 }   // sm md lg hg
-"width:l" => { width: 20 }    // s m l h
-"width:huge" => { width: 40 }
+"width-small" => { width: 5 } // small medium large huge
+"width-md" => { width: 10 }   // sm md lg hg
+"width-l" => { width: 20 }    // s m l h
+"width-huge" => { width: 40 }
 ```
 
 ## Colors
@@ -129,7 +131,7 @@ declare module 'react-native' {
 ```
 
 <p align="center">
-  <img src="https://github.com/tobua/epic-inline/raw/main/chatgpt.png" alt="That's great!">
+  <img src="https://github.com/tobua/epic-inline/raw/main/chatgpt.png" alt="That's great!" width="400">
 </p>
 
 ## Vue, Svelte and SolidJS

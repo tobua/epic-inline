@@ -4,6 +4,7 @@ export const camelToDashCase = (input: string) =>
 
 export const hasUpperCase = (input: string) => /[A-Z]/.test(input)
 
+// hello-world-again => ['hello', 'world-again']
 export const splitByFirstDash = (input: string) => {
   const index = input.indexOf('-')
   if (index !== -1) {
@@ -12,6 +13,15 @@ export const splitByFirstDash = (input: string) => {
     return [firstPart, secondPart]
   }
   return [input, '']
+}
+
+export const splitByDashesKeepingArbitrary = (input: string) => {
+  const placeholder = '__PLACEHOLDER__'
+  const valuesWithPlaceholders = input.replace(/\[.*?\]/g, (match) =>
+    match.replace(/-/g, placeholder)
+  )
+  const values = valuesWithPlaceholders.split('-')
+  return values.map((value) => value.replace(new RegExp(placeholder, 'g'), '-'))
 }
 
 export const validateHtmlClass = (className: string) => {

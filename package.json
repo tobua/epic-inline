@@ -58,13 +58,13 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
-    "@types/react": "^18.2.15",
+    "@types/react": "^18.2.18",
     "cpx": "^1.5.0",
-    "happy-dom": "^10.5.2",
+    "happy-dom": "^10.7.0",
     "padua": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "vitest": "^0.33.0"
+    "vitest": "^0.34.1"
   },
   "prettier": "padua/configuration/.prettierrc.json",
   "eslintConfig": {

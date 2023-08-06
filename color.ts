@@ -167,6 +167,10 @@ export const lighten = (color: string, tone: number): string => {
   return colorString.to.hex(hsla)
 }
 
+export const isColor = (value: string) => value in colors
+export const isTone = (value: string) =>
+  /^([1-9]?[0-9]|100|200|300|400|500|600|700|800|900)$/.test(value)
+
 export const parseColor = (value: string | number) => {
   if (typeof value !== 'string') {
     return false
@@ -189,7 +193,7 @@ export const parseColor = (value: string | number) => {
       return colors[color]
     }
 
-    return matched[1]
+    return false
   }
 
   return false

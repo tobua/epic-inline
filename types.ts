@@ -6,10 +6,10 @@ export enum Type {
 
 export type MultiSize = [number, number]
 export type PropertySize = string | number
-export type ComplexValues = Partial<{ size: MultiSize | number; color: string }>
+export type ComplexValues = Partial<{ size: MultiSize | number; color: string; arbitrary: string }>
 export type ComplexValue = (properties: ComplexValues) => string
 export type PropertyValue = string | number | MultiSize | ComplexValue
-export type Property = string | [string, PropertyValue?]
+export type Property = string | [string, PropertyValue?, Complex?]
 export type Breakpoints = { [key: string]: number }
 export type Sizes = { [key: string]: MultiSize }
 export type Shortcuts = { [key: string]: string }
@@ -39,4 +39,9 @@ export interface Configuration {
   shortcuts?: Shortcuts
   sizes?: Sizes
   classPrefix?: string
+}
+
+export enum Complex {
+  single,
+  multiple,
 }

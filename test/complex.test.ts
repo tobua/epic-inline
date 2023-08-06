@@ -35,11 +35,11 @@ test('Complex values with size and color.', () => {
 })
 
 test('Complex values with non-pixel sizes.', () => {
-  expect(ei('scaleY-1')).toEqual({ transform: 'scaleY(1)' })
-  expect(ei('scaleY-0.5')).toEqual({ transform: 'scaleY(0.5)' })
-  expect(ei('scaleY-2')).toEqual({ transform: 'scaleY(2)' })
-  expect(ei('scale-2')).toEqual({ transform: 'scale(2)' })
-  expect(ei('flip')).toEqual({ transform: 'scale(-1, -1)' })
-  expect(ei('flipHorizontal')).toEqual({ transform: 'scale(-1, 1)' })
-  expect(ei('flipVertical')).toEqual({ transform: 'scale(1, -1)' })
+  expect(ei('scaleY-[1]')).toEqual({ transform: 'scaleY(1)' })
+  expect(ei('scaleY-[0.5]')).toEqual({ transform: 'scaleY(0.5)' })
+  expect(ei('scaleY-[2]')).toEqual({ transform: 'scaleY(2)' })
+  expect(ei('scale-[2]')).toEqual({ transform: 'scale(2)' })
+  expect(ei('flip')).toEqual({ transform: 'scale(-1,-1)' })
+  expect(ei('flipHorizontal')).toEqual({ transform: 'scale(-1,1)' })
+  expect(ei('flipVertical')).toEqual({ transform: 'scale(1,-1)' })
 })

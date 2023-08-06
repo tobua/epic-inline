@@ -9,6 +9,7 @@ const getBreakpoints = () => ({
   sm: 500,
   md: 1000,
   lg: 1500,
+  // TODO rename default breakpoints to phone, tablet, desktop?
   small: 500,
   medium: 1000,
   large: 1500,

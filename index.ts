@@ -1,11 +1,19 @@
-import { ComplexValues, MultiSize, PropertyValue, Type } from './types'
-import { camelToDashCase, hasUpperCase, splitByFirstDash, validateHtmlClass } from './helper'
+import { Type } from './types'
+import {
+  camelToDashCase,
+  hasUpperCase,
+  splitByDashesKeepingArbitrary,
+  splitByFirstDash,
+  validateHtmlClass,
+} from './helper'
 import { Preset } from './web'
 import { options } from './options'
-import { parseColor } from './color'
+import { isColor, isTone, parseColor } from './color'
 
 export { Type, Preset }
 export { reset, configure } from './options'
+
+type Values = ReturnType<typeof extractValues>
 
 export const parseNumber = (value: string | number) => {
   let result: number
@@ -24,51 +32,14 @@ export const parseNumber = (value: string | number) => {
   return result
 }
 
-const extractComplexValues = (
-  values: [number, number] | number | string
-): { size?: number | MultiSize; color?: string } => {
-  if (Array.isArray(values)) {
-    return { size: values }
-  }
-
-  // eslint-disable-next-line no-param-reassign
-  values = parseNumber(values)
-
-  if (typeof values === 'number') {
-    return { size: values }
-  }
-
-  if (!values) {
-    return {}
-  }
-
-  const parts = values.split('-')
-  const results = { color: undefined, size: undefined }
-
-  parts.forEach((part) => {
-    if (part in options.sizes) {
-      results.size = options.sizes[part]
-      return
-    }
-
-    const color = parseColor(part)
-    if (color) {
-      results.color = color
-    }
-  })
-
-  return results
-}
-
-const addComplexDefaultValues = (values: ComplexValues) => {
-  values.size ??= options.sizes[options.defaultSize]
-  return values
-}
-
 const parseSize = (
   value: [number, number] | number | string
 ): [number, number] | number | string => {
   if (Array.isArray(value)) {
+    return value
+  }
+
+  if (typeof value === 'number') {
     return value
   }
 
@@ -84,11 +55,103 @@ const parseSize = (
   return parseNumber(value)
 }
 
-const extractSize = (value: string) => {
-  const [rest, initialSize] = splitByFirstDash(value)
-  const parsedSize = parseSize(initialSize)
-  // Size shortcuts, like c for center, f for flex, l for left.
-  return [rest, parsedSize] as const
+// TODO use as types for default values.
+// TODO far from including all values, should be distinct by property.
+const arbitraryPropertyValues = new Set([
+  'inherit',
+  'initial',
+  'auto',
+  'center',
+  'space-between',
+  'space-around',
+  'row',
+  'column',
+  'column-reverse',
+  'wrap',
+  'wrap-reverse',
+  'nowrap',
+  'start',
+  'normal',
+  'flex',
+  'bold',
+  'bolder',
+  'relative',
+  'sticky',
+  'static',
+  'none',
+])
+
+const isBracketed = (value: string) => value.startsWith('[') && value.endsWith(']')
+
+const isArbitrary = (value: string) => {
+  if (isBracketed(value)) {
+    return true
+  }
+
+  if (arbitraryPropertyValues.has(value)) {
+    return true
+  }
+
+  return false
+}
+
+export const extractValues = (value: string) => {
+  const [property, valuesJoined] = splitByFirstDash(value)
+  const values = splitByDashesKeepingArbitrary(valuesJoined)
+  const sizes = []
+  const colors = []
+  const arbitraryValues = []
+  let skipNext = false
+
+  values.forEach((current, index) => {
+    if (skipNext) {
+      skipNext = false
+      return null
+    }
+
+    const next = index + 1 < values.length ? values[index + 1] : undefined // Used for lookahead.
+
+    const isArbitraryWithNext = !isBracketed(current) && isArbitrary(`${current}-${next}`)
+
+    if (isArbitraryWithNext) {
+      skipNext = true
+      return arbitraryValues.push(`${current}-${next}`)
+    }
+
+    // Arbitrary value.
+    if (isArbitrary(current)) {
+      return arbitraryValues.push(current.replace('[', '').replace(']', '').replaceAll('_', ' '))
+    }
+
+    // Color.
+    if (isColor(current)) {
+      const nextIsTone = isTone(next)
+      if (nextIsTone) {
+        skipNext = true
+      }
+      return colors.push(parseColor(nextIsTone ? `${current}-${next}` : current))
+    }
+
+    if (!current) {
+      return null
+    }
+
+    // Must be a size.
+    const size = parseSize(current)
+
+    if (size || size === 0) {
+      return sizes.push(Array.isArray(size) ? size : [size, size])
+    }
+
+    // Assuming arbitrary value.
+    if (current) {
+      arbitraryValues.push(current)
+    }
+
+    return null
+  })
+
+  return { property, size: sizes, color: colors, arbitrary: arbitraryValues, complex: null }
 }
 
 const extractBreakpoint = (value: string) => {
@@ -134,85 +197,152 @@ const resolveShortcuts = (value: string) => {
   return currentValue
 }
 
-const lookupTable = (value: string) => {
-  let link = options.properties[value]
-  let linkSize: undefined | [number, number] | number | string
+const mergeValues = (
+  mainValues: Partial<Values>,
+  fallbackValues: Values,
+  fullyEmpty = false
+): Values => {
+  const hasSizeValues = mainValues.size && mainValues.size.length > 0
+  const hasColorValues = mainValues.color && mainValues.color.length > 0
+  const hasArbitraryValues = mainValues.arbitrary && mainValues.arbitrary.length > 0
 
-  if (process.env.NODE_ENV !== 'production' && !link) {
-    console.warn(`Property "${value}" not found.`)
+  const newValues = { ...fallbackValues }
+
+  if (fullyEmpty && (hasSizeValues || hasColorValues || hasArbitraryValues)) {
+    return {
+      ...newValues,
+      size: mainValues.size,
+      color: mainValues.color,
+      arbitrary: mainValues.arbitrary,
+    } as Values
+  }
+
+  // Alias values have precedence when available.
+  if (hasSizeValues) {
+    newValues.size = mainValues.size
+  }
+
+  if (hasColorValues) {
+    newValues.color = mainValues.color
+  }
+
+  if (hasArbitraryValues) {
+    newValues.arbitrary = mainValues.arbitrary
+  }
+
+  return newValues
+}
+
+export const lookupTable = (value: string) => {
+  let link = options.properties[value]
+  let values: Values = {
+    property: null,
+    size: [],
+    color: [],
+    arbitrary: [],
+    complex: null,
+  }
+  let aliasValues: Partial<Values> = {}
+
+  if (!link) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(`Property "${value}" not found.`)
+    }
+    // TODO return nothing and handle that case outside?
+    return values
   }
 
   // Resolve alias.
   if (typeof link === 'string') {
-    if (link.includes('-')) {
-      ;[link, linkSize] = extractSize(link)
-    }
-    link = options.properties[link]
+    aliasValues = extractValues(link)
+    link = options.properties[aliasValues.property]
+    values.property = aliasValues.property
+  } else {
+    // eslint-disable-next-line prefer-destructuring
+    values.property = link[0]
   }
 
-  // Parse Sizes values from user or properties default.
-  if (Array.isArray(link) && link.length > 1 && typeof link[1] !== 'function' && link[1]) {
-    link[1] = parseSize(link[1])
+  // Parse default property values.
+  if (
+    Array.isArray(link) &&
+    link.length > 1 &&
+    typeof link[1] !== 'function' &&
+    (link[1] || link[1] === 0)
+  ) {
+    values = extractValues(`${link[0]}-${link[1]}`)
   }
 
-  return {
-    property: link,
-    size: linkSize,
-    value: link && link.length > 2 && link[2], // TODO why link[2] here???
+  if (Array.isArray(link) && link.length > 1 && typeof link[1] === 'function') {
+    // eslint-disable-next-line prefer-destructuring
+    values.complex = link[1]
   }
+
+  return mergeValues(aliasValues, values)
 }
 
-const parseValue = (value: string) => {
+export const parseValue = (value: string) => {
   let currentValue = value
   let breakpoint = true
-  let size: number | [number, number] | string | undefined
-  let complexValues: ComplexValues | undefined
+  let values: ReturnType<typeof extractValues> = {
+    property: undefined,
+    size: [],
+    color: [],
+    arbitrary: [],
+    complex: null,
+  }
 
   if (currentValue.includes(':')) {
     ;[currentValue, breakpoint] = extractBreakpoint(value)
   }
 
   if (currentValue.includes('-')) {
-    ;[currentValue, size] = extractSize(currentValue)
+    values = extractValues(currentValue)
   }
 
-  const lookupResult = lookupTable(currentValue)
+  const lookupResult = lookupTable(values.property ?? currentValue)
 
-  if (Array.isArray(lookupResult.property) && typeof lookupResult.property[1] === 'function') {
-    complexValues = extractComplexValues(size)
-  }
+  // User values have precedence over lookup values.
+  values = mergeValues(values, lookupResult, true)
 
-  return [lookupResult.property, lookupResult.size ?? size, breakpoint, complexValues] as const
+  // Property name from lookup result is used and will override one in values.
+  const property =
+    options.type === Type.css && hasUpperCase(lookupResult.property)
+      ? camelToDashCase(lookupResult.property)
+      : lookupResult.property
+
+  return { ...values, breakpoint, property }
 }
 
 const calculateValue = (
-  size: [number, number] | number | string | undefined,
   property: string,
-  complexValues: ComplexValues | undefined,
-  value: PropertyValue = options.sizes[options.defaultSize]
+  size: [number, number][],
+  color: string[],
+  arbitrary: string[],
+  complex: Function
 ) => {
   // Complex values.
-  if (typeof value === 'function') {
-    return value(addComplexDefaultValues(complexValues))
+  if (typeof complex === 'function') {
+    // TODO multiple values passed to complex methods.
+    return complex({
+      size: size[0] ?? options.sizes[options.defaultSize],
+      color: color[0],
+      arbitrary: arbitrary[0],
+    })
   }
 
-  // Arbitrary values like center or space-between.
-  if (typeof size === 'string') {
-    return size
+  if (size.length > 0) {
+    return options.size(size[0][0], property)
   }
 
-  const regularSize = Array.isArray(size) ? size[0] : size
-
-  if (typeof value === 'string') {
-    if (value in options.sizes) {
-      return options.size(regularSize ?? options.sizes[value][0], property)
-    }
-    return size ?? value
+  if (color.length > 0) {
+    return color[0]
   }
 
-  const regularValue = Array.isArray(value) ? value[0] : value
+  if (arbitrary.length > 0) {
+    return arbitrary[0]
+  }
 
-  return options.size(regularSize ?? regularValue, property)
+  return 'inherit'
 }
 
 export const ei = (input: string) => {
@@ -232,18 +362,13 @@ export const ei = (input: string) => {
   let missed = partsBefore - parts.length
 
   parts.forEach((part) => {
-    const [result, size, breakpoint, complexValues] = parseValue(part)
+    const { property, size, color, arbitrary, complex, breakpoint } = parseValue(part)
 
-    if (result && breakpoint) {
-      const property =
-        options.type === Type.css && hasUpperCase(result[0])
-          ? camelToDashCase(result[0])
-          : result[0]
-
-      styles[property] = calculateValue(size, property, complexValues, result[1])
+    if (property && breakpoint) {
+      styles[property] = calculateValue(property, size, color, arbitrary, complex)
     }
 
-    if (!result && breakpoint) {
+    if (!property && breakpoint) {
       validateHtmlClass(part) // Warn if invalid class characters used in development.
       missed += 1
     }

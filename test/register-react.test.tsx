@@ -23,7 +23,7 @@ test('className is converted to an inline style.', () => {
 
   expect(screen.getByTestId('main')).toHaveAttribute(
     'style',
-    'display: flex; justify-content: center;'
+    'display: flex; justify-content: center; align-items: center;'
   )
 
   // Existing styles are merged.
