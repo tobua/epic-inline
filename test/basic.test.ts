@@ -30,7 +30,6 @@ test('Various flex properties are supported.', () => {
   expect(ei('flexWrap-initial')).toEqual({ flexWrap: 'initial' })
   expect(ei('flexWrap-inherit')).toEqual({ flexWrap: 'inherit' })
   expect(ei('flexWrap-wrap-reverse')).toEqual({ flexWrap: 'wrap-reverse' })
-  // TODO are string values valid for order in React CSSProperties?
   expect(ei('order-[5]')).toEqual({ order: '5' })
   expect(ei('flexGrow-[4]')).toEqual({ flexGrow: '4' })
   expect(ei('flexGrow')).toEqual({ flexGrow: '0' })

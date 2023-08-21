@@ -171,6 +171,42 @@ const extractBreakpoint = (value: string) => {
   return [rest, match] as [string, boolean]
 }
 
+// Recursive function to resolve chain of shortcuts.
+export const resolveShortcut = (value: string, first = true) => {
+  let values = ''
+
+  if (typeof value !== 'string') {
+    return ''
+  }
+
+  // eslint-disable-next-line no-param-reassign
+  ;[value, values] = splitByFirstDash(value)
+
+  if (!Object.hasOwn(options.shortcuts, value)) {
+    return values !== '' ? `${value}-${values}` : value
+  }
+
+  const shortcut = options.shortcuts[value]
+
+  let resolved = shortcut
+    .split(' ')
+    .map((current) => resolveShortcut(current, false))
+    .join(' ')
+
+  // TODO distribute values if multiple values are supplied mx-[5]-[10] => left: 5, right: 10
+  // Add initial values to shortcut values without any value.
+  if (first && values) {
+    resolved = resolved
+      .split(' ')
+      .map((shortcutValue) =>
+        shortcutValue.includes('-') ? shortcutValue : `${shortcutValue}-${values}`
+      )
+      .join(' ')
+  }
+
+  return resolved
+}
+
 const resolveShortcuts = (value: string) => {
   let breakpoint = true
   let currentValue = value
@@ -183,18 +219,8 @@ const resolveShortcuts = (value: string) => {
     return undefined
   }
 
-  if (Object.hasOwn(options.shortcuts, currentValue)) {
-    const shortcut = options.shortcuts[currentValue]
-
-    // Resolve alias.
-    if (typeof shortcut === 'string' && Object.hasOwn(options.shortcuts, shortcut)) {
-      return options.shortcuts[shortcut]
-    }
-
-    return shortcut
-  }
-
-  return currentValue
+  // Resolve chain of shortcut aliases.
+  return resolveShortcut(currentValue)
 }
 
 const mergeValues = (

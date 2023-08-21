@@ -131,7 +131,7 @@ declare module 'react-native' {
 ```
 
 <p align="center">
-  <img src="https://github.com/tobua/epic-inline/raw/main/chatgpt.png" alt="That's great!" width="400">
+  <img src="https://github.com/tobua/epic-inline/raw/main/chatgpt.png" alt="That's great!" width="500">
 </p>
 
 ## Vue, Svelte and SolidJS

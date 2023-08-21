@@ -1,6 +1,7 @@
+import { test, expect } from 'vitest'
 import { isColor, isTone, parseColor } from '../color'
 import { camelToDashCase } from '../helper'
-import { parseNumber, extractValues, lookupTable, parseValue } from '../index'
+import { parseNumber, extractValues, lookupTable, parseValue, resolveShortcut } from '../index'
 
 const windowWidth = 750
 
@@ -161,4 +162,14 @@ test('Full values are parsed properly.', () => {
       breakpoint: true,
     })
   )
+})
+
+test('Shortcuts are resolved properly.', () => {
+  expect(resolveShortcut('link')).toEqual('decoration')
+  expect(resolveShortcut('link-[underline]')).toEqual('decoration-[underline]') // NOTE the idea of link is to remove the default underline.
+  expect(resolveShortcut('paddingX')).toEqual('paddingLeft paddingRight')
+  expect(resolveShortcut('paddingX-large')).toEqual('paddingLeft-large paddingRight-large')
+  expect(resolveShortcut('py')).toBe('paddingTop paddingBottom')
+  expect(resolveShortcut('py-[4]')).toBe('paddingTop-[4] paddingBottom-[4]')
+  expect(resolveShortcut('code')).toBe('mono bg-lightgray p-3 radius-3')
 })

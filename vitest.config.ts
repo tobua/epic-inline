@@ -2,7 +2,7 @@ import { configDefaults } from 'vitest/config'
 
 export default {
   test: {
-    globals: true,
+    globals: true, // Required for @testing-library/react in register-react.test
     alias: {
       'epic-inline': '.',
     },

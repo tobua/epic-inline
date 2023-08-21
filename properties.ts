@@ -81,7 +81,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   ...addAxes('border', 'b', 'none'),
   textAlign: ['textAlign', 'center'],
   text: 'textAlign',
-  fontFamily: ['fontFamily', 'sans-serif'],
+  fontFamily: ['fontFamily', '[sans-serif]'],
   font: 'fontFamily',
   mono: 'fontFamily-monospace',
   serif: 'fontFamily-serif',
@@ -152,9 +152,13 @@ export const getProperties: () => { [key: string]: Property } = () => ({
 export const getShortcuts = () => ({
   button: 'outline border',
   link: 'decoration',
-  marginX: 'marginLeft-auto marginRight-auto', // Common old way to center items.
+  marginX: 'marginLeft marginRight', // Common old way to center items.
   mx: 'marginX',
+  paddingX: 'paddingLeft paddingRight',
+  px: 'paddingX',
+  paddingY: 'paddingTop paddingBottom',
+  py: 'paddingY',
   code: 'mono bg-lightgray p-3 radius-3',
-  borderTopRadius: 'borderTopLeftRadius borderTopRightRadius', // TODO pass value.
+  borderTopRadius: 'borderTopLeftRadius borderTopRightRadius',
   center: 'centerHorizontal centerVertical',
 })

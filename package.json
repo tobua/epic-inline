@@ -29,6 +29,17 @@
     "color-string": "^1.9.1",
     "parse-color": "^1.0.0"
   },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.0.1",
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.2.20",
+    "cpx": "^1.5.0",
+    "happy-dom": "^10.10.4",
+    "padua": "^2.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "vitest": "^0.34.2"
+  },
   "type": "module",
   "sideEffects": true,
   "main": "./dist/index.js",
@@ -40,8 +51,10 @@
       }
     },
     "./register-react": {
-      "types": "./dist/register-react.d.ts",
-      "default": "./dist/register-react.js"
+      "default": {
+        "types": "./dist/register-react.d.ts",
+        "default": "./dist/register-react.js"
+      }
     }
   },
   "types": "dist/index.d.ts",
@@ -55,17 +68,6 @@
     "react",
     "inline-styles"
   ],
-  "devDependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^14.0.0",
-    "@types/react": "^18.2.18",
-    "cpx": "^1.5.0",
-    "happy-dom": "^10.7.0",
-    "padua": "^2.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "vitest": "^0.34.1"
-  },
   "prettier": "padua/configuration/.prettierrc.json",
   "eslintConfig": {
     "extends": "./node_modules/padua/configuration/eslint.cjs"

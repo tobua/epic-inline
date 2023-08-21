@@ -2,8 +2,8 @@
 
 import React from 'react'
 import '../register-react' // NOTE will import from "exports" in /dist
-import { render, screen } from '@testing-library/react'
 import { expect, test } from 'vitest'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import matchers from '@testing-library/jest-dom/matchers'
 
