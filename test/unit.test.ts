@@ -165,11 +165,13 @@ test('Full values are parsed properly.', () => {
 })
 
 test('Shortcuts are resolved properly.', () => {
-  expect(resolveShortcut('link')).toEqual('decoration')
-  expect(resolveShortcut('link-[underline]')).toEqual('decoration-[underline]') // NOTE the idea of link is to remove the default underline.
+  expect(resolveShortcut('link')).toEqual('textDecoration')
+  expect(resolveShortcut('link-[underline]')).toEqual('textDecoration-[underline]') // NOTE the idea of link is to remove the default underline.
   expect(resolveShortcut('paddingX')).toEqual('paddingLeft paddingRight')
   expect(resolveShortcut('paddingX-large')).toEqual('paddingLeft-large paddingRight-large')
   expect(resolveShortcut('py')).toBe('paddingTop paddingBottom')
   expect(resolveShortcut('py-[4]')).toBe('paddingTop-[4] paddingBottom-[4]')
-  expect(resolveShortcut('code')).toBe('mono bg-lightgray p-3 radius-3')
+  expect(resolveShortcut('code')).toBe(
+    'fontFamily-monospace background-lightgray padding-3 borderRadius-3'
+  )
 })

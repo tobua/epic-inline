@@ -29,11 +29,10 @@ test('Shortcut aliases are resolved properly.', () => {
   })
   expect(ei('link')).toEqual({ textDecoration: 'none' })
   expect(ei('link-[underline]')).toEqual({ textDecoration: 'underline' })
-  // TODO should also resolve property aliases here to get default values.
-  // expect(ei('code-small')).toEqual({
-  //   fontFamily: 'monospace',
-  //   background: 'lightgray',
-  //   padding: 3,
-  //   borderRadius: 3,
-  // })
+  expect(ei('code-small')).toEqual({
+    fontFamily: 'monospace',
+    background: 'lightgray',
+    padding: 3,
+    borderRadius: 3,
+  })
 })

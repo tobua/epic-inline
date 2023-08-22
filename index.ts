@@ -182,15 +182,35 @@ export const resolveShortcut = (value: string, first = true) => {
   // eslint-disable-next-line no-param-reassign
   ;[value, values] = splitByFirstDash(value)
 
-  if (!Object.hasOwn(options.shortcuts, value)) {
+  const hasShortcut = Object.hasOwn(options.shortcuts, value)
+  // If the property is a string, it's an alias, properties themselves have no values and will be resolved later.
+  const hasAlias =
+    Object.hasOwn(options.properties, value) && typeof options.properties[value] === 'string'
+
+  if (!hasShortcut && !hasAlias) {
     return values !== '' ? `${value}-${values}` : value
   }
 
-  const shortcut = options.shortcuts[value]
+  let shortcutOrAlias = options.shortcuts[value]
 
-  let resolved = shortcut
+  if (!shortcutOrAlias && hasAlias) {
+    shortcutOrAlias = options.properties[value] as string
+  }
+
+  let resolved: string = shortcutOrAlias
     .split(' ')
-    .map((current) => resolveShortcut(current, false))
+    .map((current) =>
+      resolveShortcut(
+        // If alias has no value insert current value here.
+        // eslint-disable-next-line no-nested-ternary
+        values && hasAlias
+          ? current.includes('-')
+            ? `${splitByFirstDash(current)[0]}-${values}`
+            : `${current}-${values}`
+          : current,
+        false
+      )
+    )
     .join(' ')
 
   // TODO distribute values if multiple values are supplied mx-[5]-[10] => left: 5, right: 10
@@ -198,7 +218,7 @@ export const resolveShortcut = (value: string, first = true) => {
   if (first && values) {
     resolved = resolved
       .split(' ')
-      .map((shortcutValue) =>
+      .map((shortcutValue: string) =>
         shortcutValue.includes('-') ? shortcutValue : `${shortcutValue}-${values}`
       )
       .join(' ')
