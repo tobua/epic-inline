@@ -49,6 +49,7 @@ test('Various flex properties are supported.', () => {
 })
 
 test('Various font properties are supported.', () => {
+  expect(ei('font')).toEqual({ fontFamily: 'sans-serif' })
   expect(ei('fontWeight')).toEqual({ fontWeight: 'normal' })
   expect(ei('bold')).toEqual({ fontWeight: 'bold' })
   expect(ei('fontWeight-bolder')).toEqual({ fontWeight: 'bolder' })

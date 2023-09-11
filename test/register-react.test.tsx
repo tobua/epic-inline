@@ -5,9 +5,6 @@ import '../register-react' // NOTE will import from "exports" in /dist
 import { expect, test } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import matchers from '@testing-library/jest-dom/matchers'
-
-expect.extend(matchers)
 
 test('className is converted to an inline style.', () => {
   render(
