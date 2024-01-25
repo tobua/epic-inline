@@ -15,17 +15,17 @@ test('className is converted to an inline style.', () => {
       <div data-testid="combined" className="flex" style={{ position: 'relative' }}>
         flex and relative
       </div>
-    </>
+    </>,
   )
 
   expect(screen.getByTestId('main')).toHaveAttribute(
     'style',
-    'display: flex; justify-content: center; align-items: center;'
+    'display: flex; justify-content: center; align-items: center;',
   )
 
   // Existing styles are merged.
   expect(screen.getByTestId('combined')).toHaveAttribute(
     'style',
-    'position: relative; display: flex;'
+    'position: relative; display: flex;',
   )
 })

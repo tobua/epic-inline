@@ -129,7 +129,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
     'boxShadow',
     ({ size, color = '#000000AA' }) =>
       `0 ${Math.round(size[0] / 2)}px ${Math.round(size[0] / 2)}px ${Math.round(
-        size[0] / 4
+        size[0] / 4,
       )}px ${color}`,
   ],
   textShadow: [

@@ -92,5 +92,5 @@ createRoot(document.body).render(
         </div>
       </section>
     </main>
-  </div>
+  </div>,
 )

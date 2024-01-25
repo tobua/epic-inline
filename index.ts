@@ -2,6 +2,7 @@ import { Type } from './types'
 import {
   camelToDashCase,
   hasUpperCase,
+  matchBreakpoint,
   splitByDashesKeepingArbitrary,
   splitByFirstDash,
   validateHtmlClass,
@@ -33,7 +34,7 @@ export const parseNumber = (value: string | number) => {
 }
 
 const parseSize = (
-  value: [number, number] | number | string
+  value: [number, number] | number | string,
 ): [number, number] | number | string => {
   if (Array.isArray(value)) {
     return value
@@ -155,8 +156,16 @@ export const extractValues = (value: string) => {
 }
 
 const extractBreakpoint = (value: string) => {
-  const [breakpoint, rest] = value.split(':')
+  // eslint-disable-next-line prefer-const
+  let [breakpoint, rest] = value.split(':')
   let match = true
+  let matchUpwards = true
+
+  if (breakpoint.endsWith('-only')) {
+    breakpoint = breakpoint.replace('-only', '')
+    matchUpwards = false
+  }
+
   const breakpointExists = breakpoint in options.breakpoints
 
   if (process.env.NODE_ENV !== 'production' && !breakpointExists) {
@@ -165,7 +174,7 @@ const extractBreakpoint = (value: string) => {
 
   if (breakpointExists) {
     // TODO create matchers for all breakpoints initially and use listeners.
-    match = window.matchMedia(`(max-width: ${options.breakpoints[breakpoint]}px)`).matches
+    match = matchBreakpoint(matchUpwards, options, breakpoint)
   }
 
   return [rest, match] as [string, boolean]
@@ -208,8 +217,8 @@ export const resolveShortcut = (value: string, first = true) => {
             ? `${splitByFirstDash(current)[0]}-${values}`
             : `${current}-${values}`
           : current,
-        false
-      )
+        false,
+      ),
     )
     .join(' ')
 
@@ -219,7 +228,7 @@ export const resolveShortcut = (value: string, first = true) => {
     resolved = resolved
       .split(' ')
       .map((shortcutValue: string) =>
-        shortcutValue.includes('-') ? shortcutValue : `${shortcutValue}-${values}`
+        shortcutValue.includes('-') ? shortcutValue : `${shortcutValue}-${values}`,
       )
       .join(' ')
   }
@@ -246,7 +255,7 @@ const resolveShortcuts = (value: string) => {
 const mergeValues = (
   mainValues: Partial<Values>,
   fallbackValues: Values,
-  fullyEmpty = false
+  fullyEmpty = false,
 ): Values => {
   const hasSizeValues = mainValues.size && mainValues.size.length > 0
   const hasColorValues = mainValues.color && mainValues.color.length > 0
@@ -364,7 +373,7 @@ const calculateValue = (
   size: [number, number][],
   color: string[],
   arbitrary: string[],
-  complex: Function
+  complex: Function,
 ) => {
   // Complex values.
   if (typeof complex === 'function') {

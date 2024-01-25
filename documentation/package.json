@@ -4,9 +4,9 @@
   },
   "dependencies": {
     "@manypkg/find-root": "^2.2.1",
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.2.7",
-    "papua": "^5.7.0",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "papua": "^5.9.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

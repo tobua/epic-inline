@@ -18,9 +18,9 @@ export const Button = () => <button style={ei('flex center')}>Click me!</button>
 
 ## Breakpoints
 
-Breakpoints can be used to apply styles conditionally based on the current window width.
+Breakpoints can be used to apply styles conditionally based on the current window width. By default they will match upwards, add `-only` to match only the specific breakpoint.
 
-`small:flex medium:grid large:block inline` or shorter `s:flex m:grid l:block inline`.
+`small:flex medium-only:grid large:block inline` or shorter `s:flex m-only:grid l:block inline`.
 
 ## Sizes
 

@@ -6,9 +6,15 @@ let windowWidth = 1250
 global.window = {
   // @ts-ignore
   matchMedia: (matcher: string) => {
-    const regex = /max-width:\s*(\d+)px/
-    const width = Number((regex.exec(matcher) ?? '0')[1])
-    return { matches: width > windowWidth }
+    const regexMax = /max-width:\s*(\d+)px/
+    const maxWidth = Number((regexMax.exec(matcher) ?? '0')[1])
+    const regexMin = /min-width:\s*(\d+)px/
+    const minRegexResult = regexMin.exec(matcher)
+    if (minRegexResult) {
+      const minWidth = Number(minRegexResult[1])
+      return { matches: minWidth < windowWidth && maxWidth > windowWidth }
+    }
+    return { matches: maxWidth > windowWidth }
   },
 }
 
@@ -61,4 +67,39 @@ test('Breakpoints also work with shortcuts.', () => {
   expect(ei('s:link')).toEqual({})
   expect(ei('medium:button')).toEqual({})
   expect(ei('large:link')).toEqual({ textDecoration: 'none' })
+})
+
+test("It's possible to match only a specific breakpoint.", () => {
+  windowWidth = 750 // Medium
+
+  expect(ei('s-only:flex')).toEqual({})
+  expect(ei('m-only:flex')).toEqual({ display: 'flex' })
+  expect(ei('l-only:flex')).toEqual({})
+  expect(ei('flex')).toEqual({ display: 'flex' })
+  expect(ei('small-only:flex')).toEqual({})
+  expect(ei('medium-only:flex')).toEqual({ display: 'flex' })
+  expect(ei('large-only:flex')).toEqual({})
+  expect(ei('flex')).toEqual({ display: 'flex' })
+
+  windowWidth = 250 // Small
+
+  expect(ei('s-only:flex')).toEqual({ display: 'flex' })
+  expect(ei('m-only:flex')).toEqual({})
+  expect(ei('l-only:flex')).toEqual({})
+  expect(ei('flex')).toEqual({ display: 'flex' })
+  expect(ei('small-only:flex')).toEqual({ display: 'flex' })
+  expect(ei('medium-only:flex')).toEqual({})
+  expect(ei('large-only:flex')).toEqual({})
+  expect(ei('flex')).toEqual({ display: 'flex' })
+
+  windowWidth = 1250 // Large
+
+  expect(ei('s-only:flex')).toEqual({})
+  expect(ei('m-only:flex')).toEqual({})
+  expect(ei('l-only:flex')).toEqual({ display: 'flex' })
+  expect(ei('flex')).toEqual({ display: 'flex' })
+  expect(ei('small-only:flex')).toEqual({})
+  expect(ei('medium-only:flex')).toEqual({})
+  expect(ei('large-only:flex')).toEqual({ display: 'flex' })
+  expect(ei('flex')).toEqual({ display: 'flex' })
 })

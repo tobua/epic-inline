@@ -91,14 +91,14 @@ test('Values are extracted properly.', () => {
   expect(joinValues(extractValues('color-red-200-blue-400'))).toEqual('color.#FF3333_#0000FF')
   expect(joinValues(extractValues('gridRow-[1/2]'))).toEqual('gridRow.1/2')
   expect(joinValues(extractValues('gridTemplateColumns-[auto_1fr]-[1/2]'))).toEqual(
-    'gridTemplateColumns.auto 1fr_1/2'
+    'gridTemplateColumns.auto 1fr_1/2',
   )
   expect(joinValues(extractValues('margin-small-red-[inherit]'))).toEqual('margin.5-1.red.inherit')
   expect(joinValues(extractValues('margin-large-huge-yellow-green-[auto]-[1fr]'))).toEqual(
-    'margin.20-4_40-8.yellow_green.auto_1fr'
+    'margin.20-4_40-8.yellow_green.auto_1fr',
   )
   expect(joinValues(extractValues('scale-medium-large-red-blue-[2/3]-[4/5]'))).toEqual(
-    'scale.10-2_20-4.red_blue.2/3_4/5'
+    'scale.10-2_20-4.red_blue.2/3_4/5',
   )
   expect(joinValues(extractValues('justifyContent-center'))).toEqual('justifyContent.center')
   expect(joinValues(extractValues('order-[5]'))).toEqual('order.5')
@@ -124,10 +124,10 @@ test('Values on table can be looked up properly.', () => {
     addDefaults({
       property: 'transform',
       arbitrary: ['scale(-1,-1)'],
-    })
+    }),
   )
   expect(lookupTable('justifyContent')).toEqual(
-    addDefaults({ property: 'justifyContent', arbitrary: ['center'] })
+    addDefaults({ property: 'justifyContent', arbitrary: ['center'] }),
   )
   // Complex values.
   expect(lookupTable('textShadow').property).toBe('textShadow')
@@ -142,13 +142,13 @@ test('Full values are parsed properly.', () => {
       property: 'padding',
       size: [[10, 2]],
       breakpoint: true,
-    })
+    }),
   )
   expect(parseValue('small:w')).toEqual(
     addDefaults({
       property: 'width',
       breakpoint: false,
-    })
+    }),
   )
   expect(parseValue('medium:rowGap-medium-small-red-500-[1/2]-[inherit]')).toEqual(
     addDefaults({
@@ -160,7 +160,7 @@ test('Full values are parsed properly.', () => {
       color: ['#E60000'],
       arbitrary: ['1/2', 'inherit'],
       breakpoint: true,
-    })
+    }),
   )
 })
 
@@ -172,6 +172,6 @@ test('Shortcuts are resolved properly.', () => {
   expect(resolveShortcut('py')).toBe('paddingTop paddingBottom')
   expect(resolveShortcut('py-[4]')).toBe('paddingTop-[4] paddingBottom-[4]')
   expect(resolveShortcut('code')).toBe(
-    'fontFamily-monospace background-lightgray padding-3 borderRadius-3'
+    'fontFamily-monospace background-lightgray padding-3 borderRadius-3',
   )
 })
