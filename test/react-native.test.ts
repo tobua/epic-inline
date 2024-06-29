@@ -1,5 +1,8 @@
-import { expect, test } from 'vitest'
-import { configure, ei, Type } from '../index'
+import { expect, test, beforeEach, afterEach } from 'bun:test'
+import { configure, ei, Type, reset } from '../index'
+
+beforeEach(reset)
+afterEach(reset)
 
 test('Regular properties still work the same.', () => {
   configure({ type: Type.native })

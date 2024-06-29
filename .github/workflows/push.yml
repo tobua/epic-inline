@@ -12,16 +12,17 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - run: npm install
+      - uses: oven-sh/setup-bun@v1
+      - run: bun install
       - name: 🚧 Build
-        run: npm run build
+        run: bun run build
       - name: 🧪 Test
-        run: npm test
+        run: bun test
       - name: 🛠️ Build Documentation
         run: |
           cd documentation
-          npm install
-          npx papua build
+          bun install
+          bunx papua build
       - name: 🚀 Publish Documentation
         uses: JamesIves/github-pages-deploy-action@v4
         with:

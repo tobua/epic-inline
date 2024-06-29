@@ -40,6 +40,8 @@ const getSizes = (): Sizes => ({
 const getSize = (value: number) => value
 const getObject = (values: Object) => values
 
+const defaultSize = 'medium'
+
 export const options: Options = {
   properties: getProperties(),
   type: Type.js,
@@ -49,7 +51,7 @@ export const options: Options = {
   sizes: getSizes(),
   shortcuts: getShortcuts(),
   classPrefix: 'css-',
-  defaultSize: 'medium',
+  defaultSize,
 }
 
 if (isReactNative) {
@@ -105,6 +107,7 @@ export const reset = () => {
   options.size = getSize
   options.object = getObject
   options.shortcuts = getShortcuts()
+  options.defaultSize = defaultSize
 
   if (isReactNative) {
     Object.assign(options.properties, nativeProperties)

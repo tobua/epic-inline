@@ -1,4 +1,4 @@
-import { expect, test, vi } from 'vitest'
+import { expect, test, spyOn, afterAll } from 'bun:test'
 import { ei } from '../index'
 
 let windowWidth = 1250
@@ -18,7 +18,11 @@ global.window = {
   },
 }
 
-const warnings = vi.spyOn(console, 'warn')
+const warnings = spyOn(console, 'warn')
+
+afterAll(() => {
+  warnings.mockReset()
+})
 
 test('Various breakpoints lead to styles conditionally being shown.', () => {
   expect(ei('s:flex')).toEqual({})

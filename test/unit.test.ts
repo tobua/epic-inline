@@ -1,4 +1,4 @@
-import { test, expect } from 'vitest'
+import { test, expect } from 'bun:test'
 import { isColor, isTone, parseColor } from '../color'
 import { camelToDashCase } from '../helper'
 import { parseNumber, extractValues, lookupTable, parseValue, resolveShortcut } from '../index'
@@ -104,7 +104,7 @@ test('Values are extracted properly.', () => {
   expect(joinValues(extractValues('order-[5]'))).toEqual('order.5')
 })
 
-const addDefaults = (values: Object) => ({
+const addDefaults = (values: any) => ({
   size: [],
   color: [],
   arbitrary: [],

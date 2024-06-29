@@ -1,7 +1,15 @@
-import { expect, test, vi } from 'vitest'
+import { expect, test, spyOn, afterAll, beforeAll } from 'bun:test'
 import { ei } from '../index'
 
-const warnings = vi.spyOn(console, 'warn')
+const warnings = spyOn(console, 'warn')
+
+beforeAll(() => {
+  warnings.mockReset()
+})
+
+afterAll(() => {
+  warnings.mockReset()
+})
 
 test('Basic values are converted.', () => {
   expect(ei('jc')).toEqual({ justifyContent: 'center' })

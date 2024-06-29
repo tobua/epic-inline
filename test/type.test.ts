@@ -1,5 +1,8 @@
-import { expect, test } from 'vitest'
+import { expect, test, beforeEach, afterEach } from 'bun:test'
 import { configure, reset, ei, Type, Preset } from '../index'
+
+beforeEach(reset)
+afterEach(reset)
 
 test('Case can be configured.', () => {
   configure({ type: Type.css })

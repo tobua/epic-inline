@@ -7,11 +7,9 @@
   "license": "MIT",
   "author": "Matthias Giger",
   "scripts": {
-    "app": "node create-native-app.js",
+    "app": "bun create-native-app.js",
     "app:copy": "cpx 'dist/**/*' app/node_modules/epic-inline/dist --watch",
-    "build": "padua build",
-    "start": "padua watch",
-    "test": "vitest run"
+    "build": "padua build"
   },
   "padua": {
     "entry": [
@@ -23,6 +21,15 @@
         "epic-inline",
         "react"
       ]
+    },
+    "tsconfig": {
+      "compilerOptions": {
+        "paths": {
+          "epic-inline": [
+            "."
+          ]
+        }
+      }
     }
   },
   "dependencies": {
@@ -31,16 +38,18 @@
     "parse-color": "^1.0.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.3.0",
-    "@testing-library/react": "^14.1.2",
-    "@types/react": "^18.2.48",
+    "@types/bun": "^1.1.6",
+    "@types/react": "^18.3.3",
+    "@types/react-test-renderer": "^18.3.0",
     "cpx": "^1.5.0",
-    "happy-dom": "^13.3.1",
-    "padua": "^2.0.9",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "vitest": "^1.2.1"
+    "padua": "^4.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-test-renderer": "^18.3.1"
   },
+  "trustedDependencies": [
+    "padua"
+  ],
   "type": "module",
   "sideEffects": true,
   "main": "./dist/index.js",

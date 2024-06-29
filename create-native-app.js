@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { copyFileSync, renameSync, rmSync } from 'fs'
 import { join } from 'path'
 import { execSync } from 'child_process'
@@ -7,7 +6,7 @@ const appName = 'InlineApp'
 
 console.log('⌛ Initializing a fresh RN project...')
 
-execSync(`npx react-native init ${appName} --template react-native-template-typescript`, {
+execSync(`bunx react-native init ${appName} --skip-git-init true --install-pods true`, {
   stdio: 'inherit',
 })
 
@@ -19,7 +18,7 @@ copyFileSync('native/metro.config.json', 'app/metro.config.json')
 rmSync('app/metro.config.js')
 
 // Ensure plugin /dist contents are available
-execSync('npm run build', {
+execSync('bun run build', {
   stdio: 'inherit',
 })
 

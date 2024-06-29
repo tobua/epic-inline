@@ -4,7 +4,7 @@ export enum Type {
   native = 'react-native',
 }
 
-export type MultiSize = [number, number]
+export type MultiSize = [number, number] | number
 export type PropertySize = string | number
 export type ComplexValues = Partial<{ size: MultiSize | number; color: string; arbitrary: string }>
 export type ComplexValue = (properties: ComplexValues) => string

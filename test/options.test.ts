@@ -1,6 +1,7 @@
-import { expect, test, afterEach } from 'vitest'
+import { expect, test, beforeEach, afterEach } from 'bun:test'
 import { configure, ei, reset } from '../index'
 
+beforeEach(reset)
 afterEach(reset)
 
 test('Sizing method can be configured.', () => {

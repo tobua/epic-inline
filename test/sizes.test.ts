@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, test } from 'bun:test'
 import { configure, ei } from '../index'
 
 test('Default sizes can be used to specify lengths.', () => {
