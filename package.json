@@ -9,28 +9,8 @@
   "scripts": {
     "app": "bun create-native-app.js",
     "app:copy": "cpx 'dist/**/*' app/node_modules/epic-inline/dist --watch",
-    "build": "padua build"
-  },
-  "padua": {
-    "entry": [
-      "index.ts",
-      "register-react.ts"
-    ],
-    "esbuild": {
-      "external": [
-        "epic-inline",
-        "react"
-      ]
-    },
-    "tsconfig": {
-      "compilerOptions": {
-        "paths": {
-          "epic-inline": [
-            "."
-          ]
-        }
-      }
-    }
+    "check": "biome check --write .",
+    "types": "tsc"
   },
   "dependencies": {
     "color-convert": "^2.0.1",
@@ -38,38 +18,35 @@
     "parse-color": "^1.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
     "@types/bun": "^1.1.6",
+    "@types/color-convert": "^2.0.3",
+    "@types/color-string": "^1.5.5",
+    "@types/parse-color": "^1.0.3",
     "@types/react": "^18.3.3",
     "@types/react-test-renderer": "^18.3.0",
     "cpx": "^1.5.0",
     "padua": "^4.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-test-renderer": "^18.3.1"
+    "react-test-renderer": "^18.3.1",
+    "typescript": "^5.5.3",
+    "zero-configuration": "^0.17.2"
   },
   "trustedDependencies": [
-    "padua"
+    "zero-configuration"
   ],
   "type": "module",
   "sideEffects": true,
-  "main": "./dist/index.js",
+  "main": "./index.ts",
   "exports": {
-    ".": {
-      "default": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
-    },
+    ".": "./index.ts",
     "./register-react": {
-      "default": {
-        "types": "./dist/register-react.d.ts",
-        "default": "./dist/register-react.js"
-      }
+      "default": "./register-react.ts"
     }
   },
-  "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "*.ts"
   ],
   "keywords": [
     "style",
@@ -78,14 +55,28 @@
     "react",
     "inline-styles"
   ],
-  "prettier": "padua/configuration/.prettierrc.json",
-  "eslintConfig": {
-    "extends": "./node_modules/padua/configuration/eslint.cjs"
-  },
   "publishConfig": {
     "provenance": true
   },
-  "engines": {
-    "node": ">= 18"
+  "configuration": {
+    "gitignore": ["extends:bundle", "app"],
+    "vscode": "biome",
+    "biome": {
+      "extends": "recommended",
+      "files": {
+        "ignore": [
+          "documentation",
+          "native",
+          "create-native-app.js"
+        ]
+      }
+    },
+    "typescript": {
+      "extends": "plugin",
+      "files": [
+        "index.ts",
+        "register-react.ts"
+      ]
+    }
   }
 }

@@ -1,6 +1,6 @@
+import convert from 'color-convert'
 import colorString from 'color-string'
 import parse from 'parse-color'
-import convert from 'color-convert'
 
 export const colors = {
   aliceblue: '#F0F8FF',
@@ -162,14 +162,15 @@ export const lighten = (color: string, tone: number): string => {
   }
   hsla[2] = Math.min(100, Math.max(0, hsla[2]))
 
-  // @ts-ignore
-  if (hsla[3] === 1) return colorString.to.hex(convert.hsl.rgb(hsla))
+  if (hsla[3] === 1) {
+    // @ts-ignore
+    return colorString.to.hex(convert.hsl.rgb(hsla))
+  }
   return colorString.to.hex(hsla)
 }
 
 export const isColor = (value: string) => value in colors
-export const isTone = (value: string) =>
-  /^([1-9]?[0-9]|100|200|300|400|500|600|700|800|900)$/.test(value)
+export const isTone = (value: string) => /^([1-9]?[0-9]|100|200|300|400|500|600|700|800|900)$/.test(value)
 
 export const parseColor = (value: string | number) => {
   if (typeof value !== 'string') {
@@ -186,11 +187,12 @@ export const parseColor = (value: string | number) => {
     const color = matched[1]
     const tone = matched[2]
 
-    if (color in colors) {
+    if (color && color in colors) {
+      const current = colors[color as keyof typeof colors]
       if (tone !== '400') {
-        return lighten(colors[color], Number(tone))
+        return lighten(current, Number(tone))
       }
-      return colors[color]
+      return current
     }
 
     return false

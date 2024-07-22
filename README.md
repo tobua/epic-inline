@@ -71,7 +71,7 @@ Various behaviours and sizes can be configured.
 import { configure, Type } from 'epic-inline'
 
 configure({
-  type: Type.css | Type.js | Type.native,
+  type: Type.Css | Type.Js | Type.Native,
   size: (value) => `${value / 10}rem`,
   object: (value) => JSON.stringify(value),
   classPrefix: 'another-',
@@ -103,7 +103,7 @@ export const Button = () => <button className="flex center">Click me!</button>
 import { View, Text } from 'react-native'
 import { ei, configure, Type } from 'epic-inline'
 
-configure({ type: Type.native })
+configure({ type: Type.Native })
 
 const MyView = (
   <View style={ei('pv-medium marginHorizontal-small center')}>
@@ -119,7 +119,7 @@ import { View, Text } from 'react-native'
 import 'epic-inline/register-react'
 import { configure, Type } from 'epic-inline'
 
-configure({ type: Type.native })
+configure({ type: Type.Native })
 
 const MyText = <Text className="color-red">Hello React Native</Text>
 

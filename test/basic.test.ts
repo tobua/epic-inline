@@ -1,4 +1,4 @@
-import { expect, test, spyOn, afterAll, beforeAll } from 'bun:test'
+import { afterAll, beforeAll, expect, spyOn, test } from 'bun:test'
 import { ei } from '../index'
 
 const warnings = spyOn(console, 'warn')

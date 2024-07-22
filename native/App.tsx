@@ -1,10 +1,8 @@
-// This file will be copied over to the demo app when running create-native-app.js.
-import React from 'react'
 import { SafeAreaView, Text, View } from 'react-native'
 import 'epic-inline/register-react'
-import { configure, Type } from 'epic-inline'
+import { Type, configure } from 'epic-inline'
 
-configure({ type: Type.native })
+configure({ type: Type.Native })
 
 export default () => (
   <SafeAreaView>

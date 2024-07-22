@@ -1,7 +1,6 @@
-import React from 'react'
 import '../register-react' // NOTE will import from "exports" in /dist
 import { expect, test } from 'bun:test'
-import { create, ReactTestRendererTree } from 'react-test-renderer'
+import { type ReactTestRendererTree, create } from 'react-test-renderer'
 
 test('className is converted to an inline style.', () => {
   const rendered = create(

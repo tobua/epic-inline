@@ -1,6 +1,6 @@
-import { copyFileSync, renameSync, rmSync } from 'fs'
-import { join } from 'path'
-import { execSync } from 'child_process'
+import { execSync } from 'node:child_process'
+import { copyFileSync, renameSync } from 'node:fs'
+import { join } from 'node:path'
 
 const appName = 'InlineApp'
 
@@ -14,13 +14,7 @@ renameSync(appName, 'app')
 
 copyFileSync('native/App.tsx', 'app/App.tsx')
 // Enable experimental support for package "exports".
-copyFileSync('native/metro.config.json', 'app/metro.config.json')
-rmSync('app/metro.config.js')
-
-// Ensure plugin /dist contents are available
-execSync('bun run build', {
-  stdio: 'inherit',
-})
+copyFileSync('native/metro.config.js', 'app/metro.config.js')
 
 // Install this package locally, avoiding symlinks.
 execSync('npm install $(npm pack .. | tail -1) --legacy-peer-deps', {

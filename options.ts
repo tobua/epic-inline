@@ -1,6 +1,6 @@
-import { getProperties, getShortcuts } from './properties'
-import { Options, Type, Configuration, Sizes } from './types'
 import { isReactNative, properties as nativeProperties } from './native'
+import { getProperties, getShortcuts } from './properties'
+import { type Configuration, type Options, type Sizes, Type } from './types'
 
 const getBreakpoints = () => ({
   s: 500,
@@ -38,13 +38,13 @@ const getSizes = (): Sizes => ({
 })
 
 const getSize = (value: number) => value
-const getObject = (values: Object) => values
+const getObject = (values: object) => values
 
 const defaultSize = 'medium'
 
 export const options: Options = {
   properties: getProperties(),
-  type: Type.js,
+  type: Type.Js,
   size: getSize,
   object: getObject,
   breakpoints: getBreakpoints(),
@@ -58,17 +58,7 @@ if (isReactNative) {
   Object.assign(options.properties, nativeProperties)
 }
 
-export const configure = ({
-  type,
-  breakpoints,
-  size,
-  defaultSize,
-  object,
-  properties,
-  shortcuts,
-  sizes,
-  classPrefix,
-}: Configuration) => {
+export const configure = ({ type, breakpoints, size, defaultSize, object, properties, shortcuts, sizes, classPrefix }: Configuration) => {
   if (type) {
     options.type = type as Type
   }
@@ -101,7 +91,7 @@ export const configure = ({
 
 export const reset = () => {
   options.properties = getProperties()
-  options.type = Type.js
+  options.type = Type.Js
   options.sizes = getSizes()
   options.breakpoints = getBreakpoints()
   options.size = getSize

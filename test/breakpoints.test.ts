@@ -1,4 +1,4 @@
-import { expect, test, spyOn, afterAll } from 'bun:test'
+import { afterAll, expect, spyOn, test } from 'bun:test'
 import { ei } from '../index'
 
 let windowWidth = 1250

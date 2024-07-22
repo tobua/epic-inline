@@ -1,7 +1,7 @@
 export enum Type {
-  js = 'javascript',
-  css = 'css',
-  native = 'react-native',
+  Js = 'javascript',
+  Css = 'css',
+  Native = 'react-native',
 }
 
 export type MultiSize = [number, number] | number
@@ -15,7 +15,7 @@ export type Sizes = { [key: string]: MultiSize }
 export type Shortcuts = { [key: string]: string }
 export type Properties = { [key: string]: Property }
 export type Size = (value: number, property: string) => any
-export type GetObject = (values: Object) => any
+export type GetObject = (values: object) => any
 
 export interface Options {
   type: Type
@@ -42,6 +42,6 @@ export interface Configuration {
 }
 
 export enum Complex {
-  single,
-  multiple,
+  Single = 0,
+  Multiple = 1,
 }

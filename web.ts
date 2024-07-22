@@ -1,9 +1,9 @@
-import { Configuration, Type } from './types'
+import { type Configuration, Type } from './types'
 
 const svelte: Configuration = {
   size: (value: number) => `${value}px`,
-  type: Type.css,
-  object: (values: Object) =>
+  type: Type.Css,
+  object: (values: object) =>
     Object.entries(values)
       .map(([key, value]) => `${key}: ${value};`)
       .join(' '),
@@ -11,7 +11,7 @@ const svelte: Configuration = {
 
 const solid: Configuration = {
   size: (value: number) => `${value}px`,
-  type: Type.css,
+  type: Type.Css,
 }
 
 const vue: Configuration = {

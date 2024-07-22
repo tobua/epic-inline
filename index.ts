@@ -1,4 +1,4 @@
-import { Type } from './types'
+import { isColor, isTone, parseColor } from './color'
 import {
   camelToDashCase,
   hasUpperCase,
@@ -7,11 +7,12 @@ import {
   splitByFirstDash,
   validateHtmlClass,
 } from './helper'
-import { Preset } from './web'
 import { options } from './options'
-import { isColor, isTone, parseColor } from './color'
+import { Type } from './types'
+import { Preset } from './web'
 
 export { Type, Preset }
+// biome-ignore lint/performance/noBarrelFile: Only two fixed exports.
 export { reset, configure } from './options'
 
 type Values = ReturnType<typeof extractValues>
@@ -21,7 +22,7 @@ export const parseNumber = (value: string | number) => {
 
   try {
     result = Number(value)
-  } catch (error) {
+  } catch (_error) {
     // Ignore
     return value
   }
@@ -33,9 +34,7 @@ export const parseNumber = (value: string | number) => {
   return result
 }
 
-const parseSize = (
-  value: [number, number] | number | string,
-): [number, number] | number | string => {
+const parseSize = (value: [number, number] | number | string): [number, number] | number | string => {
   if (Array.isArray(value)) {
     return value
   }
@@ -156,17 +155,16 @@ export const extractValues = (value: string) => {
 }
 
 const extractBreakpoint = (value: string) => {
-  // eslint-disable-next-line prefer-const
   let [breakpoint, rest] = value.split(':')
   let match = true
   let matchUpwards = true
 
-  if (breakpoint.endsWith('-only')) {
+  if (breakpoint?.endsWith('-only')) {
     breakpoint = breakpoint.replace('-only', '')
     matchUpwards = false
   }
 
-  const breakpointExists = breakpoint in options.breakpoints
+  const breakpointExists = (breakpoint ?? 0) in options.breakpoints
 
   if (process.env.NODE_ENV !== 'production' && !breakpointExists) {
     console.warn(`Invalid breakpoint "${breakpoint}" used.`)
@@ -174,7 +172,7 @@ const extractBreakpoint = (value: string) => {
 
   if (breakpointExists) {
     // TODO create matchers for all breakpoints initially and use listeners.
-    match = matchBreakpoint(matchUpwards, options, breakpoint)
+    match = matchBreakpoint(matchUpwards, options, breakpoint ?? '')
   }
 
   return [rest, match] as [string, boolean]
@@ -187,16 +185,13 @@ export const resolveShortcut = (value: string, first = true) => {
   if (typeof value !== 'string') {
     return ''
   }
-
-  // eslint-disable-next-line no-param-reassign
   ;[value, values] = splitByFirstDash(value)
 
   const hasShortcut = Object.hasOwn(options.shortcuts, value)
   // If the property is a string, it's an alias, properties themselves have no values and will be resolved later.
-  const hasAlias =
-    Object.hasOwn(options.properties, value) && typeof options.properties[value] === 'string'
+  const hasAlias = Object.hasOwn(options.properties, value) && typeof options.properties[value] === 'string'
 
-  if (!hasShortcut && !hasAlias) {
+  if (!(hasShortcut || hasAlias)) {
     return values !== '' ? `${value}-${values}` : value
   }
 
@@ -211,12 +206,7 @@ export const resolveShortcut = (value: string, first = true) => {
     .map((current) =>
       resolveShortcut(
         // If alias has no value insert current value here.
-        // eslint-disable-next-line no-nested-ternary
-        values && hasAlias
-          ? current.includes('-')
-            ? `${splitByFirstDash(current)[0]}-${values}`
-            : `${current}-${values}`
-          : current,
+        values && hasAlias ? (current.includes('-') ? `${splitByFirstDash(current)[0]}-${values}` : `${current}-${values}`) : current,
         false,
       ),
     )
@@ -227,9 +217,7 @@ export const resolveShortcut = (value: string, first = true) => {
   if (first && values) {
     resolved = resolved
       .split(' ')
-      .map((shortcutValue: string) =>
-        shortcutValue.includes('-') ? shortcutValue : `${shortcutValue}-${values}`,
-      )
+      .map((shortcutValue: string) => (shortcutValue.includes('-') ? shortcutValue : `${shortcutValue}-${values}`))
       .join(' ')
   }
 
@@ -252,11 +240,7 @@ const resolveShortcuts = (value: string) => {
   return resolveShortcut(currentValue)
 }
 
-const mergeValues = (
-  mainValues: Partial<Values>,
-  fallbackValues: Values,
-  fullyEmpty = false,
-): Values => {
+const mergeValues = (mainValues: Partial<Values>, fallbackValues: Values, fullyEmpty = false): Values => {
   const hasSizeValues = mainValues.size && mainValues.size.length > 0
   const hasColorValues = mainValues.color && mainValues.color.length > 0
   const hasArbitraryValues = mainValues.arbitrary && mainValues.arbitrary.length > 0
@@ -313,22 +297,15 @@ export const lookupTable = (value: string) => {
     link = options.properties[aliasValues.property]
     values.property = aliasValues.property
   } else {
-    // eslint-disable-next-line prefer-destructuring
     values.property = link[0]
   }
 
   // Parse default property values.
-  if (
-    Array.isArray(link) &&
-    link.length > 1 &&
-    typeof link[1] !== 'function' &&
-    (link[1] || link[1] === 0)
-  ) {
+  if (Array.isArray(link) && link.length > 1 && typeof link[1] !== 'function' && (link[1] || link[1] === 0)) {
     values = extractValues(`${link[0]}-${link[1]}`)
   }
 
   if (Array.isArray(link) && link.length > 1 && typeof link[1] === 'function') {
-    // eslint-disable-next-line prefer-destructuring
     values.complex = link[1]
   }
 
@@ -361,20 +338,12 @@ export const parseValue = (value: string) => {
 
   // Property name from lookup result is used and will override one in values.
   const property =
-    options.type === Type.css && hasUpperCase(lookupResult.property)
-      ? camelToDashCase(lookupResult.property)
-      : lookupResult.property
+    options.type === Type.Css && hasUpperCase(lookupResult.property) ? camelToDashCase(lookupResult.property) : lookupResult.property
 
   return { ...values, breakpoint, property }
 }
 
-const calculateValue = (
-  property: string,
-  size: [number, number][],
-  color: string[],
-  arbitrary: string[],
-  complex: Function,
-) => {
+const calculateValue = (property: string, size: [number, number][], color: string[], arbitrary: string[], complex: Function) => {
   // Complex values.
   if (typeof complex === 'function') {
     // TODO multiple values passed to complex methods.
@@ -416,7 +385,7 @@ export const ei = (input: string) => {
 
   let missed = partsBefore - parts.length
 
-  parts.forEach((part) => {
+  for (const part of parts) {
     const { property, size, color, arbitrary, complex, breakpoint } = parseValue(part)
 
     if (property && breakpoint) {
@@ -427,12 +396,14 @@ export const ei = (input: string) => {
       validateHtmlClass(part) // Warn if invalid class characters used in development.
       missed += 1
     }
-  })
+  }
 
   // No matches found, let regular classes pass through.
   if (missed === parts.length) {
     return input
   }
 
-  return options.object(styles)
+  if (options.object) {
+    return options.object(styles)
+  }
 }

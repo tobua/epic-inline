@@ -1,8 +1,7 @@
-import { Options } from './types'
+import type { Options } from './types'
 
 // Works with Webkit prefixes as it starts upper-case.
-export const camelToDashCase = (input: string) =>
-  input.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`)
+export const camelToDashCase = (input: string) => input.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`)
 
 export const hasUpperCase = (input: string) => /[A-Z]/.test(input)
 
@@ -19,9 +18,7 @@ export const splitByFirstDash = (input: string) => {
 
 export const splitByDashesKeepingArbitrary = (input: string) => {
   const placeholder = '__PLACEHOLDER__'
-  const valuesWithPlaceholders = input.replace(/\[.*?\]/g, (match) =>
-    match.replace(/-/g, placeholder),
-  )
+  const valuesWithPlaceholders = input.replace(/\[.*?\]/g, (match) => match.replace(/-/g, placeholder))
   const values = valuesWithPlaceholders.split('-')
   return values.map((value) => value.replace(new RegExp(placeholder, 'g'), '-'))
 }
@@ -45,13 +42,12 @@ export const matchBreakpoint = (matchUpwards: boolean, options: Options, breakpo
 
   const breakpointKeys = Object.keys(options.breakpoints)
   const breakpointIndex = breakpointKeys.indexOf(breakpoint)
-  const previousBreakpoint = breakpointKeys[breakpointIndex - 1]
+  const previousBreakpoint = breakpointKeys[breakpointIndex - 1] ?? 0
 
   if (
     breakpointIndex === 0 ||
     // Edge case, i.e. "lg" is before "small", expects ordered breakpoints in size.
-    (previousBreakpoint &&
-      options.breakpoints[previousBreakpoint] > options.breakpoints[breakpoint])
+    (previousBreakpoint && (options.breakpoints[previousBreakpoint] ?? 0) > (options.breakpoints[breakpoint] ?? 0))
   ) {
     // First breakpoint
     return window.matchMedia(`(max-width: ${options.breakpoints[breakpoint]}px)`).matches

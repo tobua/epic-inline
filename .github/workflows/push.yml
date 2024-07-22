@@ -12,23 +12,14 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
+      - uses: oven-sh/setup-bun@v2
       - run: bun install
-      - name: 🚧 Build
-        run: bun run build
-      - name: 🧪 Test
-        run: bun test
-      - name: 🛠️ Build Documentation
-        run: |
-          cd documentation
-          bun install
-          bunx papua build
-      - name: 🚀 Publish Documentation
-        uses: JamesIves/github-pages-deploy-action@v4
+      - run: bun test
+      - run: cd documentation && bun install && bun rsbuild build
+      - uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: publish
           folder: documentation/dist
-      - name: 📢 Release
-        uses: tobua/release-npm-action@v3
+      - uses: tobua/release-npm-action@v3
         with:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

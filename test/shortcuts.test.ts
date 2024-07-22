@@ -1,4 +1,4 @@
-import { expect, test, afterEach } from 'bun:test'
+import { afterEach, expect, test } from 'bun:test'
 import { configure, ei, reset } from '../index'
 
 afterEach(() => reset())

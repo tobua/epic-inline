@@ -1,11 +1,11 @@
-import { expect, test, beforeEach, afterEach } from 'bun:test'
-import { configure, ei, Type, reset } from '../index'
+import { afterEach, beforeEach, expect, test } from 'bun:test'
+import { Type, configure, ei, reset } from '../index'
 
 beforeEach(reset)
 afterEach(reset)
 
 test('Regular properties still work the same.', () => {
-  configure({ type: Type.native })
+  configure({ type: Type.Native })
   expect(ei('p-l')).toEqual({ padding: 20 })
 })
 

@@ -44,10 +44,7 @@ createRoot(document.body).render(
         <h2>Colors</h2>
         <div className="flex gap-medium">
           {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map((tone) => (
-            <div
-              key={tone}
-              className={`bold color-white radius-medium p-medium background-blue-${tone}`}
-            >
+            <div key={tone} className={`bold color-white radius-medium p-medium background-blue-${tone}`}>
               blue-{tone}
             </div>
           ))}
@@ -84,9 +81,7 @@ createRoot(document.body).render(
           <span className="code">innerRadius</span>
           <div className="flex alignItems-end">
             <div className="innerRadius bg-blue w-large square" />
-            <div className="bg-blue w-100 h-huge borderTopRadius flex center color-white">
-              Fancy Tab
-            </div>
+            <div className="bg-blue w-100 h-huge borderTopRadius flex center color-white">Fancy Tab</div>
             <div className="innerRadius bg-blue w-large square flipHorizontal" />
           </div>
         </div>

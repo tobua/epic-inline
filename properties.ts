@@ -1,4 +1,4 @@
-import { Complex, Property } from './types'
+import { Complex, type Property } from './types'
 
 const addDirections = (name: string, abbreviation: string, defaultValue = undefined) => ({
   [name]: [name, defaultValue],
@@ -127,26 +127,17 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   // Complex properties (dynamically calculated).
   boxShadow: [
     'boxShadow',
-    ({ size, color = '#000000AA' }) =>
-      `0 ${Math.round(size[0] / 2)}px ${Math.round(size[0] / 2)}px ${Math.round(
-        size[0] / 4,
-      )}px ${color}`,
+    ({ size, color = '#000000AA' }) => `0 ${Math.round(size[0] / 2)}px ${Math.round(size[0] / 2)}px ${Math.round(size[0] / 4)}px ${color}`,
   ],
-  textShadow: [
-    'textShadow',
-    ({ size, color = 'black' }) => `${size[1]}px ${size[1]}px ${size[1]}px ${color}`,
-  ],
+  textShadow: ['textShadow', ({ size, color = 'black' }) => `${size[1]}px ${size[1]}px ${size[1]}px ${color}`],
   scale: ['transform', ({ arbitrary = '0.5' }) => `scale(${arbitrary})`],
   scaleY: ['transform', ({ arbitrary = '0.5' }) => `scaleY(${arbitrary})`],
   innerRadius: [
     'WebkitMaskImage',
-    ({ size }) =>
-      `radial-gradient(circle ${size[0]}px at 0 0, transparent 0, transparent ${
-        size[0] * 2
-      }px, black ${size[0] * 2 + 1}px)`,
+    ({ size }) => `radial-gradient(circle ${size[0]}px at 0 0, transparent 0, transparent ${size[0] * 2}px, black ${size[0] * 2 + 1}px)`,
   ],
   // TODO complex with Complex.multiple
-  multiple: ['transform', ({ size }) => `${size[0][0]}-${size[1][1]}`, Complex.multiple],
+  multiple: ['transform', ({ size }) => `${size[0][0]}-${size[1][1]}`, Complex.Multiple],
 })
 
 export const getShortcuts = () => ({
