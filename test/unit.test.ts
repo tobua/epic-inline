@@ -2,6 +2,7 @@ import { expect, test } from 'bun:test'
 import { isColor, isTone, parseColor } from '../color'
 import { camelToDashCase } from '../helper'
 import { extractValues, lookupTable, parseNumber, parseValue, resolveShortcut } from '../index'
+import type { Values } from '../types'
 
 const windowWidth = 750
 
@@ -37,6 +38,7 @@ test('Color parsing and validation.', () => {
   expect(isTone('1000')).toBe(false)
   expect(isTone('1100')).toBe(false)
   expect(isTone('-700')).toBe(false)
+  expect(isTone('')).toBe(false)
 
   expect(parseColor('red-800')).toBe('#990000')
   expect(parseColor('blue')).toBe('blue')
@@ -49,17 +51,7 @@ test('Color parsing and validation.', () => {
 // aspect-square	aspect-ratio: 1 / 1;
 // aspect-video	aspect-ratio: 16 / 9;
 
-const joinValues = ({
-  property,
-  size,
-  color,
-  arbitrary,
-}: {
-  property: string
-  size: string[]
-  color: string[]
-  arbitrary: string[]
-}) => {
+const joinValues = ({ property, size, color, arbitrary }: Values) => {
   const joinedValues: string[] = []
 
   if (property) {
@@ -98,13 +90,15 @@ test('Values are extracted properly.', () => {
   expect(joinValues(extractValues('order-[5]'))).toEqual('order.5')
 })
 
-const addDefaults = (values: any) => ({
-  size: [],
-  color: [],
-  arbitrary: [],
-  complex: null,
-  ...values,
-})
+const addDefaults = (values: Partial<Values> & { breakpoint?: boolean }) =>
+  ({
+    size: [],
+    color: [],
+    arbitrary: [],
+    complex: undefined,
+    ...values,
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  }) as any
 
 test('Values on table can be looked up properly.', () => {
   // Properties without values.

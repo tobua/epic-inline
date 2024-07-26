@@ -1,6 +1,6 @@
-import { Complex, type Property } from './types'
+import { Complex, type MultiSize, type Property } from './types'
 
-const addDirections = (name: string, abbreviation: string, defaultValue = undefined) => ({
+const addDirections = (name: string, abbreviation: string, defaultValue: string | undefined = undefined) => ({
   [name]: [name, defaultValue],
   [abbreviation]: name,
   [`${name}Top`]: [`${name}Top`, defaultValue],
@@ -13,12 +13,15 @@ const addDirections = (name: string, abbreviation: string, defaultValue = undefi
   [`${abbreviation}r`]: `${name}Right`,
 })
 
-const addAxes = (name: string, abbreviation: string, defaultValue = undefined) => ({
+const addAxes = (name: string, abbreviation: string, defaultValue: string | undefined = undefined) => ({
   [`${name}Vertical`]: ['paddingVertical', defaultValue],
   [`${abbreviation}v`]: `${name}Vertical`,
   [`${name}Horizontal`]: ['paddingHorizontal', defaultValue],
   [`${abbreviation}h`]: `${name}Horizontal`,
 })
+
+const bigSize = (size?: MultiSize) => (Array.isArray(size) ? size[0] : size) ?? 10
+const smallSize = (size?: MultiSize) => (Array.isArray(size) ? size[1] : size) ?? 2
 
 export const getProperties: () => { [key: string]: Property } = () => ({
   justifyContent: ['justifyContent', 'center'],
@@ -127,17 +130,19 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   // Complex properties (dynamically calculated).
   boxShadow: [
     'boxShadow',
-    ({ size, color = '#000000AA' }) => `0 ${Math.round(size[0] / 2)}px ${Math.round(size[0] / 2)}px ${Math.round(size[0] / 4)}px ${color}`,
+    ({ size, color = '#000000AA' }) =>
+      `0 ${Math.round(bigSize(size) / 2)}px ${Math.round(bigSize(size) / 2)}px ${Math.round(bigSize(size) / 4)}px ${color}`,
   ],
-  textShadow: ['textShadow', ({ size, color = 'black' }) => `${size[1]}px ${size[1]}px ${size[1]}px ${color}`],
+  textShadow: ['textShadow', ({ size, color = 'black' }) => `${smallSize(size)}px ${smallSize(size)}px ${smallSize(size)}px ${color}`],
   scale: ['transform', ({ arbitrary = '0.5' }) => `scale(${arbitrary})`],
   scaleY: ['transform', ({ arbitrary = '0.5' }) => `scaleY(${arbitrary})`],
   innerRadius: [
     'WebkitMaskImage',
-    ({ size }) => `radial-gradient(circle ${size[0]}px at 0 0, transparent 0, transparent ${size[0] * 2}px, black ${size[0] * 2 + 1}px)`,
+    ({ size }) =>
+      `radial-gradient(circle ${bigSize(size)}px at 0 0, transparent 0, transparent ${bigSize(size) * 2}px, black ${bigSize(size) * 2 + 1}px)`,
   ],
-  // TODO complex with Complex.multiple
-  multiple: ['transform', ({ size }) => `${size[0][0]}-${size[1][1]}`, Complex.Multiple],
+  // TODO complex with Complex.multiple, was size[0][0], size[1][1]
+  multiple: ['transform', ({ size }) => `${bigSize(size)}-${smallSize(size)}`, Complex.Multiple],
 })
 
 export const getShortcuts = () => ({

@@ -16,7 +16,10 @@ export const splitByFirstDash = (input: string) => {
   return [input, '']
 }
 
-export const splitByDashesKeepingArbitrary = (input: string) => {
+export const splitByDashesKeepingArbitrary = (input?: string) => {
+  if (!input) {
+    return []
+  }
   const placeholder = '__PLACEHOLDER__'
   const valuesWithPlaceholders = input.replace(/\[.*?\]/g, (match) => match.replace(/-/g, placeholder))
   const values = valuesWithPlaceholders.split('-')

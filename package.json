@@ -30,7 +30,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-test-renderer": "^18.3.1",
-    "typescript": "^5.5.3",
+    "typescript": "^5.5.4",
     "zero-configuration": "^0.17.2"
   },
   "trustedDependencies": [
@@ -59,7 +59,10 @@
     "provenance": true
   },
   "configuration": {
-    "gitignore": ["extends:bundle", "app"],
+    "gitignore": [
+      "extends:bundle",
+      "app"
+    ],
     "vscode": "biome",
     "biome": {
       "extends": "recommended",
@@ -71,12 +74,22 @@
         ]
       }
     },
-    "typescript": {
-      "extends": "plugin",
-      "files": [
-        "index.ts",
-        "register-react.ts"
-      ]
-    }
+    "typescript": [
+      {
+        "extends": "plugin",
+        "files": [
+          "index.ts",
+          "register-react.ts"
+        ]
+      },
+      {
+        "extends": "plugin",
+        "folder": "test",
+        "compilerOptions": {
+          "strict": false,
+          "jsx": "react-jsx"
+        }
+      }
+    ]
   }
 }

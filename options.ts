@@ -1,6 +1,6 @@
 import { isReactNative, properties as nativeProperties } from './native'
 import { getProperties, getShortcuts } from './properties'
-import { type Configuration, type Options, type Sizes, Type } from './types'
+import { type Configuration, type CssStyles, type Options, type Sizes, Type } from './types'
 
 const getBreakpoints = () => ({
   s: 500,
@@ -22,23 +22,24 @@ const defaultSizes: Sizes = {
   huge: [40, 8],
 }
 
-const getSizes = (): Sizes => ({
-  s: defaultSizes.small,
-  m: defaultSizes.medium,
-  l: defaultSizes.large,
-  h: defaultSizes.huge,
-  sm: defaultSizes.small,
-  mg: defaultSizes.medium,
-  lg: defaultSizes.large,
-  hg: defaultSizes.huge,
-  small: defaultSizes.small,
-  medium: defaultSizes.medium,
-  large: defaultSizes.large,
-  huge: defaultSizes.huge,
-})
+const getSizes = () =>
+  ({
+    s: defaultSizes.small,
+    m: defaultSizes.medium,
+    l: defaultSizes.large,
+    h: defaultSizes.huge,
+    sm: defaultSizes.small,
+    mg: defaultSizes.medium,
+    lg: defaultSizes.large,
+    hg: defaultSizes.huge,
+    small: defaultSizes.small,
+    medium: defaultSizes.medium,
+    large: defaultSizes.large,
+    huge: defaultSizes.huge,
+  }) as Sizes
 
 const getSize = (value: number) => value
-const getObject = (values: object) => values
+const getObject = (values: object) => values as CssStyles
 
 const defaultSize = 'medium'
 

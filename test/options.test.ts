@@ -15,6 +15,10 @@ test('Sizing method can be configured.', () => {
 test('Object method can be configured.', () => {
   expect(ei('w-10')).toEqual({ width: 10 })
 
+  configure({ object: (value) => ({ ...value, myProperty: 5 }) })
+
+  expect(ei('w-10')).toEqual({ width: 10, myProperty: 5 })
+
   configure({ object: (value) => JSON.stringify(value) })
 
   expect(ei('w-10')).toEqual(JSON.stringify({ width: 10 }))

@@ -1,8 +1,14 @@
-// Using JSX createElement override to automatically convert className.
-import 'epic-inline/register-react'
+/// <reference types="@rsbuild/core/types" />
+import _jsxdevruntime from 'react/jsx-dev-runtime'
+import _jsxruntime from 'react/jsx-runtime'
+import { register } from 'epic-inline/register-react'
 import { createRoot } from 'react-dom/client'
 import github from './asset/github.svg'
 import npm from './asset/npm.svg'
+
+// Using JSX createElement override to automatically convert className.
+register(_jsxdevruntime)
+register(_jsxruntime)
 
 const Flexboxes = ({
   classes,

@@ -8,14 +8,12 @@ import {
   validateHtmlClass,
 } from './helper'
 import { options } from './options'
-import { Type } from './types'
+import { type ComplexValue, type CssStyles, type MultiSize, Type, type Values } from './types'
 import { Preset } from './web'
 
 export { Type, Preset }
 // biome-ignore lint/performance/noBarrelFile: Only two fixed exports.
 export { reset, configure } from './options'
-
-type Values = ReturnType<typeof extractValues>
 
 export const parseNumber = (value: string | number) => {
   let result: number
@@ -34,7 +32,7 @@ export const parseNumber = (value: string | number) => {
   return result
 }
 
-const parseSize = (value: [number, number] | number | string): [number, number] | number | string => {
+const parseSize = (value: MultiSize | string): MultiSize | string | undefined => {
   if (Array.isArray(value)) {
     return value
   }
@@ -95,12 +93,47 @@ const isArbitrary = (value: string) => {
   return false
 }
 
-export const extractValues = (value: string) => {
+function processValue(current: string, next: string | undefined, sizes: MultiSize[], colors: string[], arbitraryValues: string[]) {
+  const isArbitraryWithNext = !isBracketed(current) && isArbitrary(`${current}-${next}`)
+
+  if (isArbitraryWithNext) {
+    arbitraryValues.push(`${current}-${next}`)
+    return true
+  }
+
+  if (isArbitrary(current)) {
+    arbitraryValues.push(current.replace('[', '').replace(']', '').replaceAll('_', ' '))
+    return false
+  }
+
+  if (isColor(current)) {
+    const nextIsTone = isTone(next ?? '')
+    const color = parseColor(nextIsTone ? `${current}-${next}` : current)
+    if (color) {
+      colors.push(color)
+    }
+    return nextIsTone
+  }
+
+  const size = parseSize(current)
+  if (size || size === 0) {
+    sizes.push(Array.isArray(size) ? size : ([size, size] as MultiSize))
+    return false
+  }
+
+  if (current) {
+    arbitraryValues.push(current)
+  }
+
+  return false
+}
+
+export const extractValues = (value: string): Values => {
   const [property, valuesJoined] = splitByFirstDash(value)
   const values = splitByDashesKeepingArbitrary(valuesJoined)
-  const sizes = []
-  const colors = []
-  const arbitraryValues = []
+  const sizes: MultiSize[] = []
+  const colors: string[] = []
+  const arbitraryValues: string[] = []
   let skipNext = false
 
   values.forEach((current, index) => {
@@ -111,47 +144,12 @@ export const extractValues = (value: string) => {
 
     const next = index + 1 < values.length ? values[index + 1] : undefined // Used for lookahead.
 
-    const isArbitraryWithNext = !isBracketed(current) && isArbitrary(`${current}-${next}`)
-
-    if (isArbitraryWithNext) {
+    if (processValue(current, next, sizes, colors, arbitraryValues)) {
       skipNext = true
-      return arbitraryValues.push(`${current}-${next}`)
     }
-
-    // Arbitrary value.
-    if (isArbitrary(current)) {
-      return arbitraryValues.push(current.replace('[', '').replace(']', '').replaceAll('_', ' '))
-    }
-
-    // Color.
-    if (isColor(current)) {
-      const nextIsTone = isTone(next)
-      if (nextIsTone) {
-        skipNext = true
-      }
-      return colors.push(parseColor(nextIsTone ? `${current}-${next}` : current))
-    }
-
-    if (!current) {
-      return null
-    }
-
-    // Must be a size.
-    const size = parseSize(current)
-
-    if (size || size === 0) {
-      return sizes.push(Array.isArray(size) ? size : [size, size])
-    }
-
-    // Assuming arbitrary value.
-    if (current) {
-      arbitraryValues.push(current)
-    }
-
-    return null
   })
 
-  return { property, size: sizes, color: colors, arbitrary: arbitraryValues, complex: null }
+  return { property, size: sizes, color: colors, arbitrary: arbitraryValues, complex: undefined }
 }
 
 const extractBreakpoint = (value: string) => {
@@ -180,25 +178,31 @@ const extractBreakpoint = (value: string) => {
 
 // Recursive function to resolve chain of shortcuts.
 export const resolveShortcut = (value: string, first = true) => {
-  let values = ''
-
   if (typeof value !== 'string') {
     return ''
   }
-  ;[value, values] = splitByFirstDash(value)
+  const [currentValue, values] = splitByFirstDash(value)
 
-  const hasShortcut = Object.hasOwn(options.shortcuts, value)
-  // If the property is a string, it's an alias, properties themselves have no values and will be resolved later.
-  const hasAlias = Object.hasOwn(options.properties, value) && typeof options.properties[value] === 'string'
-
-  if (!(hasShortcut || hasAlias)) {
-    return values !== '' ? `${value}-${values}` : value
+  if (!currentValue) {
+    return
   }
 
-  let shortcutOrAlias = options.shortcuts[value]
+  const hasShortcut = Object.hasOwn(options.shortcuts, currentValue)
+  // If the property is a string, it's an alias, properties themselves have no values and will be resolved later.
+  const hasAlias = Object.hasOwn(options.properties, currentValue) && typeof options.properties[currentValue] === 'string'
+
+  if (!(hasShortcut || hasAlias)) {
+    return values !== '' ? `${currentValue}-${values}` : currentValue
+  }
+
+  let shortcutOrAlias = options.shortcuts[currentValue]
 
   if (!shortcutOrAlias && hasAlias) {
-    shortcutOrAlias = options.properties[value] as string
+    shortcutOrAlias = options.properties[currentValue] as string
+  }
+
+  if (!shortcutOrAlias) {
+    return
   }
 
   let resolved: string = shortcutOrAlias
@@ -257,15 +261,15 @@ const mergeValues = (mainValues: Partial<Values>, fallbackValues: Values, fullyE
   }
 
   // Alias values have precedence when available.
-  if (hasSizeValues) {
+  if (hasSizeValues && mainValues.size) {
     newValues.size = mainValues.size
   }
 
-  if (hasColorValues) {
+  if (hasColorValues && mainValues.color) {
     newValues.color = mainValues.color
   }
 
-  if (hasArbitraryValues) {
+  if (hasArbitraryValues && mainValues.arbitrary) {
     newValues.arbitrary = mainValues.arbitrary
   }
 
@@ -275,11 +279,11 @@ const mergeValues = (mainValues: Partial<Values>, fallbackValues: Values, fullyE
 export const lookupTable = (value: string) => {
   let link = options.properties[value]
   let values: Values = {
-    property: null,
+    property: undefined,
     size: [],
     color: [],
     arbitrary: [],
-    complex: null,
+    complex: undefined,
   }
   let aliasValues: Partial<Values> = {}
 
@@ -294,7 +298,7 @@ export const lookupTable = (value: string) => {
   // Resolve alias.
   if (typeof link === 'string') {
     aliasValues = extractValues(link)
-    link = options.properties[aliasValues.property]
+    link = options.properties[aliasValues.property ?? '']
     values.property = aliasValues.property
   } else {
     values.property = link[0]
@@ -320,7 +324,7 @@ export const parseValue = (value: string) => {
     size: [],
     color: [],
     arbitrary: [],
-    complex: null,
+    complex: undefined,
   }
 
   if (currentValue.includes(':')) {
@@ -338,12 +342,14 @@ export const parseValue = (value: string) => {
 
   // Property name from lookup result is used and will override one in values.
   const property =
-    options.type === Type.Css && hasUpperCase(lookupResult.property) ? camelToDashCase(lookupResult.property) : lookupResult.property
+    options.type === Type.Css && hasUpperCase(lookupResult.property ?? '')
+      ? camelToDashCase(lookupResult.property ?? '')
+      : lookupResult.property
 
   return { ...values, breakpoint, property }
 }
 
-const calculateValue = (property: string, size: [number, number][], color: string[], arbitrary: string[], complex: Function) => {
+const calculateValue = (property: string, size: MultiSize[], color: string[], arbitrary: string[], complex?: ComplexValue) => {
   // Complex values.
   if (typeof complex === 'function') {
     // TODO multiple values passed to complex methods.
@@ -354,7 +360,7 @@ const calculateValue = (property: string, size: [number, number][], color: strin
     })
   }
 
-  if (size.length > 0) {
+  if (size.length > 0 && options.size && size[0] && Array.isArray(size[0])) {
     return options.size(size[0][0], property)
   }
 
@@ -371,7 +377,7 @@ const calculateValue = (property: string, size: [number, number][], color: strin
 
 export const ei = (input: string) => {
   let parts = input.split(' ')
-  const styles: { [key: string]: string } = {}
+  const styles: CssStyles = {}
 
   // Keep regular classes intact.
   if (parts.every((part) => part.startsWith(options.classPrefix))) {
@@ -389,7 +395,10 @@ export const ei = (input: string) => {
     const { property, size, color, arbitrary, complex, breakpoint } = parseValue(part)
 
     if (property && breakpoint) {
-      styles[property] = calculateValue(property, size, color, arbitrary, complex)
+      const value = calculateValue(property, size, color, arbitrary, complex)
+      if (value !== undefined) {
+        styles[property] = value
+      }
     }
 
     if (!property && breakpoint) {

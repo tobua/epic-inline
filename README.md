@@ -91,10 +91,21 @@ configure({
 
 While generally considered criminal, for low-quality projects this plugin provides a JSX override that will automatically transform any `className` on a React component to matching inline styles.
 
-```js
+```jsx
 import 'epic-inline/register-react'
 
 export const Button = () => <button className="flex center">Click me!</button>
+```
+
+If automatic registration doesn't work because the bundler isolates imports, try doing it manually:
+
+```js
+import _jsxdevruntime from 'react/jsx-dev-runtime'
+import _jsxruntime from 'react/jsx-runtime'
+import { register } from 'epic-inline/register-react'
+
+register(_jsxdevruntime)
+register(_jsxruntime)
 ```
 
 ## React Native

@@ -4,6 +4,7 @@ export enum Type {
   Native = 'react-native',
 }
 
+export type DoubleSize = [number, number]
 export type MultiSize = [number, number] | number
 export type PropertySize = string | number
 export type ComplexValues = Partial<{ size: MultiSize | number; color: string; arbitrary: string }>
@@ -14,8 +15,10 @@ export type Breakpoints = { [key: string]: number }
 export type Sizes = { [key: string]: MultiSize }
 export type Shortcuts = { [key: string]: string }
 export type Properties = { [key: string]: Property }
-export type Size = (value: number, property: string) => any
-export type GetObject = (values: object) => any
+export type Size = (value: number, property: string) => string | number
+export type CssStyles = { [key: string]: string | number }
+// NOTE this is relevant to infer the types returned by the main "ei" export.
+export type GetObject = (values: object) => CssStyles | string
 
 export interface Options {
   type: Type
@@ -44,4 +47,12 @@ export interface Configuration {
 export enum Complex {
   Single = 0,
   Multiple = 1,
+}
+
+export type Values = {
+  property: string | undefined
+  size: MultiSize[]
+  color: string[]
+  arbitrary: string[]
+  complex: ComplexValue | undefined
 }
