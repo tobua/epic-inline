@@ -115,6 +115,13 @@ test('Color tones can be added.', () => {
   expect(ei('background-lavenderblush-900')).toEqual({ background: '#FF70A0' })
 })
 
+test('Results are ordered with last having priority.', () => {
+  expect(ei('cursor')).toEqual({ cursor: 'pointer' })
+  expect(ei('cursor-auto')).toEqual({ cursor: 'auto' })
+  expect(ei('cursor cursor-auto')).toEqual({ cursor: 'auto' })
+  expect(ei('cursor-auto cursor')).toEqual({ cursor: 'pointer' })
+})
+
 test('Regular classes are preserved.', () => {
   expect(ei('poiuytr')).toEqual('poiuytr')
   expect(ei('poiuytr flex')).toEqual({ display: 'flex' })

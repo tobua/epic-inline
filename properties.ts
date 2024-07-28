@@ -121,6 +121,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   flip: ['transform', '[scale(-1,-1)]'],
   flipHorizontal: ['transform', '[scale(-1,1)]'],
   flipVertical: ['transform', '[scale(1,-1)]'],
+  cursor: ['cursor', 'pointer'],
   // CSS Grid
   grid: 'display-grid',
   gridTemplateRows: ['gridTemplateRows', 'none'],
@@ -146,7 +147,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
 })
 
 export const getShortcuts = () => ({
-  button: 'outline border',
+  button: 'outline border cursor',
+  input: 'outline border',
   link: 'decoration',
   marginX: 'marginLeft marginRight', // Common old way to center items.
   mx: 'marginX',
