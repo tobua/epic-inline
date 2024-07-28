@@ -91,6 +91,13 @@ createRoot(document.body).render(
             <div className="innerRadius bg-blue w-large square flipHorizontal" />
           </div>
         </div>
+        <h2>Shortcuts</h2>
+        <div className="flex gap-large alignItems wrap bg-lightgray radius p-medium">
+        <button className="button">Button</button>
+          <button className="button bold color-white radius p background-blue-300">Button Styled</button>
+          <input className="input" placeholder="Input" />
+          <input className="input bold color-white radius p background-blue-300" placeholder="Input Styled" />
+        </div>
       </section>
     </main>
   </div>,

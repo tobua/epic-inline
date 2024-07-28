@@ -32,7 +32,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   alignItems: ['alignItems', 'center'],
   items: 'alignItems',
   alignContent: ['alignContent', 'normal'],
-  align: 'alignContent',
+  align: 'alignContent', // TODO ambiguous for alignItems or alignContent...
   display: ['display', 'flex'],
   flex: 'display',
   df: 'display',
