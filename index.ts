@@ -7,13 +7,12 @@ import {
   splitByFirstDash,
   validateHtmlClass,
 } from './helper'
-import { options } from './options'
+import { configure, options, reset } from './options'
 import { type ComplexValue, type CssStyles, type MultiSize, Type, type Values } from './types'
 import { Preset } from './web'
 
 export { Type, Preset }
-// biome-ignore lint/performance/noBarrelFile: Only two fixed exports.
-export { reset, configure } from './options'
+export { reset, configure }
 
 export const parseNumber = (value: string | number) => {
   let result: number

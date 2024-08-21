@@ -70,6 +70,10 @@ test('Various font properties are supported.', () => {
   expect(ei('sticky')).toEqual({ position: 'sticky' })
   expect(ei('top')).toEqual({ top: 0 })
   expect(ei('lt-6')).toEqual({ left: 6 })
+  expect(ei('width-10')).toEqual({ width: 10 })
+  expect(ei('maxWidth-12')).toEqual({ maxWidth: 12 })
+  expect(ei('height-10')).toEqual({ height: 10 })
+  expect(ei('maxHeight-12')).toEqual({ maxHeight: 12 })
 })
 
 test('Invalid values show warning.', () => {
@@ -94,6 +98,9 @@ test('Aliases can be used.', () => {
 test('Numeric values can be provided.', () => {
   expect(ei('w-10')).toEqual({ width: 10 })
   expect(ei('p-12')).toEqual({ padding: 12 })
+
+  expect(ei('maxW-14')).toEqual({ maxWidth: 14 })
+  expect(ei('maxH-16')).toEqual({ maxHeight: 16 })
 })
 
 test('Medium size is used as default for size based short properties.', () => {

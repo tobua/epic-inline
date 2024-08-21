@@ -16,7 +16,7 @@ export type Sizes = { [key: string]: MultiSize }
 export type Shortcuts = { [key: string]: string }
 export type Properties = { [key: string]: Property }
 export type Size = (value: number, property: string) => string | number
-export type CssStyles = { [key: string]: string | number }
+export type CssStyles = { [key: string]: string | number } // Partial<CSSStyleDeclaration> will not work as styles are exported for different frameworks, some taking regular css properties.
 // NOTE this is relevant to infer the types returned by the main "ei" export.
 export type GetObject = (values: object) => CssStyles | string
 

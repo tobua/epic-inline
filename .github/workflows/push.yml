@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 jobs:
-  test-build-publish-release:
-    runs-on: macos-latest
+  test-publish-release:
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: write

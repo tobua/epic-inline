@@ -7,7 +7,7 @@
   "license": "MIT",
   "author": "Matthias Giger",
   "scripts": {
-    "app": "bun create-native-app.js",
+    "app": "bun create-app.js",
     "app:copy": "cpx 'dist/**/*' app/node_modules/epic-inline/dist --watch",
     "check": "biome check --write .",
     "types": "tsc"
@@ -22,10 +22,12 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
+    "@npmcli/arborist": "^7.5.4",
     "@types/bun": "^1.1.6",
-    "@types/react": "^18.3.3",
+    "@types/react": "^18.3.4",
     "@types/react-test-renderer": "^18.3.0",
     "cpx": "^1.5.0",
+    "npm-packlist": "^8.0.2",
     "padua": "^4.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -60,8 +62,10 @@
   },
   "configuration": {
     "gitignore": [
-      "extends:bundle",
-      "app"
+      "extends:recommended",
+      "InlineApp",
+      "app/**/*",
+      "!app/App.tsx"
     ],
     "vscode": "biome",
     "biome": {
@@ -70,7 +74,8 @@
         "ignore": [
           "documentation",
           "native",
-          "create-native-app.js"
+          "create-native-app.js",
+          "app"
         ]
       }
     },
