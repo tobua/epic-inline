@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@types/color-convert": "^2.0.3",
-    "@types/color-string": "^1.5.5",
     "@types/parse-color": "^1.0.3",
+    "@types/simple-swizzle": "^0.2.2",
     "color-convert": "^2.0.1",
     "parse-color": "^1.0.0",
     "simple-swizzle": "^0.2.2"

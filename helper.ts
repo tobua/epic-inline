@@ -71,5 +71,5 @@ function hexDouble(value: number) {
 export function toHex(...args: Array<number | number[]>): string {
   const rgba = swizzle(args)
 
-  return `#${hexDouble(rgba[0])}${hexDouble(rgba[1])}${hexDouble(rgba[2])}${rgba[3] < 1 ? hexDouble(Math.round(rgba[3] * 255)) : ''}`
+  return `#${hexDouble(rgba[0] as number)}${hexDouble(rgba[1] as number)}${hexDouble(rgba[2] as number)}${(rgba[3] as number) < 1 ? hexDouble(Math.round((rgba[3] as number) * 255)) : ''}`
 }
