@@ -17,7 +17,21 @@ export const rsbuild = defineConfig({
   },
 })
 
-export const gitignore = 'recommended'
+export const gitignore = 'bundle'
+export const vscode = 'biome'
+export const biome = {
+  extends: 'recommended',
+  linter: {
+    rules: {
+      suspicious: {
+        noArrayIndexKey: 'off',
+      },
+    },
+  },
+  files: {
+    ignore: ['rsbuild.config.ts'],
+  },
+}
 
 export const typescript = {
   extends: 'web',

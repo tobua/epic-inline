@@ -1,8 +1,8 @@
 /// <reference types="@rsbuild/core/types" />
-import _jsxdevruntime from 'react/jsx-dev-runtime'
-import _jsxruntime from 'react/jsx-runtime'
 import { register } from 'epic-inline/register-react'
 import { createRoot } from 'react-dom/client'
+import _jsxdevruntime from 'react/jsx-dev-runtime'
+import _jsxruntime from 'react/jsx-runtime'
 import github from './asset/github.svg'
 import npm from './asset/npm.svg'
 
@@ -93,8 +93,12 @@ createRoot(document.body).render(
         </div>
         <h2>Shortcuts</h2>
         <div className="flex gap-large alignItems wrap bg-lightgray radius p-medium">
-        <button className="button">Button</button>
-          <button className="button bold color-white radius p background-blue-300">Button Styled</button>
+          <button type="button" className="button">
+            Button
+          </button>
+          <button type="button" className="button bold color-white radius p background-blue-300">
+            Button Styled
+          </button>
           <input className="input" placeholder="Input" />
           <input className="input bold color-white radius p background-blue-300" placeholder="Input Styled" />
         </div>

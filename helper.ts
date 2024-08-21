@@ -1,3 +1,4 @@
+import swizzle from 'simple-swizzle'
 import type { Options } from './types'
 
 // Works with Webkit prefixes as it starts upper-case.
@@ -59,4 +60,16 @@ export const matchBreakpoint = (matchUpwards: boolean, options: Options, breakpo
   return window.matchMedia(
     `(min-width: ${options.breakpoints[previousBreakpoint]}px) and (max-width: ${options.breakpoints[breakpoint]}px)`,
   ).matches
+}
+
+function hexDouble(value: number) {
+  const str = Math.round(value).toString(16).toUpperCase()
+  return str.length < 2 ? `0${str}` : str
+}
+
+// Taken from 'color-string' dependency which is missing a main or exports field and therefore erroring in metro.
+export function toHex(...args: Array<number | number[]>): string {
+  const rgba = swizzle(args)
+
+  return `#${hexDouble(rgba[0])}${hexDouble(rgba[1])}${hexDouble(rgba[2])}${rgba[3] < 1 ? hexDouble(Math.round(rgba[3] * 255)) : ''}`
 }

@@ -8,7 +8,7 @@
   "author": "Matthias Giger",
   "scripts": {
     "app": "bun create-app.js",
-    "app:copy": "cpx 'dist/**/*' app/node_modules/epic-inline/dist --watch",
+    "app:copy": "cpx '**/*.ts' app/node_modules/epic-inline --watch",
     "check": "biome check --write .",
     "types": "tsc"
   },
@@ -17,8 +17,8 @@
     "@types/color-string": "^1.5.5",
     "@types/parse-color": "^1.0.3",
     "color-convert": "^2.0.1",
-    "color-string": "^1.9.1",
-    "parse-color": "^1.0.0"
+    "parse-color": "^1.0.0",
+    "simple-swizzle": "^0.2.2"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",

@@ -1,5 +1,5 @@
-import { afterAll, beforeAll, expect, spyOn, test } from 'bun:test'
-import { ei } from '../index'
+import { afterAll, afterEach, beforeAll, beforeEach, expect, spyOn, test } from 'bun:test'
+import { ei, reset } from '../index'
 
 const warnings = spyOn(console, 'warn')
 
@@ -10,6 +10,9 @@ beforeAll(() => {
 afterAll(() => {
   warnings.mockReset()
 })
+
+beforeEach(reset)
+afterEach(reset)
 
 test('Basic values are converted.', () => {
   expect(ei('jc')).toEqual({ justifyContent: 'center' })

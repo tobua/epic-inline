@@ -1,6 +1,6 @@
 import convert from 'color-convert'
-import colorString from 'color-string'
 import parse from 'parse-color'
+import { toHex } from './helper'
 
 export const colors = {
   aliceblue: '#F0F8FF',
@@ -164,9 +164,9 @@ export const lighten = (color: string, tone: number): string => {
 
   if (hsla[3] === 1) {
     // @ts-ignore
-    return colorString.to.hex(convert.hsl.rgb(hsla))
+    return toHex(convert.hsl.rgb(hsla))
   }
-  return colorString.to.hex(hsla)
+  return toHex(hsla)
 }
 
 export const isColor = (value: string) => value in colors
