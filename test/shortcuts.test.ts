@@ -5,7 +5,7 @@ afterEach(() => reset())
 
 test('Case can be configured.', () => {
   expect(ei('button')).toEqual({ outline: 'none', cursor: 'pointer', border: 'none' })
-  expect(ei('button link')).toEqual({ outline: 'none', border: 'none', cursor: 'pointer', textDecoration: 'none' })
+  expect(ei('button link')).toEqual({ outline: 'none', border: 'none', cursor: 'pointer', textDecoration: 'none', color: 'inherit' })
   expect(ei('center')).toEqual({ justifyContent: 'center', alignItems: 'center' })
   // @ts-ignore Weird error.
   expect(ei('link button')).toEqual(ei('button link'))
@@ -28,8 +28,8 @@ test('Shortcut aliases are resolved properly.', () => {
     padding: 3,
     borderRadius: 3,
   })
-  expect(ei('link')).toEqual({ textDecoration: 'none' })
-  expect(ei('link-[underline]')).toEqual({ textDecoration: 'underline' })
+  expect(ei('link')).toEqual({ textDecoration: 'none', color: 'inherit' })
+  expect(ei('link-[underline]')).toEqual({ textDecoration: 'underline', color: 'inherit' })
   expect(ei('code-small')).toEqual({
     fontFamily: 'monospace',
     background: 'lightgray',

@@ -70,7 +70,7 @@ test('Breakpoints also work with shortcuts.', () => {
 
   expect(ei('s:link')).toEqual({})
   expect(ei('medium:button')).toEqual({})
-  expect(ei('large:link')).toEqual({ textDecoration: 'none' })
+  expect(ei('large:link')).toEqual({ textDecoration: 'none', color: 'inherit' })
 })
 
 test("It's possible to match only a specific breakpoint.", () => {
