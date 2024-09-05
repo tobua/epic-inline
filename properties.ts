@@ -23,6 +23,8 @@ const addAxes = (name: string, abbreviation: string, defaultValue: string | unde
 const bigSize = (size?: MultiSize) => (Array.isArray(size) ? size[0] : size) ?? 10
 const smallSize = (size?: MultiSize) => (Array.isArray(size) ? size[1] : size) ?? 2
 
+// TODO how to do flex: 1?
+
 export const getProperties: () => { [key: string]: Property } = () => ({
   justifyContent: ['justifyContent', 'center'],
   centerHorizontal: 'justifyContent-center',
@@ -149,7 +151,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
 export const getShortcuts = () => ({
   button: 'outline border cursor',
   input: 'outline border',
-  link: 'decoration',
+  link: 'decoration color-inherit',
+  normal: 'margin-0', // Normalize headings and p.
   marginX: 'marginLeft marginRight', // Common old way to center items.
   mx: 'marginX',
   paddingX: 'paddingLeft paddingRight',
