@@ -1,6 +1,10 @@
 import '../register-react' // NOTE will import from "exports" in /dist
-import { expect, test } from 'bun:test'
+import { afterEach, beforeEach, expect, test } from 'bun:test'
 import { type ReactTestRendererTree, create } from 'react-test-renderer'
+import { reset } from '../index'
+
+beforeEach(reset)
+afterEach(reset)
 
 test('className is converted to an inline style.', () => {
   const rendered = create(

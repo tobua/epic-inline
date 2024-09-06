@@ -1,5 +1,8 @@
-import { expect, test } from 'bun:test'
-import { ei } from '../index'
+import { afterEach, beforeEach, expect, test } from 'bun:test'
+import { ei, reset } from '../index'
+
+beforeEach(reset)
+afterEach(reset)
 
 test('Complex values with sizes.', () => {
   expect(ei('boxShadow')).toEqual({

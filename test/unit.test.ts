@@ -1,19 +1,27 @@
-import { expect, test } from 'bun:test'
+import { afterAll, afterEach, beforeAll, beforeEach, expect, test } from 'bun:test'
 import { isColor, isTone, parseColor } from '../color'
 import { camelToDashCase } from '../helper'
-import { extractValues, lookupTable, parseNumber, parseValue, resolveShortcut } from '../index'
+import { extractValues, lookupTable, parseNumber, parseValue, reset, resolveShortcut } from '../index'
 import type { Values } from '../types'
 
 const windowWidth = 750
 
-global.window = {
-  // @ts-ignore
-  matchMedia: (matcher: string) => {
-    const regex = /max-width:\s*(\d+)px/
-    const width = Number((regex.exec(matcher) ?? '0')[1])
-    return { matches: width > windowWidth }
-  },
-}
+beforeEach(reset)
+afterEach(reset)
+beforeAll(() => {
+  global.window = {
+    // @ts-ignore
+    matchMedia: (matcher: string) => {
+      const regex = /max-width:\s*(\d+)px/
+      const width = Number((regex.exec(matcher) ?? '0')[1])
+      return { matches: width > windowWidth }
+    },
+  }
+})
+
+afterAll(() => {
+  global.window = undefined
+})
 
 test('Webkit values are prefixed with a dash.', () => {
   expect(camelToDashCase('WebkitMaskImage')).toBe('-webkit-mask-image')

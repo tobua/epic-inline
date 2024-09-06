@@ -1,27 +1,31 @@
-import { afterAll, expect, spyOn, test } from 'bun:test'
-import { ei } from '../index'
+import { afterAll, afterEach, beforeAll, beforeEach, expect, spyOn, test } from 'bun:test'
+import { ei, reset } from '../index'
 
 let windowWidth = 1250
 
-global.window = {
-  // @ts-ignore
-  matchMedia: (matcher: string) => {
-    const regexMax = /max-width:\s*(\d+)px/
-    const maxWidth = Number((regexMax.exec(matcher) ?? '0')[1])
-    const regexMin = /min-width:\s*(\d+)px/
-    const minRegexResult = regexMin.exec(matcher)
-    if (minRegexResult) {
-      const minWidth = Number(minRegexResult[1])
-      return { matches: minWidth < windowWidth && maxWidth > windowWidth }
-    }
-    return { matches: maxWidth > windowWidth }
-  },
-}
-
 const warnings = spyOn(console, 'warn')
 
+beforeEach(reset)
+afterEach(reset)
+beforeAll(() => {
+  global.window = {
+    // @ts-ignore
+    matchMedia: (matcher: string) => {
+      const regexMax = /max-width:\s*(\d+)px/
+      const maxWidth = Number((regexMax.exec(matcher) ?? '0')[1])
+      const regexMin = /min-width:\s*(\d+)px/
+      const minRegexResult = regexMin.exec(matcher)
+      if (minRegexResult) {
+        const minWidth = Number(minRegexResult[1])
+        return { matches: minWidth < windowWidth && maxWidth > windowWidth }
+      }
+      return { matches: maxWidth > windowWidth }
+    },
+  }
+})
 afterAll(() => {
   warnings.mockReset()
+  global.window = undefined
 })
 
 test('Various breakpoints lead to styles conditionally being shown.', () => {

@@ -5,9 +5,9 @@
     "types": "tsc"
   },
   "dependencies": {
-    "@rsbuild/core": "^1.0.1-beta.15",
-    "@rsbuild/plugin-react": "^1.0.1-beta.15",
-    "@types/react": "^18.3.4",
+    "@rsbuild/core": "^1.0.1-rc.5",
+    "@rsbuild/plugin-react": "^1.0.1-rc.5",
+    "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

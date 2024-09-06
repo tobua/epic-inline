@@ -1,7 +1,8 @@
-import { afterEach, expect, test } from 'bun:test'
+import { afterEach, beforeEach, expect, test } from 'bun:test'
 import { configure, ei, reset } from '../index'
 
-afterEach(() => reset())
+beforeEach(reset)
+afterEach(reset)
 
 test('Case can be configured.', () => {
   expect(ei('button')).toEqual({ outline: 'none', cursor: 'pointer', border: 'none' })

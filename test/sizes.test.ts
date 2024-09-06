@@ -1,5 +1,8 @@
-import { expect, test } from 'bun:test'
-import { configure, ei } from '../index'
+import { afterEach, beforeEach, expect, test } from 'bun:test'
+import { configure, ei, reset } from '../index'
+
+beforeEach(reset)
+afterEach(reset)
 
 test('Default sizes can be used to specify lengths.', () => {
   expect(ei('p-l')).toEqual({ padding: 20 })

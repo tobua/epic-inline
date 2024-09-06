@@ -3,16 +3,14 @@ import { ei, reset } from '../index'
 
 const warnings = spyOn(console, 'warn')
 
+beforeEach(reset)
+afterEach(reset)
 beforeAll(() => {
   warnings.mockReset()
 })
-
 afterAll(() => {
   warnings.mockReset()
 })
-
-beforeEach(reset)
-afterEach(reset)
 
 test('Basic values are converted.', () => {
   expect(ei('jc')).toEqual({ justifyContent: 'center' })
