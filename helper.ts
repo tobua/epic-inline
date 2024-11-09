@@ -1,10 +1,13 @@
 import swizzle from 'simple-swizzle'
 import type { Options } from './types'
 
-// Works with Webkit prefixes as it starts upper-case.
-export const camelToDashCase = (input: string) => input.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`)
+const upperCaseRegexAll = /[A-Z]/g
+const upperCaseRegex = /[A-Z]/
 
-export const hasUpperCase = (input: string) => /[A-Z]/.test(input)
+// Works with Webkit prefixes as it starts upper-case.
+export const camelToDashCase = (input: string) => input.replace(upperCaseRegexAll, (match) => `-${match.toLowerCase()}`)
+
+export const hasUpperCase = (input: string) => upperCaseRegex.test(input)
 
 // hello-world-again => ['hello', 'world-again']
 export const splitByFirstDash = (input: string) => {
@@ -36,6 +39,7 @@ export const validateHtmlClass = (className: string) => {
     return
   }
 
+  // biome-ignore lint/suspicious/noConsole: Only shown in development.
   console.warn(`Class "${className}" isn't a valid HTML class!`)
 }
 

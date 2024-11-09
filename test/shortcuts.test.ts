@@ -16,6 +16,16 @@ test('Case can be configured.', () => {
   expect(ei('image')).toEqual({ width: 50, height: 50 })
 })
 
+test('Can be mixed with regular properties.', () => {
+  expect(ei('flex column link gap-medium')).toEqual({
+    color: 'inherit',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 10,
+    textDecoration: 'none',
+  })
+})
+
 test('Shortcut aliases are resolved properly.', () => {
   expect(ei('marginX')).toEqual({ marginLeft: 10, marginRight: 10 })
   expect(ei('marginX-[5]')).toEqual({ marginLeft: '5', marginRight: '5' })

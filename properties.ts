@@ -116,6 +116,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   right: ['right', 0],
   bottom: ['bottom', 0],
   left: ['left', 0],
+  inset: ['inset', 0],
   tp: 'top',
   ri: 'right',
   bt: 'bottom',

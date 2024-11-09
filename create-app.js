@@ -31,4 +31,5 @@ for (const file of files) {
 execSync('bun install color-convert parse-color simple-swizzle', { cwd: join(process.cwd(), 'app') })
 
 // biome-ignore lint/suspicious/noConsoleLog: Used for development only.
+// biome-ignore lint/suspicious/noConsole: Used for development only.
 console.log('🍞 React Native App created inside /app.')

@@ -164,6 +164,7 @@ const extractBreakpoint = (value: string) => {
   const breakpointExists = (breakpoint ?? 0) in options.breakpoints
 
   if (process.env.NODE_ENV !== 'production' && !breakpointExists) {
+    // biome-ignore lint/suspicious/noConsole: Only shown in development.
     console.warn(`Invalid breakpoint "${breakpoint}" used.`)
   }
 
@@ -244,6 +245,7 @@ const resolveShortcuts = (value: string) => {
 }
 
 const mergeValues = (mainValues: Partial<Values>, fallbackValues: Values, fullyEmpty = false): Values => {
+  // biome-ignore lint/style/useExplicitLengthCheck: This is not a regular JS property.
   const hasSizeValues = mainValues.size && mainValues.size.length > 0
   const hasColorValues = mainValues.color && mainValues.color.length > 0
   const hasArbitraryValues = mainValues.arbitrary && mainValues.arbitrary.length > 0
@@ -260,6 +262,7 @@ const mergeValues = (mainValues: Partial<Values>, fallbackValues: Values, fullyE
   }
 
   // Alias values have precedence when available.
+  // biome-ignore lint/style/useExplicitLengthCheck: This is not a regular JS property.
   if (hasSizeValues && mainValues.size) {
     newValues.size = mainValues.size
   }
@@ -288,6 +291,7 @@ export const lookupTable = (value: string) => {
 
   if (!link) {
     if (process.env.NODE_ENV !== 'production') {
+      // biome-ignore lint/suspicious/noConsole: Only shown in development.
       console.warn(`Property "${value}" not found.`)
     }
     // TODO return nothing and handle that case outside?
@@ -359,6 +363,7 @@ const calculateValue = (property: string, size: MultiSize[], color: string[], ar
     })
   }
 
+  // biome-ignore lint/style/useExplicitLengthCheck: This is not a regular JS property.
   if (size.length > 0 && options.size && size[0] && Array.isArray(size[0])) {
     return options.size(size[0][0], property)
   }
