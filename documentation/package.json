@@ -5,14 +5,14 @@
     "types": "tsc"
   },
   "dependencies": {
-    "@rsbuild/core": "^1.0.1-rc.5",
-    "@rsbuild/plugin-react": "^1.0.1-rc.5",
-    "@types/react": "^18.3.5",
-    "@types/react-dom": "^18.3.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "typescript": "^5.5.4",
-    "zero-configuration": "^0.17.3"
+    "@rsbuild/core": "^1.1.10",
+    "@rsbuild/plugin-react": "^1.1.0",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.2",
+    "zero-configuration": "^0.17.6"
   },
   "localDependencies": {
     "epic-inline": ".."

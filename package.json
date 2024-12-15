@@ -23,17 +23,17 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@npmcli/arborist": "^8.0.0",
-    "@types/bun": "^1.1.13",
-    "@types/react": "^18.3.12",
-    "@types/react-test-renderer": "^18.3.0",
+    "@types/bun": "^1.1.14",
+    "@types/react": "^19.0.1",
+    "@types/react-test-renderer": "^19.0.0",
     "cpx": "^1.5.0",
-    "npm-packlist": "^9.0.0",
+    "npm-packlist": "^10.0.0",
     "padua": "^4.0.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-test-renderer": "^18.3.1",
-    "typescript": "^5.6.3",
-    "zero-configuration": "^0.17.5"
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-test-renderer": "18.3.1",
+    "typescript": "^5.7.2",
+    "zero-configuration": "^0.17.6"
   },
   "trustedDependencies": [
     "zero-configuration"

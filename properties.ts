@@ -23,8 +23,6 @@ const addAxes = (name: string, abbreviation: string, defaultValue: string | unde
 const bigSize = (size?: MultiSize) => (Array.isArray(size) ? size[0] : size) ?? 10
 const smallSize = (size?: MultiSize) => (Array.isArray(size) ? size[1] : size) ?? 2
 
-// TODO how to do flex: 1?
-
 export const getProperties: () => { [key: string]: Property } = () => ({
   justifyContent: ['justifyContent', 'center'],
   centerHorizontal: 'justifyContent-center',
@@ -49,6 +47,10 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   columnGap: ['columnGap'],
   rowGap: ['rowGap'],
   order: ['order'],
+  flex1: ['flex', '[1]'],
+  flex0: ['flex', '[0]'],
+  flexAuto: ['flex', 'auto'],
+  flexNone: ['flex', 'none'],
   flexGrow: ['flexGrow', '[0]'],
   grow: 'flexGrow',
   flexShrink: ['flexShrink', '[1]'],

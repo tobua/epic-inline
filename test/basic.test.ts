@@ -48,6 +48,10 @@ test('Various flex properties are supported.', () => {
   expect(ei('flexBasis')).toEqual({ flexBasis: 'auto' })
   expect(ei('self')).toEqual({ alignSelf: 'auto' })
   expect(ei('alignContent-start')).toEqual({ alignContent: 'start' })
+  expect(ei('flex1')).toEqual({ flex: '1' })
+  expect(ei('flex0')).toEqual({ flex: '0' })
+  expect(ei('flexAuto')).toEqual({ flex: 'auto' })
+  expect(ei('flexNone')).toEqual({ flex: 'none' })
 
   expect(ei('flex centerHorizontal column wrap')).toEqual({
     display: 'flex',

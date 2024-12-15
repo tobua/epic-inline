@@ -13,6 +13,7 @@ import { Preset } from './web'
 
 export { Type, Preset }
 export { reset, configure }
+export type { CssStyles }
 
 export const parseNumber = (value: string | number) => {
   let result: number
