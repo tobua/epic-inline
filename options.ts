@@ -53,13 +53,25 @@ export const options: Options = {
   shortcuts: getShortcuts(),
   classPrefix: 'css-',
   defaultSize,
+  colors: {},
 }
 
 if (isReactNative) {
   Object.assign(options.properties, nativeProperties)
 }
 
-export const configure = ({ type, breakpoints, size, defaultSize, object, properties, shortcuts, sizes, classPrefix }: Configuration) => {
+export const configure = ({
+  type,
+  breakpoints,
+  size,
+  defaultSize,
+  object,
+  properties,
+  shortcuts,
+  sizes,
+  classPrefix,
+  colors,
+}: Configuration) => {
   if (type) {
     options.type = type as Type
   }
@@ -83,6 +95,9 @@ export const configure = ({ type, breakpoints, size, defaultSize, object, proper
   }
   if (defaultSize) {
     options.defaultSize = defaultSize
+  }
+  if (colors) {
+    options.colors = colors
   }
 
   if (properties) {

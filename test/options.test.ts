@@ -42,3 +42,12 @@ test('Default size can be changed.', () => {
     boxShadow: '0 20px 20px 10px #000000AA',
   })
 })
+
+test('Can configure custom colors.', () => {
+  expect(ei('color-gray100')).toEqual({ color: 'gray100' })
+
+  configure({ colors: { gray50: '#FAFAFA', gray100: '#F5F5F5', gray200: '#EEEEEE', gray300: '#E0E0E0' } })
+
+  expect(ei('color-gray100')).toEqual({ color: '#F5F5F5' })
+  expect(ei('background-gray300')).toEqual({ background: '#E0E0E0' })
+})

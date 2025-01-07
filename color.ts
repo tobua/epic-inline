@@ -1,6 +1,7 @@
 import convert from 'color-convert'
 import parse from 'parse-color'
 import { toHex } from './helper'
+import { options } from './options'
 
 export const colors = {
   aliceblue: '#F0F8FF',
@@ -169,7 +170,7 @@ export const lighten = (color: string, tone: number): string => {
   return toHex(hsla)
 }
 
-export const isColor = (value: string) => value in colors
+export const isColor = (value: string) => value in colors || value in options.colors
 export const isTone = (value: string) => /^([1-9]?[0-9]|100|200|300|400|500|600|700|800|900)$/.test(value)
 
 export const parseColor = (value: string | number) => {
@@ -179,6 +180,10 @@ export const parseColor = (value: string | number) => {
 
   if (value in colors) {
     return value
+  }
+
+  if (value in options.colors) {
+    return options.colors[value]
   }
 
   const matched = value.match(/^(\w+)-(\d?[05]0)$/)

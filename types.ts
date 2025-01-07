@@ -12,6 +12,7 @@ export type ComplexValue = (properties: ComplexValues) => string
 export type PropertyValue = string | number | MultiSize | ComplexValue
 export type Property = string | [string, PropertyValue?, Complex?]
 export type Breakpoints = { [key: string]: number }
+export type Colors = { [key: string]: string }
 export type Sizes = { [key: string]: MultiSize }
 export type Shortcuts = { [key: string]: string }
 export type Properties = { [key: string]: Property }
@@ -30,6 +31,7 @@ export interface Options {
   properties: Properties
   shortcuts: Shortcuts
   classPrefix: string
+  colors: Colors
 }
 
 export interface Configuration {
@@ -42,6 +44,7 @@ export interface Configuration {
   shortcuts?: Shortcuts
   sizes?: Sizes
   classPrefix?: string
+  colors?: Colors
 }
 
 export enum Complex {
