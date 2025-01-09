@@ -381,7 +381,10 @@ const calculateValue = (property: string, size: MultiSize[], color: string[], ar
 }
 
 export const ei = (input: string) => {
-  let parts = input.split(' ')
+  let parts = input
+    .trim()
+    .split(' ')
+    .filter((part) => part !== '')
   const styles: CssStyles = {}
 
   // Keep regular classes intact.

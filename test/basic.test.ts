@@ -167,3 +167,10 @@ test('Arbitrary values can also be used in complex values.', () => {
     textShadow: '4px 4px 4px gray',
   })
 })
+
+test("Additional whitespace doesn't cause issues.", () => {
+  expect(ei(' m')).toEqual({ margin: 10 })
+  expect(ei('m  ')).toEqual({ margin: 10 })
+  expect(ei('  m ')).toEqual({ margin: 10 })
+  expect(ei('  m   p  ')).toEqual({ margin: 10, padding: 10 })
+})
