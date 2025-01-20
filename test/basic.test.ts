@@ -67,6 +67,12 @@ test('Various font properties are supported.', () => {
   expect(ei('bold')).toEqual({ fontWeight: 'bold' })
   expect(ei('fontWeight-bolder')).toEqual({ fontWeight: 'bolder' })
   expect(ei('fontWeight-[500]')).toEqual({ fontWeight: '500' })
+  expect(ei('fontStyle')).toEqual({ fontStyle: 'normal' })
+  expect(ei('fontStyle-italic')).toEqual({ fontStyle: 'italic' })
+  expect(ei('italic')).toEqual({ fontStyle: 'italic' })
+})
+
+test('Various other properties work as expected.', () => {
   expect(ei('aspectRatio')).toEqual({ aspectRatio: 'auto' })
   expect(ei('aspectRatio-[3]')).toEqual({ aspectRatio: '3' })
   expect(ei('square')).toEqual({ aspectRatio: '1' })
@@ -79,6 +85,15 @@ test('Various font properties are supported.', () => {
   expect(ei('maxWidth-12')).toEqual({ maxWidth: 12 })
   expect(ei('height-10')).toEqual({ height: 10 })
   expect(ei('maxHeight-12')).toEqual({ maxHeight: 12 })
+  expect(ei('minHeight-100')).toEqual({ minHeight: 100 })
+  expect(ei('minHeight-[100vh]')).toEqual({ minHeight: '100vh' })
+  expect(ei('minH-[100vh]')).toEqual({ minHeight: '100vh' })
+  expect(ei('noBorder')).toEqual({ border: 'none' })
+  expect(ei('borderColor-red')).toEqual({ borderColor: 'red' })
+  expect(ei('borderStyle')).toEqual({ borderStyle: 'solid' })
+  expect(ei('noCursor')).toEqual({ cursor: 'auto' })
+  expect(ei('boxSizing-border-box')).toEqual({ boxSizing: 'border-box' })
+  expect(ei('borderBox')).toEqual({ boxSizing: 'border-box' })
 })
 
 test('Invalid values show warning.', () => {
@@ -132,6 +147,10 @@ test('Results are ordered with last having priority.', () => {
   expect(ei('cursor-auto')).toEqual({ cursor: 'auto' })
   expect(ei('cursor cursor-auto')).toEqual({ cursor: 'auto' })
   expect(ei('cursor-auto cursor')).toEqual({ cursor: 'pointer' })
+})
+
+test('Composite properties are preserved.', () => {
+  expect(ei('flex border-[2px solid red]')).toEqual({ display: 'flex', border: '2px solid red' })
 })
 
 test('Regular classes are preserved.', () => {

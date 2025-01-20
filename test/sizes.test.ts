@@ -7,6 +7,8 @@ afterEach(reset)
 test('Default sizes can be used to specify lengths.', () => {
   expect(ei('p-l')).toEqual({ padding: 20 })
   expect(ei('p-large')).toEqual({ padding: 20 })
+  expect(ei('fontSize-medium')).toEqual({ fontSize: 10 })
+  expect(ei('width-small')).toEqual({ width: 5 })
 })
 
 test('Sizes can be configured.', () => {

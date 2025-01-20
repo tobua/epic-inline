@@ -77,7 +77,13 @@ const arbitraryPropertyValues = new Set([
   'sticky',
   'static',
   'none',
+  'sans-serif',
+  'border-box',
+  'content-box',
+  'pointer',
 ])
+
+const splitBySpacesKeepBracketsRegex = /(?:[^\s\[]+|\[[^\]]*\])+/g // Keep arbitrary values intact, border-[2px solid red]
 
 const isBracketed = (value: string) => value.startsWith('[') && value.endsWith(']')
 
@@ -366,7 +372,10 @@ const calculateValue = (property: string, size: MultiSize[], color: string[], ar
 
   // biome-ignore lint/style/useExplicitLengthCheck: This is not a regular JS property.
   if (size.length > 0 && options.size && size[0] && Array.isArray(size[0])) {
-    return options.size(size[0][0], property)
+    if (typeof size[0][0] === 'number') {
+      return options.size(size[0][0], property)
+    }
+    return size[0][0]
   }
 
   if (color.length > 0) {
@@ -381,10 +390,9 @@ const calculateValue = (property: string, size: MultiSize[], color: string[], ar
 }
 
 export const ei = (input: string) => {
-  let parts = input
-    .trim()
-    .split(' ')
-    .filter((part) => part !== '')
+  let parts = input.trim().match(splitBySpacesKeepBracketsRegex) || ([] as string[])
+
+  parts = parts.filter((part) => part !== '')
   const styles: CssStyles = {}
 
   // Keep regular classes intact.
@@ -392,7 +400,7 @@ export const ei = (input: string) => {
     return parts.join(' ')
   }
 
-  parts = parts.map(resolveShortcuts).join(' ').split(' ')
+  parts = parts.map(resolveShortcuts).join(' ').match(splitBySpacesKeepBracketsRegex) || ([''] as string[])
 
   const partsBefore = parts.length
   parts = parts.filter((value) => !!value)

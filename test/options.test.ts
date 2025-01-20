@@ -10,6 +10,9 @@ test('Sizing method can be configured.', () => {
   configure({ size: (value) => `${value / 10}rem` })
 
   expect(ei('h-50')).toEqual({ height: '5rem' })
+  expect(ei('fullWidth')).toEqual({ width: '100%' }) // Preserve non-number values.
+  expect(ei('minHeight-100')).toEqual({ minHeight: '10rem' })
+  expect(ei('minHeight-[100vh]')).toEqual({ minHeight: '100vh' })
 })
 
 test('Object method can be configured.', () => {

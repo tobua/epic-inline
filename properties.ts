@@ -39,6 +39,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   flexDirection: ['flexDirection', 'row'],
   row: 'flexDirection-row',
   column: 'flexDirection-column',
+  col: 'column',
   direction: 'flexDirection',
   flexWrap: ['flexWrap', 'wrap'], // nowrap is the default.
   wrap: 'flexWrap',
@@ -75,6 +76,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   fullWidth: ['width', '100%'],
   maxWidth: ['maxWidth'],
   maxW: 'maxWidth',
+  minHeight: ['minHeight', '100vh'],
+  minH: 'minHeight',
   height: ['height'],
   h: 'height',
   fullHeight: ['height', '100%'],
@@ -86,6 +89,11 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   ...addAxes('margin', 'm', 'medium'),
   ...addDirections('border', 'b', 'none'),
   ...addAxes('border', 'b', 'none'),
+  border: ['border', '[1px solid black]'],
+  noBorder: 'border-none',
+  borderColor: ['borderColor', 'black'],
+  borderWidth: ['borderWidth', 1],
+  borderStyle: ['borderStyle', 'solid'],
   textAlign: ['textAlign', 'center'],
   text: 'textAlign',
   fontFamily: ['fontFamily', '[sans-serif]'],
@@ -96,6 +104,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   sans: 'fontFamily',
   fontWeight: ['fontWeight', 'normal'],
   fontSize: ['fontSize', 'medium'],
+  fontStyle: ['fontStyle', 'normal'],
+  italic: 'fontStyle-italic',
   bold: 'fontWeight-bold',
   weight: 'fontWeight',
   outline: ['outline', 'none'],
@@ -114,6 +124,9 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   absolute: 'position-absolute',
   fixed: 'position-fixed',
   sticky: 'position-sticky',
+  boxSizing: ['boxSizing', 'border-box'],
+  borderBox: 'boxSizing',
+  box: 'boxSizing',
   top: ['top', 0],
   right: ['right', 0],
   bottom: ['bottom', 0],
@@ -127,6 +140,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   flipHorizontal: ['transform', '[scale(-1,1)]'],
   flipVertical: ['transform', '[scale(1,-1)]'],
   cursor: ['cursor', 'pointer'],
+  noCursor: ['cursor', 'auto'],
   // CSS Grid
   grid: 'display-grid',
   gridTemplateRows: ['gridTemplateRows', 'none'],
@@ -152,8 +166,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
 })
 
 export const getShortcuts = () => ({
-  button: 'outline border cursor',
-  input: 'outline border',
+  button: 'outline noBorder cursor',
+  input: 'outline noBorder',
   link: 'decoration color-inherit',
   normal: 'margin-0', // Normalize headings and p.
   marginX: 'marginLeft marginRight', // Common old way to center items.
