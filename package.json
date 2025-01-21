@@ -23,7 +23,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@npmcli/arborist": "^9.0.0",
-    "@types/bun": "^1.1.17",
+    "@types/bun": "^1.1.18",
     "@types/react": "^19.0.7",
     "@types/react-test-renderer": "^19.0.0",
     "cpx": "^1.5.0",

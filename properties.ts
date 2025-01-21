@@ -111,7 +111,6 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   outline: ['outline', 'none'],
   textDecoration: ['textDecoration', 'none'],
   decoration: 'textDecoration',
-  shadow: 'boxShadow',
   visibility: ['visibility', 'hidden'],
   hidden: 'visibility',
   visible: 'visibility-visible',
@@ -147,13 +146,16 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   gridTemplateColumns: ['gridTemplateColumns', 'none'],
   gridRow: ['gridRow', 'auto'],
   gridColumn: ['gridColumn', 'auto'],
+  boxShadow: ['boxShadow', 'none'],
+  textShadow: ['textShadow', 'none'],
   // Complex properties (dynamically calculated).
-  boxShadow: [
+  boxShadowX: [
     'boxShadow',
     ({ size, color = '#000000AA' }) =>
       `0 ${Math.round(bigSize(size) / 2)}px ${Math.round(bigSize(size) / 2)}px ${Math.round(bigSize(size) / 4)}px ${color}`,
   ],
-  textShadow: ['textShadow', ({ size, color = 'black' }) => `${smallSize(size)}px ${smallSize(size)}px ${smallSize(size)}px ${color}`],
+  shadow: 'boxShadowX',
+  textShadowX: ['textShadow', ({ size, color = 'black' }) => `${smallSize(size)}px ${smallSize(size)}px ${smallSize(size)}px ${color}`],
   scale: ['transform', ({ arbitrary = '0.5' }) => `scale(${arbitrary})`],
   scaleY: ['transform', ({ arbitrary = '0.5' }) => `scaleY(${arbitrary})`],
   innerRadius: [

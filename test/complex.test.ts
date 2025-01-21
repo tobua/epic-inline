@@ -5,7 +5,7 @@ beforeEach(reset)
 afterEach(reset)
 
 test('Complex values with sizes.', () => {
-  expect(ei('boxShadow')).toEqual({
+  expect(ei('boxShadowX')).toEqual({
     boxShadow: '0 5px 5px 3px #000000AA',
   })
   expect(ei('shadow')).toEqual({
@@ -23,16 +23,16 @@ test('Complex values with sizes.', () => {
 })
 
 test('Complex values with size and color.', () => {
-  expect(ei('textShadow')).toEqual({
+  expect(ei('textShadowX')).toEqual({
     textShadow: '2px 2px 2px black',
   })
-  expect(ei('textShadow-large')).toEqual({
+  expect(ei('textShadowX-large')).toEqual({
     textShadow: '4px 4px 4px black',
   })
-  expect(ei('textShadow-large-gray')).toEqual({
+  expect(ei('textShadowX-large-gray')).toEqual({
     textShadow: '4px 4px 4px gray',
   })
-  expect(ei('textShadow-gray-large')).toEqual({
+  expect(ei('textShadowX-gray-large')).toEqual({
     textShadow: '4px 4px 4px gray',
   })
 })

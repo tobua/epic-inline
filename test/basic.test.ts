@@ -151,6 +151,7 @@ test('Results are ordered with last having priority.', () => {
 
 test('Composite properties are preserved.', () => {
   expect(ei('flex border-[2px solid red]')).toEqual({ display: 'flex', border: '2px solid red' })
+  expect(ei('textShadow-[0px 0px 10px rgba(0, 0, 0, 0.5)]')).toEqual({ textShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)' })
 })
 
 test('Regular classes are preserved.', () => {
@@ -182,7 +183,7 @@ test('Arbitrary values can be used.', () => {
 })
 
 test('Arbitrary values can also be used in complex values.', () => {
-  expect(ei('textShadow-large-gray-[1/1]')).toEqual({
+  expect(ei('textShadowX-large-gray-[1/1]')).toEqual({
     textShadow: '4px 4px 4px gray',
   })
 })

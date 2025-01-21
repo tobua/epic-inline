@@ -125,7 +125,7 @@ test('Values on table can be looked up properly.', () => {
   expect(lookupTable('justifyContent')).toEqual(addDefaults({ property: 'justifyContent', arbitrary: ['center'] }))
   // Complex values.
   expect(lookupTable('textShadow').property).toBe('textShadow')
-  expect(typeof lookupTable('textShadow').complex).toBe('function')
+  expect(typeof lookupTable('textShadowX').complex).toBe('function')
   expect(lookupTable('scale').property).toBe('transform')
   expect(typeof lookupTable('scale').complex).toBe('function')
 })

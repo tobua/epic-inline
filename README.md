@@ -58,9 +58,9 @@ Using methods it's possible to create more complex styles. The methods can recei
 
 ```js
 ei('shadow') => { boxShadow: '0 5px 5px 3px #000000AA' }
-ei('boxShadow-large') => { boxShadow: '0 10px 10px 5px #000000AA' }
-ei('textShadow') => { textShadow: '2px 2px 2px black' }
-ei('textShadow-large-gray') => { textShadow: '4px 4px 4px gray' }
+ei('boxShadowX-large') => { boxShadow: '0 10px 10px 5px #000000AA' }
+ei('textShadowX') => { textShadow: '2px 2px 2px black' }
+ei('textShadowX-large-gray') => { textShadow: '4px 4px 4px gray' }
 ```
 
 ## Configuration
