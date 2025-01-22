@@ -67,6 +67,7 @@ const arbitraryPropertyValues = new Set([
   'column-reverse',
   'wrap',
   'wrap-reverse',
+  'inline-flex',
   'nowrap',
   'start',
   'normal',

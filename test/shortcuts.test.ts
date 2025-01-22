@@ -5,8 +5,15 @@ beforeEach(reset)
 afterEach(reset)
 
 test('Case can be configured.', () => {
-  expect(ei('button')).toEqual({ outline: 'none', cursor: 'pointer', border: 'none' })
-  expect(ei('button link')).toEqual({ outline: 'none', border: 'none', cursor: 'pointer', textDecoration: 'none', color: 'inherit' })
+  expect(ei('button')).toEqual({ background: 'none', outline: 'none', cursor: 'pointer', border: 'none' })
+  expect(ei('button link')).toEqual({
+    background: 'none',
+    outline: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    textDecoration: 'none',
+    color: 'inherit',
+  })
   expect(ei('center')).toEqual({ justifyContent: 'center', alignItems: 'center' })
   // @ts-ignore Weird error.
   expect(ei('link button')).toEqual(ei('button link'))

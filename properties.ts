@@ -14,9 +14,9 @@ const addDirections = (name: string, abbreviation: string, defaultValue: string 
 })
 
 const addAxes = (name: string, abbreviation: string, defaultValue: string | undefined = undefined) => ({
-  [`${name}Vertical`]: ['paddingVertical', defaultValue],
+  [`${name}Vertical`]: [`${name}Vertical`, defaultValue],
   [`${abbreviation}v`]: `${name}Vertical`,
-  [`${name}Horizontal`]: ['paddingHorizontal', defaultValue],
+  [`${name}Horizontal`]: [`${name}Horizontal`, defaultValue],
   [`${abbreviation}h`]: `${name}Horizontal`,
 })
 
@@ -35,6 +35,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   align: 'alignContent', // TODO ambiguous for alignItems or alignContent...
   display: ['display', 'flex'],
   flex: 'display',
+  inlineFlex: 'display-inline-flex',
+  inline: 'inlineFlex',
   df: 'display',
   flexDirection: ['flexDirection', 'row'],
   row: 'flexDirection-row',
@@ -43,6 +45,8 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   direction: 'flexDirection',
   flexWrap: ['flexWrap', 'wrap'], // nowrap is the default.
   wrap: 'flexWrap',
+  whiteSpace: ['whiteSpace', 'nowrap'],
+  nowrap: 'whiteSpace',
   gap: ['gap', 'medium'],
   space: 'gap',
   columnGap: ['columnGap'],
@@ -61,6 +65,10 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   alignSelf: ['alignSelf', 'auto'],
   self: 'alignSelf',
   borderRadius: ['borderRadius', 'medium'],
+  overflow: ['overflow', 'auto'],
+  scroll: 'overflow',
+  textOverflow: ['textOverflow', 'ellipsis'],
+  ellipsis: 'textOverflow',
   radius: 'borderRadius',
   borderTopLeftRadius: ['borderTopLeftRadius', 'medium'],
   borderTopRightRadius: ['borderTopRightRadius', 'medium'],
@@ -168,7 +176,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
 })
 
 export const getShortcuts = () => ({
-  button: 'outline noBorder cursor',
+  button: 'outline noBorder cursor background-none',
   input: 'outline noBorder',
   link: 'decoration color-inherit',
   normal: 'margin-0', // Normalize headings and p.
@@ -181,4 +189,5 @@ export const getShortcuts = () => ({
   code: 'mono bg-lightgray p-3 radius-3',
   borderTopRadius: 'borderTopLeftRadius borderTopRightRadius',
   center: 'centerHorizontal centerVertical',
+  singleLineText: 'overflow-hidden nowrap ellipsis',
 })

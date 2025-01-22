@@ -52,6 +52,8 @@ test('Various flex properties are supported.', () => {
   expect(ei('flex0')).toEqual({ flex: '0' })
   expect(ei('flexAuto')).toEqual({ flex: 'auto' })
   expect(ei('flexNone')).toEqual({ flex: 'none' })
+  expect(ei('display-inline-flex')).toEqual({ display: 'inline-flex' })
+  expect(ei('inline')).toEqual({ display: 'inline-flex' })
 
   expect(ei('flex centerHorizontal column wrap')).toEqual({
     display: 'flex',
@@ -94,6 +96,9 @@ test('Various other properties work as expected.', () => {
   expect(ei('noCursor')).toEqual({ cursor: 'auto' })
   expect(ei('boxSizing-border-box')).toEqual({ boxSizing: 'border-box' })
   expect(ei('borderBox')).toEqual({ boxSizing: 'border-box' })
+  expect(ei('nowrap')).toEqual({ whiteSpace: 'nowrap' })
+  expect(ei('scroll')).toEqual({ overflow: 'auto' })
+  expect(ei('ellipsis')).toEqual({ textOverflow: 'ellipsis' })
 })
 
 test('Invalid values show warning.', () => {

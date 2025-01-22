@@ -46,3 +46,7 @@ test('Complex values with non-pixel sizes.', () => {
   expect(ei('flipHorizontal')).toEqual({ transform: 'scale(-1,1)' })
   expect(ei('flipVertical')).toEqual({ transform: 'scale(1,-1)' })
 })
+
+test('Various complex values work correctly.', () => {
+  expect(ei('singleLineText')).toEqual({ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' })
+})
