@@ -22,6 +22,17 @@ const defaultSizes: Sizes = {
   huge: [40, 8],
 }
 
+// Names cannot collide with sizes, would require some parsing refactoring otherwise.
+const defaultFontSizes: Sizes = {
+  title: [40, 32],
+  subtitle: [32, 24],
+  lead: [26, 20],
+  largeText: [20, 14],
+  text: [16, 10],
+  smallText: [12, 8],
+  tinyText: [10, 6],
+}
+
 const getSizes = () =>
   ({
     s: defaultSizes.small,
@@ -50,6 +61,7 @@ export const options: Options = {
   object: getObject,
   breakpoints: getBreakpoints(),
   sizes: getSizes(),
+  fontSizes: defaultFontSizes,
   shortcuts: getShortcuts(),
   classPrefix: 'css-',
   defaultSize,
@@ -69,6 +81,7 @@ export const configure = ({
   properties,
   shortcuts,
   sizes,
+  fontSizes,
   classPrefix,
   colors,
 }: Configuration) => {
@@ -90,6 +103,9 @@ export const configure = ({
   if (sizes) {
     options.sizes = sizes
   }
+  if (fontSizes) {
+    options.fontSizes = fontSizes
+  }
   if (classPrefix) {
     options.classPrefix = classPrefix
   }
@@ -109,6 +125,7 @@ export const reset = () => {
   options.properties = getProperties()
   options.type = Type.Js
   options.sizes = getSizes()
+  options.fontSizes = defaultFontSizes
   options.breakpoints = getBreakpoints()
   options.size = getSize
   options.object = getObject

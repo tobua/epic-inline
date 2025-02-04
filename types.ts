@@ -25,6 +25,7 @@ export interface Options {
   type: Type
   breakpoints: Breakpoints
   sizes: Sizes
+  fontSizes: Sizes
   size?: Size
   defaultSize: keyof Sizes
   object?: GetObject
@@ -43,6 +44,7 @@ export interface Configuration {
   properties?: Properties
   shortcuts?: Shortcuts
   sizes?: Sizes
+  fontSizes?: Sizes
   classPrefix?: string
   colors?: Colors
 }

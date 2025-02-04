@@ -48,5 +48,11 @@ test('Complex values with non-pixel sizes.', () => {
 })
 
 test('Various complex values work correctly.', () => {
-  expect(ei('singleLineText')).toEqual({ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' })
+  expect(ei('singleLineText')).toEqual({ display: 'initial', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' })
+  expect(ei('webKitEllipsis')).toEqual({
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 1,
+    display: '-webkit-box',
+    overflow: 'hidden',
+  })
 })

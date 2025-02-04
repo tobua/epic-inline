@@ -6,6 +6,7 @@ const upperCaseRegex = /[A-Z]/
 
 // Works with Webkit prefixes as it starts upper-case.
 export const camelToDashCase = (input: string) => input.replace(upperCaseRegexAll, (match) => `-${match.toLowerCase()}`)
+export const webkitProperites = (property: string) => (property.startsWith('Webkit') ? property.replace('Webkit', '-webkit') : property)
 
 export const hasUpperCase = (input: string) => upperCaseRegex.test(input)
 

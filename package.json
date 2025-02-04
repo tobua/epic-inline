@@ -9,7 +9,7 @@
   "scripts": {
     "app": "bun create-app.js",
     "app:copy": "cpx '**/*.ts' app/node_modules/epic-inline --watch",
-    "check": "biome check --write .",
+    "check": "biome check --write . && biome check --write --config-path=test ./test/*",
     "types": "tsc"
   },
   "dependencies": {
@@ -23,8 +23,8 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@npmcli/arborist": "^9.0.0",
-    "@types/bun": "^1.1.18",
-    "@types/react": "^19.0.7",
+    "@types/bun": "^1.2.2",
+    "@types/react": "^19.0.8",
     "@types/react-test-renderer": "^19.0.0",
     "cpx": "^1.5.0",
     "npm-packlist": "^10.0.0",
@@ -33,7 +33,7 @@
     "react-dom": "18.3.1",
     "react-test-renderer": "18.3.1",
     "typescript": "^5.7.3",
-    "zero-configuration": "^0.17.7"
+    "zero-configuration": "^0.18.0"
   },
   "trustedDependencies": [
     "zero-configuration"
@@ -68,7 +68,7 @@
       "!app/App.tsx"
     ],
     "vscode": "biome",
-    "biome": {
+    "biome": [{
       "extends": "recommended",
       "linter": {
         "rules": {
@@ -82,10 +82,14 @@
           "documentation",
           "native",
           "create-native-app.js",
-          "app"
+          "app",
+          "test"
         ]
       }
-    },
+    }, {
+      "extends": "test",
+      "folder": "test"
+    }],
     "typescript": [
       {
         "extends": "plugin",

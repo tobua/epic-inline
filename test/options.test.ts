@@ -13,6 +13,7 @@ test('Sizing method can be configured.', () => {
   expect(ei('fullWidth')).toEqual({ width: '100%' }) // Preserve non-number values.
   expect(ei('minHeight-100')).toEqual({ minHeight: '10rem' })
   expect(ei('minHeight-[100vh]')).toEqual({ minHeight: '100vh' })
+  expect(ei('fs-large')).toEqual({ fontSize: '2rem' })
 })
 
 test('Object method can be configured.', () => {

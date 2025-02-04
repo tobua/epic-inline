@@ -71,6 +71,8 @@ test('Various font properties are supported.', () => {
   expect(ei('fontWeight-[500]')).toEqual({ fontWeight: '500' })
   expect(ei('fontStyle')).toEqual({ fontStyle: 'normal' })
   expect(ei('fontStyle-italic')).toEqual({ fontStyle: 'italic' })
+  expect(ei('fontSize-12')).toEqual({ fontSize: 12 })
+  expect(ei('fs-large')).toEqual({ fontSize: 20 })
   expect(ei('italic')).toEqual({ fontStyle: 'italic' })
 })
 
@@ -99,6 +101,7 @@ test('Various other properties work as expected.', () => {
   expect(ei('nowrap')).toEqual({ whiteSpace: 'nowrap' })
   expect(ei('scroll')).toEqual({ overflow: 'auto' })
   expect(ei('ellipsis')).toEqual({ textOverflow: 'ellipsis' })
+  expect(ei('lineClamp')).toEqual({ WebkitLineClamp: 1 })
 })
 
 test('Invalid values show warning.', () => {

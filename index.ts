@@ -6,6 +6,7 @@ import {
   splitByDashesKeepingArbitrary,
   splitByFirstDash,
   validateHtmlClass,
+  webkitProperites,
 } from './helper'
 import { configure, options, reset } from './options'
 import { type ComplexValue, type CssStyles, type MultiSize, Type, type Values } from './types'
@@ -41,6 +42,10 @@ const parseSize = (value: MultiSize | string): MultiSize | string | undefined =>
     return value
   }
 
+  if (value in options.fontSizes) {
+    return options.fontSizes[value]
+  }
+
   if (value in options.sizes) {
     return options.sizes[value]
   }
@@ -55,10 +60,14 @@ const parseSize = (value: MultiSize | string): MultiSize | string | undefined =>
 
 // TODO use as types for default values.
 // TODO far from including all values, should be distinct by property.
+export const propertyValues = {
+  inherit: 'inherit',
+  auto: 'auto',
+}
+// For quick lookup.
 const arbitraryPropertyValues = new Set([
-  'inherit',
-  'initial',
-  'auto',
+  propertyValues.inherit,
+  propertyValues.auto,
   'center',
   'space-between',
   'space-around',
@@ -81,7 +90,11 @@ const arbitraryPropertyValues = new Set([
   'sans-serif',
   'border-box',
   'content-box',
+  'padding-box',
   'pointer',
+  'webkit-box', // transformed later to -webkit-box.
+  'no-repeat',
+  'cover',
 ])
 
 const splitBySpacesKeepBracketsRegex = /(?:[^\s\[]+|\[[^\]]*\])+/g // Keep arbitrary values intact, border-[2px solid red]
@@ -351,10 +364,12 @@ export const parseValue = (value: string) => {
   // User values have precedence over lookup values.
   values = mergeValues(values, lookupResult, true)
 
+  values.arbitrary = values.arbitrary.map((value) => (value.startsWith('webkit-') ? value.replace('webkit-', '-webkit-') : value))
+
   // Property name from lookup result is used and will override one in values.
   const property =
     options.type === Type.Css && hasUpperCase(lookupResult.property ?? '')
-      ? camelToDashCase(lookupResult.property ?? '')
+      ? webkitProperites(camelToDashCase(lookupResult.property ?? ''))
       : lookupResult.property
 
   return { ...values, breakpoint, property }

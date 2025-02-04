@@ -7,6 +7,7 @@ afterEach(reset)
 test('Case can be configured.', () => {
   configure({ type: Type.Css })
   expect(ei('jc')).toEqual({ 'justify-content': 'center' })
+  expect(ei('boxOrient')).toEqual({ '-webkit-box-orient': 'vertical' })
   configure({ type: 'css' })
   expect(ei('jc')).toEqual({ 'justify-content': 'center' })
   configure({ type: 'javascript' })

@@ -105,7 +105,6 @@ const addDefaults = (values: Partial<Values> & { breakpoint?: boolean }) =>
     arbitrary: [],
     complex: undefined,
     ...values,
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   }) as any
 
 test('Values on table can be looked up properly.', () => {
