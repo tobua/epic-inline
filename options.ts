@@ -15,11 +15,18 @@ const getBreakpoints = () => ({
   large: 1500,
 })
 
+export const sizes = {
+  small: 'small',
+  medium: 'medium',
+  large: 'large',
+  huge: 'huge',
+}
+
 const defaultSizes: Sizes = {
-  small: [5, 1],
-  medium: [10, 2],
-  large: [20, 4],
-  huge: [40, 8],
+  [sizes.small]: [5, 1],
+  [sizes.medium]: [10, 2],
+  [sizes.large]: [20, 4],
+  [sizes.huge]: [40, 8],
 }
 
 // Names cannot collide with sizes, would require some parsing refactoring otherwise.
@@ -28,7 +35,7 @@ const defaultFontSizes: Sizes = {
   subtitle: [32, 24],
   lead: [26, 20],
   largeText: [20, 14],
-  text: [16, 10],
+  mediumText: [16, 10],
   smallText: [12, 8],
   tinyText: [10, 6],
 }

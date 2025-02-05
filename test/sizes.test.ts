@@ -12,7 +12,7 @@ test('Default sizes can be used to specify lengths.', () => {
 })
 
 test('Custom font sizes can be used.', () => {
-  expect(ei('fs-text')).toEqual({ fontSize: 16 })
+  expect(ei('fs-mediumText')).toEqual({ fontSize: 16 }) //
   expect(ei('fontSize-title')).toEqual({ fontSize: 40 })
   expect(ei('fontSize-smallText')).toEqual({ fontSize: 12 })
 })

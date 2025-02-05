@@ -1,5 +1,6 @@
 import { isColor, isTone, parseColor } from './color'
 import {
+  arbitraryPropertyValues,
   camelToDashCase,
   hasUpperCase,
   matchBreakpoint,
@@ -57,45 +58,6 @@ const parseSize = (value: MultiSize | string): MultiSize | string | undefined =>
 
   return parseNumber(value)
 }
-
-// TODO use as types for default values.
-// TODO far from including all values, should be distinct by property.
-export const propertyValues = {
-  inherit: 'inherit',
-  auto: 'auto',
-}
-// For quick lookup.
-const arbitraryPropertyValues = new Set([
-  propertyValues.inherit,
-  propertyValues.auto,
-  'center',
-  'space-between',
-  'space-around',
-  'row',
-  'column',
-  'column-reverse',
-  'wrap',
-  'wrap-reverse',
-  'inline-flex',
-  'nowrap',
-  'start',
-  'normal',
-  'flex',
-  'bold',
-  'bolder',
-  'relative',
-  'sticky',
-  'static',
-  'none',
-  'sans-serif',
-  'border-box',
-  'content-box',
-  'padding-box',
-  'pointer',
-  'webkit-box', // transformed later to -webkit-box.
-  'no-repeat',
-  'cover',
-])
 
 const splitBySpacesKeepBracketsRegex = /(?:[^\s\[]+|\[[^\]]*\])+/g // Keep arbitrary values intact, border-[2px solid red]
 

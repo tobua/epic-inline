@@ -16,7 +16,7 @@
     "@types/color-convert": "^2.0.4",
     "@types/parse-color": "^1.0.3",
     "@types/simple-swizzle": "^0.2.2",
-    "color-convert": "^2.0.1",
+    "color-convert": "^3.0.0",
     "parse-color": "^1.0.0",
     "simple-swizzle": "^0.2.2"
   },
@@ -68,28 +68,31 @@
       "!app/App.tsx"
     ],
     "vscode": "biome",
-    "biome": [{
-      "extends": "recommended",
-      "linter": {
-        "rules": {
-          "performance": {
-            "useTopLevelRegex": "off"
+    "biome": [
+      {
+        "extends": "recommended",
+        "linter": {
+          "rules": {
+            "performance": {
+              "useTopLevelRegex": "off"
+            }
           }
+        },
+        "files": {
+          "ignore": [
+            "documentation",
+            "native",
+            "create-native-app.js",
+            "app",
+            "test"
+          ]
         }
       },
-      "files": {
-        "ignore": [
-          "documentation",
-          "native",
-          "create-native-app.js",
-          "app",
-          "test"
-        ]
+      {
+        "extends": "test",
+        "folder": "test"
       }
-    }, {
-      "extends": "test",
-      "folder": "test"
-    }],
+    ],
     "typescript": [
       {
         "extends": "plugin",

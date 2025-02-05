@@ -78,3 +78,90 @@ export function toHex(...args: Array<number | number[]>): string {
 
   return `#${hexDouble(rgba[0] as number)}${hexDouble(rgba[1] as number)}${hexDouble(rgba[2] as number)}${(rgba[3] as number) < 1 ? hexDouble(Math.round((rgba[3] as number) * 255)) : ''}`
 }
+
+export const propertyValues = {
+  inherit: 'inherit',
+  auto: 'auto',
+  none: 'none',
+  normal: 'normal',
+  initial: 'initial',
+  unset: 'unset',
+  // Flexbox & Grid
+  flex: 'flex',
+  inlineFlex: 'inline-flex',
+  grid: 'grid',
+  inlineGrid: 'inline-grid',
+  row: 'row',
+  rowReverse: 'row-reverse',
+  column: 'column',
+  columnReverse: 'column-reverse',
+  nowrap: 'nowrap',
+  wrap: 'wrap',
+  wrapReverse: 'wrap-reverse',
+  start: 'start',
+  end: 'end',
+  center: 'center',
+  spaceBetween: 'space-between',
+  spaceAround: 'space-around',
+  spaceEvenly: 'space-evenly',
+  stretch: 'stretch',
+  // Positioning
+  absolute: 'absolute',
+  relative: 'relative',
+  fixed: 'fixed',
+  sticky: 'sticky',
+  static: 'static',
+  // Display
+  block: 'block',
+  inlineBlock: 'inline-block',
+  inline: 'inline',
+  table: 'table',
+  tableRow: 'table-row',
+  tableCell: 'table-cell',
+  // Font & Text
+  bold: 'bold',
+  bolder: 'bolder',
+  lighter: 'lighter',
+  italic: 'italic',
+  oblique: 'oblique',
+  smallCaps: 'small-caps',
+  sansSerif: 'sans-serif',
+  serif: 'serif',
+  monospace: 'monospace',
+  cursive: 'cursive',
+  fantasy: 'fantasy',
+  systemUi: 'system-ui',
+  // Box Model
+  borderBox: 'border-box',
+  contentBox: 'content-box',
+  paddingBox: 'padding-box',
+  // Backgrounds & Borders
+  noRepeat: 'no-repeat',
+  repeat: 'repeat',
+  repeatX: 'repeat-x',
+  repeatY: 'repeat-y',
+  space: 'space',
+  round: 'round',
+  cover: 'cover',
+  contain: 'contain',
+  transparent: 'transparent',
+  currentColor: 'currentColor',
+  // Cursors
+  pointer: 'pointer',
+  default: 'default',
+  grab: 'grab',
+  grabbing: 'grabbing',
+  notAllowed: 'not-allowed',
+  crosshair: 'crosshair',
+  text: 'text',
+  // Visibility & Overflow
+  visible: 'visible',
+  hidden: 'hidden',
+  clip: 'clip',
+  scroll: 'scroll',
+  // Miscellaneous
+  ellipsis: 'ellipsis',
+  webkitBox: 'webkit-box', // transformed later to -webkit-box.
+}
+
+export const arbitraryPropertyValues = new Set(Object.values(propertyValues))
