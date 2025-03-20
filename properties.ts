@@ -102,6 +102,10 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   italic: `fontStyle-${propertyValues.italic}`,
   bold: `fontWeight-${propertyValues.bold}`,
   outline: ['outline', propertyValues.none],
+  noOutline: 'outline-none',
+  outlineColor: ['outlineColor', 'black'],
+  outlineWidth: ['outlineWidth', 1],
+  outlineStyle: ['outlineStyle', 'solid'],
   textDecoration: ['textDecoration', propertyValues.none],
   visibility: ['visibility', propertyValues.hidden],
   hidden: 'visibility',
@@ -188,6 +192,7 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   gridColumn: ['gridColumn', 'auto'],
   boxShadow: ['boxShadow', propertyValues.none],
   textShadow: ['textShadow', propertyValues.none],
+  resize: ['resize', propertyValues.none],
   // Complex properties (dynamically calculated).
   boxShadowX: [
     'boxShadow',

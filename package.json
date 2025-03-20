@@ -16,15 +16,15 @@
     "@types/color-convert": "^2.0.4",
     "@types/parse-color": "^1.0.3",
     "@types/simple-swizzle": "^0.2.2",
-    "color-convert": "^3.0.0",
+    "color-convert": "^3.0.1",
     "parse-color": "^1.0.0",
     "simple-swizzle": "^0.2.2"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@npmcli/arborist": "^9.0.0",
-    "@types/bun": "^1.2.2",
-    "@types/react": "^19.0.8",
+    "@npmcli/arborist": "^9.0.1",
+    "@types/bun": "^1.2.5",
+    "@types/react": "^19.0.12",
     "@types/react-test-renderer": "^19.0.0",
     "cpx": "^1.5.0",
     "npm-packlist": "^10.0.0",
@@ -32,8 +32,8 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-test-renderer": "18.3.1",
-    "typescript": "^5.7.3",
-    "zero-configuration": "^0.18.0"
+    "typescript": "^5.8.2",
+    "zero-configuration": "^0.18.2"
   },
   "trustedDependencies": [
     "zero-configuration"

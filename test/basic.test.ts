@@ -28,6 +28,8 @@ test('Combined properties use camelCase.', () => {
 
 test('Various flex properties are supported.', () => {
   expect(ei('flexDirection')).toEqual({ flexDirection: 'row' })
+  expect(ei('alignItems-flex-end')).toEqual({ alignItems: 'flex-end' })
+  expect(ei('justifyContent-flex-start')).toEqual({ justifyContent: 'flex-start' })
   expect(ei('row')).toEqual({ flexDirection: 'row' })
   expect(ei('column')).toEqual({ flexDirection: 'column' })
   expect(ei('direction')).toEqual({ flexDirection: 'row' })
