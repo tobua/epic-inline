@@ -180,6 +180,9 @@ export const getProperties: () => { [key: string]: Property } = () => ({
   flip: ['transform', '[scale(-1,-1)]'],
   flipHorizontal: ['transform', '[scale(-1,1)]'],
   flipVertical: ['transform', '[scale(1,-1)]'],
+  objectFit: ['objectFit', propertyValues.cover],
+  zIndex: ['zIndex', propertyValues.auto],
+  layer: 'zIndex',
   // Deprecated, non-standard properties.
   lineClamp: ['WebkitLineClamp', '1'],
   boxOrient: ['WebkitBoxOrient', 'vertical'],

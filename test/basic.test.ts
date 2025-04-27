@@ -105,6 +105,12 @@ test('Various other properties work as expected.', () => {
   expect(ei('scroll')).toEqual({ overflow: 'auto' })
   expect(ei('ellipsis')).toEqual({ textOverflow: 'ellipsis' })
   expect(ei('lineClamp')).toEqual({ WebkitLineClamp: 1 })
+  expect(ei('objectFit')).toEqual({ objectFit: 'cover' })
+  expect(ei('objectFit-contain')).toEqual({ objectFit: 'contain' })
+  expect(ei('zIndex-9')).toEqual({ zIndex: 9 })
+  expect(ei('zIndex-[9]')).toEqual({ zIndex: '9' })
+  expect(ei('zIndex-[-1]')).toEqual({ zIndex: '-1' })
+  expect(ei('layer-5')).toEqual({ zIndex: 5 })
 })
 
 test('Invalid values show warning.', () => {
