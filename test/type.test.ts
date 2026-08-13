@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, expect, test } from 'bun:test'
-import { Preset, Type, configure, ei, reset } from '../index'
+import { configure, ei, Preset, reset, Type } from '../index'
 
 beforeEach(reset)
 afterEach(reset)

@@ -1,9 +1,7 @@
-// biome-ignore lint/correctness/noNodejsModules: Used for development only.
 import { execSync } from 'node:child_process'
-// biome-ignore lint/correctness/noNodejsModules: Used for development only.
 import { copyFileSync, cpSync, mkdirSync, renameSync, rmSync } from 'node:fs'
-// biome-ignore lint/correctness/noNodejsModules: Used for development only.
 import { join, resolve } from 'node:path'
+import process from 'node:process'
 import Arborist from '@npmcli/arborist'
 import packlist from 'npm-packlist'
 
@@ -30,6 +28,5 @@ for (const file of files) {
 // TODO load dependencies from "dependencies" field.
 execSync('bun install color-convert parse-color simple-swizzle', { cwd: join(process.cwd(), 'app') })
 
-// biome-ignore lint/suspicious/noConsoleLog: Used for development only.
 // biome-ignore lint/suspicious/noConsole: Used for development only.
 console.log('🍞 React Native App created inside /app.')

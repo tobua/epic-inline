@@ -2,7 +2,7 @@ import { propertyValues } from './helper'
 import { sizes } from './options'
 import { Complex, type MultiSize, type Property } from './types'
 
-const addDirections = (name: string, abbreviation: string, defaultValue: string | undefined = undefined) => ({
+const addDirections = (name: string, abbreviation: string, defaultValue: string | undefined) => ({
   [name]: [name, defaultValue],
   [abbreviation]: name,
   [`${name}Top`]: [`${name}Top`, defaultValue],
@@ -15,14 +15,14 @@ const addDirections = (name: string, abbreviation: string, defaultValue: string 
   [`${abbreviation}r`]: `${name}Right`,
 })
 
-const addAxes = (name: string, abbreviation: string, defaultValue: string | undefined = undefined) => ({
+const addAxes = (name: string, abbreviation: string, defaultValue: string | undefined) => ({
   [`${name}Vertical`]: [`${name}Vertical`, defaultValue],
   [`${abbreviation}v`]: `${name}Vertical`,
   [`${name}Horizontal`]: [`${name}Horizontal`, defaultValue],
   [`${abbreviation}h`]: `${name}Horizontal`,
 })
 
-const addCorners = (start: string, end: string, abbreviations: string[], defaultValue: string | undefined = undefined) => ({
+const addCorners = (start: string, end: string, abbreviations: string[], defaultValue: string | undefined) => ({
   [`${start}${end}`]: [`${start}${end}`, defaultValue],
   ...abbreviations.reduce(
     (result, abbreviation) => {

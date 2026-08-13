@@ -9,13 +9,12 @@ import {
   validateHtmlClass,
   webkitProperites,
 } from './helper'
-import { configure, options, reset } from './options'
+import { options } from './options'
 import { type ComplexValue, type CssStyles, type MultiSize, Type, type Values } from './types'
-import { Preset } from './web'
 
-export { Type, Preset }
-export { reset, configure }
-export type { CssStyles }
+export { configure, reset } from './options'
+export { type CssStyles, Type } from './types'
+export { Preset } from './web'
 
 export const parseNumber = (value: string | number) => {
   let result: number
@@ -59,7 +58,7 @@ const parseSize = (value: MultiSize | string): MultiSize | string | undefined =>
   return parseNumber(value)
 }
 
-const splitBySpacesKeepBracketsRegex = /(?:[^\s\[]+|\[[^\]]*\])+/g // Keep arbitrary values intact, border-[2px solid red]
+const splitBySpacesKeepBracketsRegex = /(?:[^\s[]+|\[[^\]]*\])+/g // Keep arbitrary values intact, border-[2px solid red]
 
 const isBracketed = (value: string) => value.startsWith('[') && value.endsWith(']')
 
@@ -121,7 +120,7 @@ export const extractValues = (value: string): Values => {
   values.forEach((current, index) => {
     if (skipNext) {
       skipNext = false
-      return null
+      return
     }
 
     const next = index + 1 < values.length ? values[index + 1] : undefined // Used for lookahead.
@@ -159,6 +158,13 @@ const extractBreakpoint = (value: string) => {
   return [rest, match] as [string, boolean]
 }
 
+function withValue(current: string, values: string): string {
+  if (current.includes('-')) {
+    return `${splitByFirstDash(current)[0]}-${values}`
+  }
+  return `${current}-${values}`
+}
+
 // Recursive function to resolve chain of shortcuts.
 export const resolveShortcut = (value: string, first = true) => {
   if (typeof value !== 'string') {
@@ -175,7 +181,7 @@ export const resolveShortcut = (value: string, first = true) => {
   const hasAlias = Object.hasOwn(options.properties, currentValue) && typeof options.properties[currentValue] === 'string'
 
   if (!(hasShortcut || hasAlias)) {
-    return values !== '' ? `${currentValue}-${values}` : currentValue
+    return values === '' ? currentValue : `${currentValue}-${values}`
   }
 
   let shortcutOrAlias = options.shortcuts[currentValue]
@@ -193,7 +199,7 @@ export const resolveShortcut = (value: string, first = true) => {
     .map((current) =>
       resolveShortcut(
         // If alias has no value insert current value here.
-        values && hasAlias ? (current.includes('-') ? `${splitByFirstDash(current)[0]}-${values}` : `${current}-${values}`) : current,
+        values && hasAlias ? withValue(current, values) : current,
         false,
       ),
     )
@@ -220,7 +226,7 @@ const resolveShortcuts = (value: string) => {
   }
 
   if (!breakpoint) {
-    return undefined
+    return
   }
 
   // Resolve chain of shortcut aliases.
@@ -381,7 +387,7 @@ export const ei = (input: string) => {
   parts = parts.map(resolveShortcuts).join(' ').match(splitBySpacesKeepBracketsRegex) || ([''] as string[])
 
   const partsBefore = parts.length
-  parts = parts.filter((value) => !!value)
+  parts = parts.filter((value) => Boolean(value))
 
   let missed = partsBefore - parts.length
 

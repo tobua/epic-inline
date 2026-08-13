@@ -9,31 +9,27 @@
   "scripts": {
     "app": "bun create-app.js",
     "app:copy": "cpx '**/*.ts' app/node_modules/epic-inline --watch",
-    "check": "biome check --write . && biome check --write --config-path=test ./test/*",
+    "check": "biome check --write .",
     "types": "tsc"
   },
   "dependencies": {
-    "@types/color-convert": "^2.0.4",
+    "@types/color-convert": "^3.0.1",
     "@types/parse-color": "^1.0.3",
     "@types/simple-swizzle": "^0.2.2",
-    "color-convert": "^3.0.1",
+    "color-convert": "^3.1.3",
     "parse-color": "^1.0.0",
-    "simple-swizzle": "^0.2.2"
+    "simple-swizzle": "^0.2.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@npmcli/arborist": "^9.0.2",
-    "@types/bun": "^1.2.10",
-    "@types/react": "^19.1.2",
-    "@types/react-test-renderer": "^19.1.0",
+    "@biomejs/biome": "^2.5.8",
+    "@happy-dom/global-registrator": "^20.11.2",
+    "@npmcli/arborist": "^10.0.2",
+    "@types/bun": "^1.3.14",
     "cpx": "^1.5.0",
-    "npm-packlist": "^10.0.0",
-    "padua": "^4.0.1",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "react-test-renderer": "18.3.1",
-    "typescript": "^5.8.3",
-    "zero-configuration": "^0.19.0"
+    "epic-jsx": "^0.14.0",
+    "npm-packlist": "^11.3.0",
+    "typescript": "^7.0.2",
+    "zero-configuration": "^1.2.0"
   },
   "trustedDependencies": [
     "zero-configuration"
@@ -43,8 +39,8 @@
   "main": "./index.ts",
   "exports": {
     ".": "./index.ts",
-    "./register-react": {
-      "default": "./register-react.ts"
+    "./register-jsx": {
+      "default": "./register-jsx.ts"
     }
   },
   "files": [
@@ -57,9 +53,6 @@
     "react",
     "inline-styles"
   ],
-  "publishConfig": {
-    "provenance": true
-  },
   "configuration": {
     "gitignore": [
       "extends:recommended",
@@ -75,30 +68,36 @@
           "rules": {
             "performance": {
               "useTopLevelRegex": "off"
+            },
+            "style": {
+              "noMagicNumbers": "off"
             }
           }
         },
         "files": {
-          "ignore": [
-            "documentation",
-            "native",
-            "create-native-app.js",
-            "app",
-            "test"
+          "includes": [
+            "**/*",
+            "!app",
+            "!documentation"
           ]
         }
       },
       {
         "extends": "test",
-        "folder": "test"
+        "folder": "test",
+        "root": false
       }
     ],
     "typescript": [
       {
         "extends": "plugin",
+        "compilerOptions": {
+          "types": [
+            "bun"
+          ]
+        },
         "files": [
-          "index.ts",
-          "register-react.ts"
+          "index.ts"
         ]
       },
       {
@@ -106,7 +105,20 @@
         "folder": "test",
         "compilerOptions": {
           "strict": false,
-          "jsx": "react-jsx"
+          "types": [
+            "bun"
+          ],
+          "paths": {
+            "react": [
+              "./../node_modules/epic-jsx"
+            ],
+            "react/jsx-runtime": [
+              "./../node_modules/epic-jsx"
+            ],
+            "react/jsx-dev-runtime": [
+              "./../node_modules/epic-jsx"
+            ]
+          }
         }
       }
     ]

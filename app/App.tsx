@@ -1,6 +1,7 @@
 import { SafeAreaView, Text, View } from 'react-native'
-import 'epic-inline/register-react'
-import { Type, configure } from 'epic-inline'
+// NOTE support for React Native dropped.
+import 'epic-inline/register-jsx'
+import { configure, Type } from 'epic-inline'
 
 configure({ type: Type.Native })
 

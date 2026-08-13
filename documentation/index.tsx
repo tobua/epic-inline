@@ -1,24 +1,12 @@
 /// <reference types="@rsbuild/core/types" />
-import { register } from 'epic-inline/register-react'
-import { createRoot } from 'react-dom/client'
-import _jsxdevruntime from 'react/jsx-dev-runtime'
-import _jsxruntime from 'react/jsx-runtime'
+// biome-ignore lint/correctness/noUndeclaredDependencies: local dependency.
+import 'epic-inline/register-jsx'
+import { render } from 'epic-jsx'
 import github from './asset/github.svg'
 import npm from './asset/npm.svg'
 
-// Using JSX createElement override to automatically convert className.
-register(_jsxdevruntime)
-register(_jsxruntime)
 
-const Flexboxes = ({
-  classes,
-  title,
-  count = 3,
-}: {
-  classes?: string
-  title: string
-  count: number
-}) => (
+const Flexboxes = ({ classes, title, count = 3 }: { classes?: string; title: string; count: number }) => (
   <div class="flex bg-lightgray column">
     <span class="flex alignSelf-center p-small mono">{title}</span>
     <div class={`flex gap-small p-medium ${classes}`}>
@@ -29,7 +17,7 @@ const Flexboxes = ({
   </div>
 )
 
-createRoot(document.body).render(
+render(
   <div class="flex column font">
     <header class="flex between alignItems font">
       <h1>epic-inline</h1>

@@ -7,7 +7,11 @@ export enum Type {
 export type DoubleSize = [number, number]
 export type MultiSize = [number, number] | number
 export type PropertySize = string | number
-export type ComplexValues = Partial<{ size: MultiSize | number; color: string; arbitrary: string }>
+export type ComplexValues = {
+  size?: MultiSize | undefined
+  color?: string | undefined
+  arbitrary?: string | null | undefined
+}
 export type ComplexValue = (properties: ComplexValues) => string
 export type PropertyValue = string | number | MultiSize | ComplexValue
 export type Property = string | [string, PropertyValue?, Complex?]

@@ -28,12 +28,16 @@ export const biome = {
       },
     },
   },
-  files: {
-    ignore: ['rsbuild.config.ts'],
-  },
 }
 
 export const typescript = {
   extends: 'web',
   files: ['index.tsx'],
+  compilerOptions: {
+    paths: {
+      react: ['./node_modules/epic-jsx'],
+      'react/jsx-runtime': ['./node_modules/epic-jsx'],
+      'react/jsx-dev-runtime': ['./node_modules/epic-jsx'],
+    },
+  },
 }
